@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact - Tropicom{% endblock %}
+
+{% block content %}
+<section class="text-center mb-10">
+  <h2 class="text-4xl font-bold text-blue-700">Contactez-nous</h2>
+  <p class="text-gray-700 mt-2">Nous sommes disponibles pour répondre à toutes vos questions.</p>
+</section>
+
+<form method="post" class="max-w-2xl mx-auto bg-white p-6 shadow rounded-lg space-y-4">
+  {% csrf_token %}
+  <div>
+    <label class="block text-left font-medium text-gray-700 mb-1">Nom complet</label>
+    <input type="text" name="name" class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+  </div>
+  <div>
+    <label class="block text-left font-medium text-gray-700 mb-1">Email</label>
+    <input type="email" name="email" class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+  </div>
+  <div>
+    <label class="block text-left font-medium text-gray-700 mb-1">Message</label>
+    <textarea name="message" rows="4" class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required></textarea>
+  </div>
+  <button type="submit" class="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800 transition">Envoyer</button>
+</form>
+{% endblock %}

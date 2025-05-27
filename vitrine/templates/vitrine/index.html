@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Accueil - Tropicom{% endblock %}
+
+{% block content %}
+<!-- SECTION HERO -->
+<section class="relative h-[500px] bg-cover bg-center rounded-xl shadow-lg mb-12" style="background-image: url('{% static "img/2.WebP" %}');">
+  <div class="absolute inset-0 bg-blue-900 bg-opacity-70"></div>
+  <div class="relative z-10 flex flex-col justify-center items-center h-full text-white text-center px-4">
+    <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Bienvenue chez Tropicom</h1>
+    <p class="text-lg md:text-xl mb-6 max-w-3xl">Votre partenaire fiable pour la sécurité, la connectivité et la performance informatique.</p>
+    <a href="{% url 'vitrine:services' %}" class="bg-white text-blue-700 px-8 py-4 rounded-md font-semibold hover:bg-gray-100 transition">Découvrez nos services</a>
+  </div>
+</section>
+
+<!-- SLIDER avec image + texte -->
+<section class="overflow-hidden w-full max-w-6xl mx-auto my-12 px-4">
+  <div id="slidesContainer" class="flex w-[400%] transition-transform duration-1000 ease-in-out">
+    
+    <!-- Slide 1 -->
+    <div class="slide flex flex-col md:flex-row w-full flex-shrink-0 items-center bg-white p-6 rounded-lg shadow-md space-y-6 md:space-y-0 md:space-x-8 h-[300px]">
+      <div class="w-full md:w-1/2 flex justify-center items-center h-full">
+        <img src="{% static 'img/3.WebP' %}" alt="Systèmes informatiques" class="w-[90%] md:w-[80%] h-[400px] object-cover rounded-md shadow">
+      </div>
+      <div class="md:w-1/2 h-full flex flex-col justify-center">
+        <h3 class="text-3xl font-bold text-blue-700 mb-4">Systèmes informatiques</h3>
+        <p class="mb-6 text-gray-700 text-lg leading-relaxed">Conception, déploiement et maintenance de solutions informatiques robustes.</p>
+        <a href="{% url 'vitrine:contact' %}" class="inline-block bg-blue-600 text-white px-5 py-3 rounded hover:bg-blue-700 transition font-semibold">Contactez-nous</a>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide flex flex-col md:flex-row w-full flex-shrink-0 items-center bg-white p-6 rounded-lg shadow-md space-y-6 md:space-y-0 md:space-x-8 h-[300px]">
+      <div class="w-full md:w-1/2 flex justify-center items-center h-full">
+        <img src="{% static 'img/3.WebP' %}" alt="Réseaux & télécoms" class="w-[90%] md:w-[80%] h-[400px] object-cover rounded-md shadow">
+      </div>
+      <div class="md:w-1/2 h-full flex flex-col justify-center">
+        <h3 class="text-3xl font-bold text-blue-700 mb-4">Réseaux & télécoms</h3>
+        <p class="mb-6 text-gray-700 text-lg leading-relaxed">Installation de réseaux filaires et sans fil, et solutions de téléphonie IP.</p>
+        <a href="{% url 'vitrine:contact' %}" class="inline-block bg-blue-600 text-white px-5 py-3 rounded hover:bg-blue-700 transition font-semibold">Contactez-nous</a>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide flex flex-col md:flex-row w-full flex-shrink-0 items-center bg-white p-6 rounded-lg shadow-md space-y-6 md:space-y-0 md:space-x-8 h-[300px]">
+      <div class="w-full md:w-1/2 flex justify-center items-center h-full">
+        <img src="{% static 'img/4.WebP' %}" alt="Sécurité électronique" class="w-[90%] md:w-[80%] h-[400px] object-cover rounded-md shadow">
+      </div>
+      <div class="md:w-1/2 h-full flex flex-col justify-center">
+        <h3 class="text-3xl font-bold text-blue-700 mb-4">Sécurité électronique</h3>
+        <p class="mb-6 text-gray-700 text-lg leading-relaxed">Vidéosurveillance, alarmes, contrôle d’accès pour sécuriser vos locaux.</p>
+        <a href="{% url 'vitrine:contact' %}" class="inline-block bg-blue-600 text-white px-5 py-3 rounded hover:bg-blue-700 transition font-semibold">Contactez-nous</a>
+      </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide flex flex-col md:flex-row w-full flex-shrink-0 items-center bg-white p-6 rounded-lg shadow-md space-y-6 md:space-y-0 md:space-x-8 h-[300px]">
+      <div class="w-full md:w-1/2 flex justify-center items-center h-full">
+        <img src="{% static 'img/5.WebP' %}" alt="Transformation digitale" class="w-[90%] md:w-[80%] h-[400px] object-cover rounded-md shadow">
+      </div>
+      <div class="md:w-1/2 h-full flex flex-col justify-center">
+        <h3 class="text-3xl font-bold text-blue-700 mb-4">Transformation digitale</h3>
+        <p class="mb-6 text-gray-700 text-lg leading-relaxed">Accompagnement stratégique et technique pour moderniser vos processus métiers.</p>
+        <a href="{% url 'vitrine:contact' %}" class="inline-block bg-blue-600 text-white px-5 py-3 rounded hover:bg-blue-700 transition font-semibold">Contactez-nous</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById("slidesContainer");
+    const slides = document.querySelectorAll(".slide");
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+    const interval = 9000;
+
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      container.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }, interval);
+  });
+</script>
+{% endblock %}

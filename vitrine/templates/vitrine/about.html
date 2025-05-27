@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}À propos de Tropicom{% endblock %}
+
+{% block content %}
+<section class="text-center">
+  <h2 class="text-4xl font-bold text-blue-700">À propos de nous</h2>
+  <p class="text-gray-700 mt-4 mb-8 max-w-3xl mx-auto">
+    Tropicom est une entreprise spécialisée dans les solutions informatiques, la cybersécurité, la vidéosurveillance, les réseaux et les télécommunications.
+  </p>
+
+  <div class="bg-blue-100 p-6 rounded-lg shadow max-w-4xl mx-auto">
+    <h3 class="text-2xl font-semibold text-blue-800 mb-2">Notre mission</h3>
+    <p>
+      Accompagner les entreprises et particuliers dans leur transformation numérique avec des services fiables et innovants.
+    </p>
+  </div>
+</section>
+
+<section class="mt-16 text-center">
+  <h2 class="text-3xl font-bold text-blue-900 mb-6">Nos Services</h2>
+  <p class="text-gray-600 max-w-2xl mx-auto mb-8">
+    Tropicom vous propose des solutions informatiques adaptées à vos besoins.
+  </p>
+  <a href="{% url 'vitrine:services' %}" class="btn-contact">
+    Voir les services
+  </a>
+</section>
+
+{% endblock %}

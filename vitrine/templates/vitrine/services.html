@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Nos Services - Tropicom{% endblock %}
+
+{% block content %}
+<section class="text-center mb-10">
+  <h2 class="text-4xl font-bold text-blue-700">Nos Services</h2>
+  <p class="text-gray-700 mt-2">Des solutions modernes pour répondre aux besoins des entreprises et particuliers.</p>
+</section>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+  <div class="bg-blue-50 p-6 rounded-xl shadow hover:shadow-lg transition">
+    <i data-feather="cpu" class="text-blue-600 w-10 h-10 mb-4 mx-auto"></i>
+    <h3 class="text-xl font-semibold text-blue-700 mb-2">Systèmes informatiques</h3>
+    <p>Conception, déploiement et maintenance de solutions informatiques robustes.</p>
+  </div>
+
+  <div class="bg-blue-50 p-6 rounded-xl shadow hover:shadow-lg transition">
+    <i data-feather="wifi" class="text-blue-600 w-10 h-10 mb-4 mx-auto"></i>
+    <h3 class="text-xl font-semibold text-blue-700 mb-2">Réseaux & télécoms</h3>
+    <p>Installation de réseaux filaires et sans fil, et solutions de téléphonie IP.</p>
+  </div>
+
+  <div class="bg-blue-50 p-6 rounded-xl shadow hover:shadow-lg transition">
+    <i data-feather="shield" class="text-blue-600 w-10 h-10 mb-4 mx-auto"></i>
+    <h3 class="text-xl font-semibold text-blue-700 mb-2">Sécurité électronique</h3>
+    <p>Vidéosurveillance, alarmes, contrôle d’accès pour sécuriser vos locaux.</p>
+  </div>
+
+  <div class="bg-blue-50 p-6 rounded-xl shadow hover:shadow-lg transition">
+    <i data-feather="refresh-ccw" class="text-blue-600 w-10 h-10 mb-4 mx-auto"></i>
+    <h3 class="text-xl font-semibold text-blue-700 mb-2">Transformation digitale</h3>
+    <p>Accompagnement stratégique et technique pour moderniser vos processus métiers.</p>
+  </div>
+</div>
+{% endblock %}
