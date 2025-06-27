@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Comparatif des services - Tropicom{% endblock %}
+
+{% block content %}
+<section class="py-12 px-4 max-w-7xl mx-auto">
+  <h2 class="text-4xl font-bold text-blue-800 text-center mb-8">Comparatif des services</h2>
+  <p class="text-gray-700 text-center max-w-3xl mx-auto mb-12">
+    Voici une vue d’ensemble des services que nous proposons aux <strong>entreprises</strong> et aux <strong>particuliers</strong>.
+  </p>
+
+  <div class="overflow-x-auto">
+    <table class="w-full table-auto border-collapse border border-gray-300 text-left text-sm md:text-base">
+      <thead class="bg-blue-800 text-white">
+        <tr>
+          <th class="p-4 border border-gray-300">Service</th>
+          <th class="p-4 border border-gray-300 text-center">Entreprises</th>
+          <th class="p-4 border border-gray-300 text-center">Particuliers</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white">
+        <tr class="hover:bg-gray-50">
+          <td class="p-4 border border-gray-300 font-medium">Installation de réseaux informatiques</td>
+          <td class="p-4 border border-gray-300 text-center">✔️</td>
+          <td class="p-4 border border-gray-300 text-center">❌</td>
+        </tr>
+        <tr class="hover:bg-gray-50">
+          <td class="p-4 border border-gray-300 font-medium">Vidéosurveillance & sécurité électronique</td>
+          <td class="p-4 border border-gray-300 text-center">✔️</td>
+          <td class="p-4 border border-gray-300 text-center">✔️</td>
+        </tr>
+        <tr class="hover:bg-gray-50">
+          <td class="p-4 border border-gray-300 font-medium">Maintenance informatique</td>
+          <td class="p-4 border border-gray-300 text-center">✔️</td>
+          <td class="p-4 border border-gray-300 text-center">✔️</td>
+        </tr>
+        <tr class="hover:bg-gray-50">
+          <td class="p-4 border border-gray-300 font-medium">Déploiement de serveurs & cloud</td>
+          <td class="p-4 border border-gray-300 text-center">✔️</td>
+          <td class="p-4 border border-gray-300 text-center">❌</td>
+        </tr>
+        <tr class="hover:bg-gray-50">
+          <td class="p-4 border border-gray-300 font-medium">Création de site web</td>
+          <td class="p-4 border border-gray-300 text-center">✔️</td>
+          <td class="p-4 border border-gray-300 text-center">✔️</td>
+        </tr>
+        <tr class="hover:bg-gray-50">
+          <td class="p-4 border border-gray-300 font-medium">Assistance technique à domicile</td>
+          <td class="p-4 border border-gray-300 text-center">❌</td>
+          <td class="p-4 border border-gray-300 text-center">✔️</td>
+        </tr>
+        <tr class="hover:bg-gray-50">
+          <td class="p-4 border border-gray-300 font-medium">Formation en cybersécurité</td>
+          <td class="p-4 border border-gray-300 text-center">✔️</td>
+          <td class="p-4 border border-gray-300 text-center">❌</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

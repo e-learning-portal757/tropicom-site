@@ -1,0 +1,48 @@
+/* === HEADER ADMIN === */
+#header {
+    background-color: white !important; /* Fond blanc */
+    border-bottom: 2px solid #003366; /* Ligne fine bleu foncé */
+    padding: 10px;
+}
+
+/* === BRANDING (logo + nom) === */
+#branding img {
+    height: 45px;
+    vertical-align: middle;
+}
+
+#branding h1 {
+    display: inline-block;
+    margin-left: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #003366;
+}
+
+/* === LIENS UTILISATEUR EN HAUT À DROITE === */
+#user-tools a {
+    color: #003366 !important; /* Bleu Tropicom */
+    font-weight: 600;
+}
+
+#user-tools a:hover {
+    text-decoration: underline;
+    color: #004080 !important;
+}
+
+/* === BOUTONS PRINCIPAUX === */
+.button, input[type="submit"], .submit-row input {
+    background-color: #003366 !important;
+    color: white !important;
+    border-radius: 4px;
+    border: none;
+}
+
+.button:hover, input[type="submit"]:hover {
+    background-color: #004080 !important;
+}
+
+/* === STYLE GÉNÉRAL === */
+.module h2, .module caption {
+    color: #003366;
+}

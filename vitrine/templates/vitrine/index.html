@@ -1,88 +1,334 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Accueil - Tropicom{% endblock %}
+{% block title %}{% trans "Accueil - Tropicom" %}{% endblock %}
 
 {% block content %}
-<!-- SECTION HERO -->
-<section class="relative h-[500px] bg-cover bg-center rounded-xl shadow-lg mb-12" style="background-image: url('{% static "img/2.WebP" %}');">
-  <div class="absolute inset-0 bg-blue-900 bg-opacity-70"></div>
-  <div class="relative z-10 flex flex-col justify-center items-center h-full text-white text-center px-4">
-    <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Bienvenue chez Tropicom</h1>
-    <p class="text-lg md:text-xl mb-6 max-w-3xl">Votre partenaire fiable pour la sécurité, la connectivité et la performance informatique.</p>
-    <a href="{% url 'vitrine:services' %}" class="bg-white text-blue-700 px-8 py-4 rounded-md font-semibold hover:bg-gray-100 transition">Découvrez nos services</a>
+
+<!-- SECTION SERVICES -->
+<section class="max-w-7xl mx-auto px-6 py-16">
+  <h2 class="text-3xl font-bold text-center text-blue-900 mb-10">{% trans "Nos Services" %}</h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
+    {% for service in services %}
+    <div class="bg-white shadow-md rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-300">
+      
+      <!-- Image carrée centrée -->
+      <div class="w-full h-48 overflow-hidden bg-gray-100 flex items-center justify-center">
+        <img src="{{ service.image.url }}" alt="{{ service.titre }}"
+             class="object-cover w-full h-full">
+      </div>
+
+      <!-- Contenu -->
+      <div class="p-4 text-center">
+        <h3 class="text-lg font-semibold text-blue-700 mb-2">{{ service.titre }}</h3>
+
+        {% if service.get_prestations %}
+        <ul class="text-gray-600 text-sm mb-4 space-y-1">
+          {% for ligne in service.get_prestations %}
+          <li>{{ ligne }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+        <p class="text-xs text-green-600 mb-4">📞 {% trans "Support 24h/7" %} | 🚀 {% trans "Intervention rapide" %}</p>
+
+        <a href="#contact"
+           class="inline-block w-full bg-blue-100 text-blue-800 font-semibold py-2 rounded hover:bg-blue-200 transition">
+          {% trans "Demander un devis" %}
+        </a>
+      </div>
+    </div>
+    {% endfor %}
   </div>
 </section>
 
-<!-- SLIDER avec image + texte -->
-<section class="overflow-hidden w-full max-w-6xl mx-auto my-12 px-4">
-  <div id="slidesContainer" class="flex w-[400%] transition-transform duration-1000 ease-in-out">
+<!-- SECTION Nos realisation-->
+<section class="w-full px-6 py-16">
+  <h2 class="text-3xl sm:text-4xl font-bold text-center mb-10 text-blue-900">{% trans "Nos Réalisations" %}</h2>
+
+  <!-- Ligne 1 -->
+  <div class="flex flex-wrap md:flex-nowrap gap-6 h-[60vh] mb-12">
+    <!-- Image 1 -->
+    {% if images_nos_realisations|length > 0 %}
+    <div class="w-full md:w-[60%] relative group h-full rounded-lg overflow-hidden shadow-lg">
+      <div class="absolute inset-0 bg-center bg-cover transition-transform duration-700 group-hover:scale-110"
+           style="background-image: url('{{ images_nos_realisations.0.image.url }}');"></div>
+      <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition duration-300"></div>
+      <div class="absolute bottom-0 left-0 right-0 z-10 p-4 transform group-hover:-translate-y-2 transition duration-600">
+        <p class="text-white text-xl font-bold text-center bg-black bg-opacity-40 rounded py-2">
+          {{ images_nos_realisations.0.description }}
+        </p>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Deux petites images empilées -->
+    <div class="w-full md:w-[35%] flex flex-col justify-between gap-6 h-full">
+      {% if images_nos_realisations|length > 1 %}
+      <div class="relative group h-[48%] rounded-lg overflow-hidden shadow-md">
+        <div class="absolute inset-0 bg-center bg-cover transition-transform duration-700 group-hover:scale-110"
+             style="background-image: url('{{ images_nos_realisations.1.image.url }}');"></div>
+        <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition duration-300"></div>
+        <div class="absolute bottom-0 left-0 right-0 z-10 p-3 transform group-hover:-translate-y-2 transition duration-600">
+          <p class="text-white text-sm font-medium text-center bg-black bg-opacity-40 rounded py-1">
+            {{ images_nos_realisations.1.description }}
+          </p>
+        </div>
+      </div>
+      {% endif %}
+      {% if images_nos_realisations|length > 2 %}
+      <div class="relative group h-[48%] rounded-lg overflow-hidden shadow-md">
+        <div class="absolute inset-0 bg-center bg-cover transition-transform duration-700 group-hover:scale-110"
+             style="background-image: url('{{ images_nos_realisations.2.image.url }}');"></div>
+        <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition duration-300"></div>
+        <div class="absolute bottom-0 left-0 right-0 z-10 p-3 transform group-hover:-translate-y-2 transition duration-600">
+          <p class="text-white text-sm font-medium text-center bg-black bg-opacity-40 rounded py-1">
+            {{ images_nos_realisations.2.description }}
+          </p>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Ligne 2 (inversée) -->
+  <div class="flex flex-wrap md:flex-nowrap gap-6 h-[60vh] flex-row-reverse">
+    <!-- Image 4 -->
+    {% if images_nos_realisations|length > 3 %}
+    <div class="w-full md:w-[60%] relative group h-full rounded-lg overflow-hidden shadow-lg">
+      <div class="absolute inset-0 bg-center bg-cover transition-transform duration-700 group-hover:scale-110"
+           style="background-image: url('{{ images_nos_realisations.4.image.url }}');"></div>
+      <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition duration-300"></div>
+      <div class="absolute bottom-0 left-0 right-0 z-10 p-4 transform group-hover:-translate-y-2 transition duration-600">
+        <p class="text-white text-xl font-bold text-center bg-black bg-opacity-40 rounded py-2">
+          {{ images_nos_realisations.4.description }}
+        </p>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Deux petites à gauche -->
+    <div class="w-full md:w-[35%] flex flex-col justify-between gap-6 h-full">
+      {% if images_nos_realisations|length > 3 %}
+      <div class="relative group h-[48%] rounded-lg overflow-hidden shadow-md">
+        <div class="absolute inset-0 bg-center bg-cover transition-transform duration-700 group-hover:scale-110"
+             style="background-image: url('{{ images_nos_realisations.3.image.url }}');"></div>
+        <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition duration-300"></div>
+        <div class="absolute bottom-0 left-0 right-0 z-10 p-3 transform group-hover:-translate-y-2 transition duration-600">
+          <p class="text-white text-sm font-medium text-center bg-black bg-opacity-40 rounded py-1">
+            {{ images_nos_realisations.3.description }}
+          </p>
+        </div>
+      </div>
+      {% endif %}
+      {% if images_nos_realisations|length > 5 %}
+      <div class="relative group h-[48%] rounded-lg overflow-hidden shadow-md">
+        <div class="absolute inset-0 bg-center bg-cover transition-transform duration-700 group-hover:scale-110"
+             style="background-image: url('{{ images_nos_realisations.5.image.url }}');"></div>
+        <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition duration-300"></div>
+        <div class="absolute bottom-0 left-0 right-0 z-10 p-3 transform group-hover:-translate-y-2 transition duration-600">
+          <p class="text-white text-sm font-medium text-center bg-black bg-opacity-40 rounded py-1">
+            {{ images_nos_realisations.5.description }}
+          </p>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+
+<!-- SECTION POURQUOI NOUS CHOISIR -->
+<section class="py-20 bg-gray-50 px-4">
+  <h2 class="text-3xl text-center font-bold text-blue-900 mb-10">{% trans "Pourquoi choisir Tropicom ?" %}</h2>
+  <div class="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+    <div class="text-center p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
+      <i data-feather="zap" class="text-red-600 mx-auto mb-4 w-10 h-10" aria-hidden="true"></i>
+      <h3 class="text-xl font-semibold text-blue-800 mb-2">{% trans "Réactivité" %}</h3>
+      <p class="text-base text-gray-600">{% trans "Interventions rapides en moins de 24h" %}</p>
+    </div>
+    <div class="text-center p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
+      <i data-feather="shield" class="text-red-600 mx-auto mb-4 w-10 h-10" aria-hidden="true"></i>
+      <h3 class="text-xl font-semibold text-blue-800 mb-2">{% trans "Sécurité" %}</h3>
+      <p class="text-base text-gray-600">{% trans "Protection de vos données et systèmes" %}</p>
+    </div>
+    <div class="text-center p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
+      <i data-feather="cpu" class="text-red-600 mx-auto mb-4 w-10 h-10" aria-hidden="true"></i>
+      <h3 class="text-xl font-semibold text-blue-800 mb-2">{% trans "Expertise" %}</h3>
+      <p class="text-base text-gray-600">{% trans "Spécialistes certifiés dans chaque domaine" %}</p>
+    </div>
+    <div class="text-center p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
+      <i data-feather="dollar-sign" class="text-red-600 mx-auto mb-4 w-10 h-10" aria-hidden="true"></i>
+      <h3 class="text-xl font-semibold text-blue-800 mb-2">{% trans "Prix Compétitifs" %}</h3>
+      <p class="text-base text-gray-600">{% trans "Des solutions pour chaque budget" %}</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION TÉMOIGNAGES -->
+<section class="py-20 bg-white px-4">
+  <h2 class="text-3xl text-center font-bold text-blue-900 mb-10">{% trans "Ce que disent nos clients" %}</h2>
+  <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
     
-    <!-- Slide 1 -->
-    <div class="slide flex flex-col md:flex-row w-full flex-shrink-0 items-center bg-white p-6 rounded-lg shadow-md space-y-6 md:space-y-0 md:space-x-8 h-[300px]">
-      <div class="w-full md:w-1/2 flex justify-center items-center h-full">
-        <img src="{% static 'img/3.WebP' %}" alt="Systèmes informatiques" class="w-[90%] md:w-[80%] h-[400px] object-cover rounded-md shadow">
-      </div>
-      <div class="md:w-1/2 h-full flex flex-col justify-center">
-        <h3 class="text-3xl font-bold text-blue-700 mb-4">Systèmes informatiques</h3>
-        <p class="mb-6 text-gray-700 text-lg leading-relaxed">Conception, déploiement et maintenance de solutions informatiques robustes.</p>
-        <a href="{% url 'vitrine:contact' %}" class="inline-block bg-blue-600 text-white px-5 py-3 rounded hover:bg-blue-700 transition font-semibold">Contactez-nous</a>
+    <!-- Témoignage 1 -->
+    <div class="bg-blue-100 p-6 rounded-lg shadow hover:shadow-xl transition text-center group">
+      <p class="text-gray-700 italic text-lg mb-6">"{% trans "Tropicom a entièrement sécurisé notre réseau en moins d'une semaine." %}"</p>
+      <div class="flex items-center justify-center gap-4">
+        <img src="{% static 'img/74.jpeg' %}" alt="Fatou K." class="w-24 h-24 rounded-full border-4 border-white shadow-md object-cover transition-transform duration-300 group-hover:scale-110">
+        <p class="font-semibold text-blue-800">Fatou K., FasoSecure</p>
       </div>
     </div>
 
-    <!-- Slide 2 -->
-    <div class="slide flex flex-col md:flex-row w-full flex-shrink-0 items-center bg-white p-6 rounded-lg shadow-md space-y-6 md:space-y-0 md:space-x-8 h-[300px]">
-      <div class="w-full md:w-1/2 flex justify-center items-center h-full">
-        <img src="{% static 'img/3.WebP' %}" alt="Réseaux & télécoms" class="w-[90%] md:w-[80%] h-[400px] object-cover rounded-md shadow">
-      </div>
-      <div class="md:w-1/2 h-full flex flex-col justify-center">
-        <h3 class="text-3xl font-bold text-blue-700 mb-4">Réseaux & télécoms</h3>
-        <p class="mb-6 text-gray-700 text-lg leading-relaxed">Installation de réseaux filaires et sans fil, et solutions de téléphonie IP.</p>
-        <a href="{% url 'vitrine:contact' %}" class="inline-block bg-blue-600 text-white px-5 py-3 rounded hover:bg-blue-700 transition font-semibold">Contactez-nous</a>
+    <!-- Témoignage 2 -->
+    <div class="bg-blue-100 p-6 rounded-lg shadow hover:shadow-xl transition text-center group">
+      <p class="text-gray-700 italic text-lg mb-6">"{% trans "Service client impeccable. Nous recommandons sans hésiter." %}"</p>
+      <div class="flex items-center justify-center gap-4">
+        <img src="{% static 'img/72.jpeg' %}" alt="Ismaël D." class="w-24 h-24 rounded-full border-4 border-white shadow-md object-cover transition-transform duration-300 group-hover:scale-110">
+        <p class="font-semibold text-blue-800">Ismaël D., Cabinet DKT</p>
       </div>
     </div>
 
-    <!-- Slide 3 -->
-    <div class="slide flex flex-col md:flex-row w-full flex-shrink-0 items-center bg-white p-6 rounded-lg shadow-md space-y-6 md:space-y-0 md:space-x-8 h-[300px]">
-      <div class="w-full md:w-1/2 flex justify-center items-center h-full">
-        <img src="{% static 'img/4.WebP' %}" alt="Sécurité électronique" class="w-[90%] md:w-[80%] h-[400px] object-cover rounded-md shadow">
-      </div>
-      <div class="md:w-1/2 h-full flex flex-col justify-center">
-        <h3 class="text-3xl font-bold text-blue-700 mb-4">Sécurité électronique</h3>
-        <p class="mb-6 text-gray-700 text-lg leading-relaxed">Vidéosurveillance, alarmes, contrôle d’accès pour sécuriser vos locaux.</p>
-        <a href="{% url 'vitrine:contact' %}" class="inline-block bg-blue-600 text-white px-5 py-3 rounded hover:bg-blue-700 transition font-semibold">Contactez-nous</a>
-      </div>
-    </div>
-
-    <!-- Slide 4 -->
-    <div class="slide flex flex-col md:flex-row w-full flex-shrink-0 items-center bg-white p-6 rounded-lg shadow-md space-y-6 md:space-y-0 md:space-x-8 h-[300px]">
-      <div class="w-full md:w-1/2 flex justify-center items-center h-full">
-        <img src="{% static 'img/5.WebP' %}" alt="Transformation digitale" class="w-[90%] md:w-[80%] h-[400px] object-cover rounded-md shadow">
-      </div>
-      <div class="md:w-1/2 h-full flex flex-col justify-center">
-        <h3 class="text-3xl font-bold text-blue-700 mb-4">Transformation digitale</h3>
-        <p class="mb-6 text-gray-700 text-lg leading-relaxed">Accompagnement stratégique et technique pour moderniser vos processus métiers.</p>
-        <a href="{% url 'vitrine:contact' %}" class="inline-block bg-blue-600 text-white px-5 py-3 rounded hover:bg-blue-700 transition font-semibold">Contactez-nous</a>
+    <!-- Témoignage 3 -->
+    <div class="bg-blue-100 p-6 rounded-lg shadow hover:shadow-xl transition text-center group">
+      <p class="text-gray-700 italic text-lg mb-6">"{% trans "Des experts à l'écoute qui ont modernisé notre SI." %}"</p>
+      <div class="flex items-center justify-center gap-4">
+        <img src="{% static 'img/73.jpeg' %}" alt="Sarah T." class="w-24 h-24 rounded-full border-4 border-white shadow-md object-cover transition-transform duration-300 group-hover:scale-110">
+        <p class="font-semibold text-blue-800">Sarah T., Groupe Logex</p>
       </div>
     </div>
 
   </div>
 </section>
-{% endblock %}
 
-{% block extra_js %}
+
+<!-- SECTION PARTENAIRES -->
+<section class="py-12 bg-gray-100 text-center">
+  <h2 class="text-3xl font-bold text-blue-900 mb-10">{% trans "Ils nous font confiance" %}</h2>
+  <div class="overflow-hidden relative max-w-7xl mx-auto">
+    <div id="partners-slider" class="flex gap-8 animate-scroll whitespace-nowrap">
+      <img src="{% static 'img/60.jpg' %}" alt="{% trans 'Partenaire 1' %}" class="h-12 inline-block" />
+      <img src="{% static 'img/partner2.png' %}" alt="{% trans 'Partenaire 2' %}" class="h-12 inline-block" />
+      <img src="{% static 'img/partner3.png' %}" alt="{% trans 'Partenaire 3' %}" class="h-12 inline-block" />
+
+      <!-- Répétition pour boucle fluide -->
+      <img src="{% static 'img/60.jpg' %}" alt="{% trans 'Partenaire 1' %}" class="h-12 inline-block" />
+      <img src="{% static 'img/partner2.png' %}" alt="{% trans 'Partenaire 2' %}" class="h-12 inline-block" />
+      <img src="{% static 'img/partner3.png' %}" alt="{% trans 'Partenaire 3' %}" class="h-12 inline-block" />
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Animation de défilement horizontal */
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-scroll {
+    animation: scroll 20s linear infinite;
+  }
+</style>
+<!-- BANNIÈRE SPÉCIALE AVANT LE FOOTER -->
+<section class="relative h-[60vh] overflow-hidden group">
+  <!-- Image de fond avec zoom au survol -->
+  <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+       style="background-image: url('{% static 'img/12.jpeg' %}');"></div>
+
+  <!-- Overlay sombre pour lisibilité -->
+  <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+
+  <!-- Texte centré -->
+  <div class="relative z-10 h-full flex flex-col justify-center items-center text-white text-center px-4">
+    <h2 class="text-3xl sm:text-5xl font-bold mb-4 drop-shadow-lg">
+      {% trans "Rejoignez la révolution digitale avec Tropicom" %}
+    </h2>
+    <p class="text-lg sm:text-xl max-w-2xl drop-shadow">
+      {% trans "Des solutions innovantes, rapides et sécurisées pour vos projets numériques." %}
+    </p>
+  </div>
+</section>
+<!-- Conteneur des notifications -->
+<div id="notif-container" class="fixed bottom-5 left-5 z-50 space-y-4">
+  <!-- Notification 1 -->
+  <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm">
+    <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600" onclick="this.parentElement.remove()">×</button>
+    <p class="font-semibold text-blue-900 mb-2 text-sm">Besoin d'un vpn securise ?</p>
+    <a href="https://wa.me/22673122222" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
+  Oui, contactez-nous
+</a>
+
+  </div>
+  <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm">
+    <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600" onclick="this.parentElement.remove()">×</button>
+    <p class="font-semibold text-blue-900 mb-2 text-sm">Besoin de systeme d'alarme ?</p>
+    <a href="https://wa.me/22673122222" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
+  Oui, contactez-nous
+</a>
+
+  </div>
+  <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm">
+    <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600" onclick="this.parentElement.remove()">×</button>
+    <p class="font-semibold text-blue-900 mb-2 text-sm">Besoin de conseil en communication ?</p>
+    <a href="https://wa.me/22673122222" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
+  Oui, contactez-nous
+</a>
+
+  </div>
+
+  <!-- Notification 2 -->
+ <div id="notif-container" class="fixed bottom-5 left-5 z-50 space-y-4">
+  <!-- Notification 1 -->
+  <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm">
+    <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600" onclick="this.parentElement.remove()">×</button>
+    <p class="font-semibold text-blue-900 mb-2 text-sm">Besoin de site Web ?</p>
+    <a href="https://wa.me/22673122222" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
+  Oui, contactez-nous
+</a>
+
+  </div>
+
+  <!-- Notification 3 -->
+  <div id="notif-container" class="fixed bottom-5 left-5 z-50 space-y-4">
+  <!-- Notification 1 -->
+  <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm">
+    <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600" onclick="this.parentElement.remove()">×</button>
+    <p class="font-semibold text-blue-900 mb-2 text-sm">Besoin d'installation Reseau ?</p>
+    <a href="https://wa.me/22673122222" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
+  Oui, contactez-nous
+</a>
+
+  </div>
+</div>
+
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const container = document.getElementById("slidesContainer");
-    const slides = document.querySelectorAll(".slide");
-    let currentIndex = 0;
-    const totalSlides = slides.length;
-    const interval = 9000;
+  document.addEventListener("DOMContentLoaded", function () {
+    const notifs = document.querySelectorAll("#notif-container .notif");
+    let delay = 0;
 
-    setInterval(() => {
-      currentIndex = (currentIndex + 1) % totalSlides;
-      container.style.transform = `translateX(-${currentIndex * 100}%)`;
-    }, interval);
+    notifs.forEach((notif) => {
+      setTimeout(() => {
+        notif.classList.remove("hidden");
+
+        // Disparaît 8 secondes après son apparition
+        setTimeout(() => {
+          notif.remove();
+        }, 8000);
+
+      }, delay);
+
+      // Prochaine notification dans 9 secondes
+      delay += 9000;
+    });
   });
 </script>
+
+
+
 {% endblock %}

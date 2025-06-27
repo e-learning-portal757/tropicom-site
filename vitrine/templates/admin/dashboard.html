@@ -1,0 +1,16 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<h1>Bienvenue dans le tableau de bord Tropicom</h1>
+
+<div style="display: flex; gap: 20px;">
+  <div><strong>Total Services :</strong> {{ total_services }}</div>
+  <div><strong>Messages :</strong> {{ total_messages }}</div>
+  <div><strong>Inscrits Newsletter :</strong> {{ total_newsletter }}</div>
+</div>
+
+<hr>
+
+<p><a href="{% url 'admin:theme_service_changelist' %}">➡️ Gérer les Services</a></p>
+<p><a href="{% url 'admin:vitrine_messagecontact_changelist' %}">📬 Voir les messages</a></p>
+
+{% endblock %}

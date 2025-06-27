@@ -1,36 +1,363 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
 
 {% block title %}Nos Services - Tropicom{% endblock %}
 
+{% block header %}
+
+<header class="relative bg-blue-900 text-white py-20">
+  <!-- Image de fond en arrière-plan -->
+  <div 
+    class="absolute inset-0 bg-cover bg-center opacity-70" 
+    style="background-image: url('{% static 'img/31.webp' %}');"
+    aria-hidden="true">
+  </div>
+
+  <!-- Contenu au-dessus de l'image -->
+  <div class="relative max-w-6xl mx-auto px-4 text-center">
+    <h1 class="text-5xl font-bold mb-4">{% trans "Nos Services" %}</h1>
+    <p class="text-lg max-w-2xl mx-auto">Des solutions sur mesure pour chaque besoin</p>
+  </div>
+</header>
+{% endblock %}
+
 {% block content %}
-<section class="text-center mb-10">
-  <h2 class="text-4xl font-bold text-blue-700">Nos Services</h2>
-  <p class="text-gray-700 mt-2">Des solutions modernes pour répondre aux besoins des entreprises et particuliers.</p>
+<section class="relative h-[60vh] overflow-hidden group">
+  <!-- Image de fond avec zoom au survol -->
+  <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+       style="background-image: url('{% static 'img/07.jpeg' %}');"></div>
+
+  <!-- Overlay sombre pour lisibilité -->
+  <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+
+  <!-- Texte centré -->
+  <div class="relative z-10 h-full flex flex-col justify-center items-center text-white text-center px-4">
+    <h2 class="text-3xl sm:text-5xl font-bold mb-4 drop-shadow-lg">
+      {% trans "Nous intervenons dans 5 domaines clés" %}
+    </h2>
+    <p class="text-lg sm:text-xl max-w-2xl drop-shadow">
+      {% trans "Sécurité électronique, Transformation digitale, Réseaux & Télécoms, Gestion Documentaire et Systèmes Informatiques." %}
+    </p>
+  </div>
 </section>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-  <div class="bg-blue-50 p-6 rounded-xl shadow hover:shadow-lg transition">
-    <i data-feather="cpu" class="text-blue-600 w-10 h-10 mb-4 mx-auto"></i>
-    <h3 class="text-xl font-semibold text-blue-700 mb-2">Systèmes informatiques</h3>
-    <p>Conception, déploiement et maintenance de solutions informatiques robustes.</p>
+<!-- SECTION SERVICES -->
+<section class="max-w-7xl mx-auto px-6 py-16">
+  <h2 class="text-3xl font-bold text-center text-blue-900 mb-10">Nos Services</h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
+    {% for service in services %}
+    <div class="bg-white shadow-md rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-300">
+      
+      <!-- Image carrée centrée -->
+      <div class="w-full h-48 overflow-hidden bg-gray-100 flex items-center justify-center">
+        <img src="{{ service.image.url }}" alt="{{ service.titre }}"
+             class="object-cover w-full h-full">
+      </div>
+
+      <!-- Contenu -->
+      <div class="p-4 text-center">
+        <h3 class="text-lg font-semibold text-blue-700 mb-2">{{ service.titre }}</h3>
+
+        {% if service.get_prestations %}
+        <ul class="text-gray-600 text-sm mb-4 space-y-1">
+          {% for ligne in service.get_prestations %}
+          <li>{{ ligne }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+        <p class="text-xs text-green-600 mb-4">📞 Support 24h/7 | 🚀 Intervention rapide</p>
+
+        <a href="#contact"
+           class="inline-block w-full bg-blue-100 text-blue-800 font-semibold py-2 rounded hover:bg-blue-200 transition">
+          Demander un devis
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+<section class="bg-white py-16">
+  <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+    
+    <!-- Texte avec effet -->
+    <div class="transform transition duration-700 ease-in-out hover:scale-105 animate-fadeInLeft">
+      <h2 class="text-3xl font-bold text-blue-900 mb-4">System informatique</h2>
+      <p class="text-lg">Entreprise burkinabè spécialisée en informatique et télécommunications.</p>
+    <ul class="space-y-2 text-base">
+      <li>✔ Protection de données</li>
+      <li>✔ Infogerance</li>
+      <li>✔ Antivirus ESET</li>
+      
+    </ul>
+    <a href="#contact" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
+    </div>
+
+    <!-- Image à droite avec zoom au survol -->
+    <div class="overflow-hidden rounded-lg shadow-lg group">
+      <img src="{% static 'img/10.jpeg' %}" alt="Tropicom" 
+           class="w-full h-auto transform transition duration-700 ease-in-out group-hover:scale-110">
+    </div>
+
+  </div>
+</section>
+<section class="bg-white py-16">
+  <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+    
+    <!-- Image à gauche avec effet zoom -->
+    <div class="overflow-hidden rounded-lg shadow-lg group order-1 md:order-none">
+      <img src="{% static 'img/55.jpeg' %}" alt="Tropicom" 
+           class="w-full h-auto transform transition duration-700 ease-in-out group-hover:scale-110">
+    </div>
+
+    <!-- Texte à droite -->
+    <div class="transform transition duration-700 ease-in-out hover:scale-105 animate-fadeInLeft">
+      <h2 class="text-3xl font-bold text-blue-900 mb-4">Reseau & Telcoms</h2>
+      <p class="text-lg">Entreprise burkinabè spécialisée en informatique et télécommunications.</p>
+    <ul class="space-y-2 text-base">
+      <li>✔ Fourniture d'Accès internet par satellite</li>
+          <li>✔ Interconnexion réseaux d'entreprise (BLR,FH et FO)</li>
+          <li>✔ Réseaux LAN cables et WIFI d'entreprise</li>
+          <li>✔ Telephonie d'entreprise</li>
+          <li>✔ Certification de cablage</li>
+          <li>✔ Audit & conseil</li>
+    </ul>
+    <a href="#contact" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
+    </div>
+
+
+  </div>
+</section>
+
+<section class="bg-white py-16">
+  <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+    
+    <!-- Texte avec effet -->
+    <div class="transform transition duration-700 ease-in-out hover:scale-105 animate-fadeInLeft">
+      <h2 class="text-3xl font-bold text-blue-900 mb-4">Securite electronique</h2>
+      <p class="text-lg">Entreprise burkinabè spécialisée en informatique et télécommunications.</p>
+    <ul class="space-y-2 text-base">
+      <li>✔ Videos Surveillance</li>
+          <li>✔ Systeme d'alarme</li>
+          <li>✔ controls d'acces</li>
+          <li>✔ Detection et Securite incendie</li>
+          <li>✔ Systeme Biometrique</li>
+          <li>✔ Tracking Online et gestion de flotte</li>
+          <li>✔ Scelle de Securite electronique</li>
+          <li>✔ Gestion des visiteurs</li>
+      
+    </ul>
+    <a href="#contact" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
+    </div>
+
+
+    <!-- Image à droite avec zoom au survol -->
+    <div class="overflow-hidden rounded-lg shadow-lg group">
+      <img src="{% static 'img/00.jpeg' %}" alt="Tropicom" 
+           class="w-full h-auto transform transition duration-700 ease-in-out group-hover:scale-110">
+    </div>
+
+  </div>
+</section>
+<section class="bg-white py-16">
+  <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+    
+    <!-- Image à gauche avec effet zoom -->
+    <div class="overflow-hidden rounded-lg shadow-lg group order-1 md:order-none">
+      <img src="{% static 'img/02.jpeg' %}" alt="Tropicom" 
+           class="w-full h-auto transform transition duration-700 ease-in-out group-hover:scale-110">
+    </div>
+
+    <!-- Texte à droite -->
+    <div class="transform transition duration-700 ease-in-out hover:scale-105 animate-fadeInLeft">
+      <h2 class="text-3xl font-bold text-blue-900 mb-4">Transformation Digitale</h2>
+      <p class="text-lg">Entreprise burkinabè spécialisée en informatique et télécommunications.</p>
+    <ul class="space-y-2 text-base">
+      <li>✔ Antivirus ESET</li>
+          <li>✔ Firewall</li>
+          <li>✔ Supervision réseau</li>
+          <li>✔ Audit de sécurité</li>
+    </ul>
+    <a href="#contact" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
+    </div>
+
+
+  </div>
+</section>
+
+<section class="relative bg-gradient-to-br from-blue-800 to-blue-600 text-white py-16">
+  <!-- Forme de vague blanche en bas -->
+  <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] rotate-180">
+    <svg class="relative block w-full h-[100px]" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 1200 120">
+      <path d="M1200 0L0 0 892.25 114.72 1200 0z" fill="#fff"></path>
+    </svg>
   </div>
 
-  <div class="bg-blue-50 p-6 rounded-xl shadow hover:shadow-lg transition">
-    <i data-feather="wifi" class="text-blue-600 w-10 h-10 mb-4 mx-auto"></i>
-    <h3 class="text-xl font-semibold text-blue-700 mb-2">Réseaux & télécoms</h3>
-    <p>Installation de réseaux filaires et sans fil, et solutions de téléphonie IP.</p>
+  <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
+    
+    <!-- Texte avec effet -->
+    <div class="transform transition duration-700 ease-in-out hover:scale-105 animate-fadeInLeft">
+      <h2 class="text-3xl font-bold text-white mb-4">Communication d'entreprise</h2>
+      <p class="text-lg mb-4">Entreprise burkinabè spécialisée en informatique et télécommunications.</p>
+      <ul class="space-y-2 text-base text-white mb-6">
+        <li>✔ Antivirus <span class="text-red-400">ESET</span></li>
+        <li>✔ <span class="text-red-400">Firewall</span></li>
+        <li>✔ Supervision réseau</li>
+        <li>✔ Audit de sécurité</li>
+      </ul>
+      <a href="#contact" class="inline-block bg-white text-blue-800 py-2 px-4 rounded hover:bg-gray-200 transition font-semibold">
+        Contactez-nous
+      </a>
+    </div>
+
+    <!-- Image à droite avec zoom au survol -->
+    <div class="overflow-hidden rounded-lg shadow-lg group">
+      <img src="{% static 'img/8.jpeg' %}" alt="Tropicom" 
+           class="w-full h-auto transform transition duration-700 ease-in-out group-hover:scale-110">
+    </div>
+
+  </div>
+</section>
+
+
+<!-- SECTION VIDÉO DE DÉMONSTRATION -->
+<section class="py-20 bg-white px-4">
+  <div class="max-w-5xl mx-auto text-center">
+    <h2 class="text-3xl font-bold text-blue-900 mb-6">{% trans "Vidéo de démonstration" %}</h2>
+    <p class="text-gray-700 mb-10 max-w-3xl mx-auto">
+      {% trans "Découvrez comment nos solutions innovantes peuvent transformer votre entreprise." %}
+    </p>
+    <div class="relative" style="padding-top: 56.25%;"> <!-- ratio 16:9 -->
+      <iframe 
+        src="https://www.youtube.com/embed/VIDEO_ID" 
+        title="Vidéo de démonstration Tropicom" 
+        class="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<section class="py-20 bg-gray-50 px-4">
+  <h2 class="text-3xl sm:text-4xl font-bold text-center text-blue-900 mb-12">
+    {% trans "Pourquoi choisir nos services ?" %}
+  </h2>
+
+  <div class="grid md:grid-cols-5 gap-6 max-w-7xl mx-auto">
+    <!-- Carte 1 -->
+    <div class="bg-white p-6 rounded-lg shadow hover:shadow-xl transform hover:scale-105 transition duration-500 text-center">
+      <div class="text-4xl mb-4">🔒</div>
+      <h3 class="text-xl font-semibold text-blue-800 mb-2">{% trans "Sécurité garantie" %}</h3>
+      <p class="text-gray-600 text-sm">{% trans "Vos données et systèmes sont entre de bonnes mains." %}</p>
+    </div>
+
+    <!-- Carte 2 -->
+    <div class="bg-white p-6 rounded-lg shadow hover:shadow-xl transform hover:scale-105 transition duration-500 text-center">
+      <div class="text-4xl mb-4">⚡</div>
+      <h3 class="text-xl font-semibold text-blue-800 mb-2">{% trans "Intervention rapide" %}</h3>
+      <p class="text-gray-600 text-sm">{% trans "Moins de 24h pour agir efficacement." %}</p>
+    </div>
+
+    <!-- Carte 3 -->
+    <div class="bg-white p-6 rounded-lg shadow hover:shadow-xl transform hover:scale-105 transition duration-500 text-center">
+      <div class="text-4xl mb-4">🧠</div>
+      <h3 class="text-xl font-semibold text-blue-800 mb-2">{% trans "Expertise certifiée" %}</h3>
+      <p class="text-gray-600 text-sm">{% trans "Des professionnels qualifiés dans chaque domaine." %}</p>
+    </div>
+
+    <!-- Carte 4 -->
+    <div class="bg-white p-6 rounded-lg shadow hover:shadow-xl transform hover:scale-105 transition duration-500 text-center">
+      <div class="text-4xl mb-4">💼</div>
+      <h3 class="text-xl font-semibold text-blue-800 mb-2">{% trans "Solutions personnalisées" %}</h3>
+      <p class="text-gray-600 text-sm">{% trans "Chaque entreprise est unique, nos solutions aussi." %}</p>
+    </div>
+
+    <!-- Carte 5 -->
+    <div class="bg-white p-6 rounded-lg shadow hover:shadow-xl transform hover:scale-105 transition duration-500 text-center">
+      <div class="text-4xl mb-4">🛠️</div>
+      <h3 class="text-xl font-semibold text-blue-800 mb-2">{% trans "Assistance après installation" %}</h3>
+      <p class="text-gray-600 text-sm">{% trans "Suivi et maintenance garantis." %}</p>
+    </div>
+  </div>
+</section>
+<div id="notif-container" class="fixed bottom-5 left-5 z-50 space-y-4">
+  <!-- Notification 1 -->
+  <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm">
+    <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600" onclick="this.parentElement.remove()">×</button>
+    <p class="font-semibold text-blue-900 mb-2 text-sm">Besoin d'un vpn securise ?</p>
+    <a href="https://wa.me/22673122222" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
+  Oui, contactez-nous
+</a>
+
+  </div>
+  <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm">
+    <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600" onclick="this.parentElement.remove()">×</button>
+    <p class="font-semibold text-blue-900 mb-2 text-sm">Besoin de systeme d'alarme ?</p>
+    <a href="https://wa.me/22673122222" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
+  Oui, contactez-nous
+</a>
+
+  </div>
+  <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm">
+    <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600" onclick="this.parentElement.remove()">×</button>
+    <p class="font-semibold text-blue-900 mb-2 text-sm">Besoin de conseil en communication ?</p>
+    <a href="https://wa.me/22673122222" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
+  Oui, contactez-nous
+</a>
+
   </div>
 
-  <div class="bg-blue-50 p-6 rounded-xl shadow hover:shadow-lg transition">
-    <i data-feather="shield" class="text-blue-600 w-10 h-10 mb-4 mx-auto"></i>
-    <h3 class="text-xl font-semibold text-blue-700 mb-2">Sécurité électronique</h3>
-    <p>Vidéosurveillance, alarmes, contrôle d’accès pour sécuriser vos locaux.</p>
+  <!-- Notification 2 -->
+ <div id="notif-container" class="fixed bottom-5 left-5 z-50 space-y-4">
+  <!-- Notification 1 -->
+  <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm">
+    <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600" onclick="this.parentElement.remove()">×</button>
+    <p class="font-semibold text-blue-900 mb-2 text-sm">Besoin de site Web ?</p>
+    <a href="https://wa.me/22673122222" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
+  Oui, contactez-nous
+</a>
+
   </div>
 
-  <div class="bg-blue-50 p-6 rounded-xl shadow hover:shadow-lg transition">
-    <i data-feather="refresh-ccw" class="text-blue-600 w-10 h-10 mb-4 mx-auto"></i>
-    <h3 class="text-xl font-semibold text-blue-700 mb-2">Transformation digitale</h3>
-    <p>Accompagnement stratégique et technique pour moderniser vos processus métiers.</p>
+  <!-- Notification 3 -->
+  <div id="notif-container" class="fixed bottom-5 left-5 z-50 space-y-4">
+  <!-- Notification 1 -->
+  <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm">
+    <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600" onclick="this.parentElement.remove()">×</button>
+    <p class="font-semibold text-blue-900 mb-2 text-sm">Besoin d'installation Reseau ?</p>
+    <a href="https://wa.me/22673122222" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
+  Oui, contactez-nous
+</a>
+
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const notifs = document.querySelectorAll("#notif-container .notif");
+    let delay = 0;
+
+    notifs.forEach((notif) => {
+      setTimeout(() => {
+        notif.classList.remove("hidden");
+
+        // Disparaît 8 secondes après son apparition
+        setTimeout(() => {
+          notif.remove();
+        }, 8000);
+
+      }, delay);
+
+      // Prochaine notification dans 9 secondes
+      delay += 9000;
+    });
+  });
+</script>
+
+
+
 {% endblock %}

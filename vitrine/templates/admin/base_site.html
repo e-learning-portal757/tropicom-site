@@ -1,0 +1,16 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}Administration Tropicom{% endblock %}
+
+{% block branding %}
+  <div id="branding">
+    <img src="{% static 'admin/img/1.png' %}" alt="Tropicom Logo" height="45">
+    <h1 id="site-name"><a href="{% url 'admin:index' %}">Administration Tropicom</a></h1>
+  </div>
+{% endblock %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static 'admin/css/admin.css' %}">
+{% endblock %}

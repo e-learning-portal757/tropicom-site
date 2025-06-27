@@ -1,0 +1,14 @@
+msgid "Nos Services"
+msgstr "Our Services"
+
+msgid "Services"
+msgstr "Services"
+
+msgid "Accueil"
+msgstr "Home"
+
+msgid "Contact"
+msgstr "Contact"
+
+msgid "Votre message a été envoyé avec succès."
+msgstr "Your message has been sent successfully."

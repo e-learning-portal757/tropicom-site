@@ -1,0 +1,225 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-20 11:04+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+#: .\theme\Admin.py:9 .\theme\models.py:9
+msgid "Catégorie de service"
+msgstr ""
+
+#: .\theme\Admin.py:10 .\theme\models.py:10
+msgid "Catégories de services"
+msgstr ""
+
+#: .\theme\Admin.py:17 .\theme\models.py:23
+msgid "Service"
+msgstr ""
+
+#: .\theme\Admin.py:18 .\theme\models.py:24 .\theme\templates\base.html:72
+#: .\theme\templates\base.html:96
+msgid "Services"
+msgstr ""
+
+#: .\theme\Admin.py:26 .\theme\models.py:38
+msgid "Message de contact"
+msgstr ""
+
+#: .\theme\Admin.py:27 .\theme\models.py:39
+msgid "Messages de contact"
+msgstr ""
+
+#: .\theme\Admin.py:33 .\theme\Admin.py:34 .\theme\models.py:53
+#: .\theme\models.py:54
+msgid "Informations du site"
+msgstr ""
+
+#: .\theme\models.py:6
+msgid "Nom de la catégorie"
+msgstr ""
+
+#: .\theme\models.py:17 .\vitrine\models.py:5
+msgid "Titre"
+msgstr ""
+
+#: .\theme\models.py:18 .\vitrine\models.py:7 .\vitrine\models.py:32
+#: .\vitrine\models.py:56
+msgid "Description"
+msgstr ""
+
+#: .\theme\models.py:19 .\vitrine\models.py:6 .\vitrine\models.py:31
+#: .\vitrine\models.py:55 .\vitrine\models.py:59
+msgid "Image"
+msgstr ""
+
+#: .\theme\models.py:20 .\vitrine\models.py:8
+msgid "Catégorie"
+msgstr ""
+
+#: .\theme\models.py:31 .\vitrine\models.py:45
+msgid "Nom"
+msgstr ""
+
+#: .\theme\models.py:32 .\theme\models.py:47 .\vitrine\models.py:38
+#: .\vitrine\models.py:46
+msgid "Email"
+msgstr ""
+
+#: .\theme\models.py:33 .\vitrine\models.py:47
+msgid "Sujet"
+msgstr ""
+
+#: .\theme\models.py:34 .\vitrine\models.py:48
+msgid "Message"
+msgstr ""
+
+#: .\theme\models.py:35
+msgid "Date d'envoi"
+msgstr ""
+
+#: .\theme\models.py:46
+msgid "Nom de l'entreprise"
+msgstr ""
+
+#: .\theme\models.py:48
+msgid "Téléphone"
+msgstr ""
+
+#: .\theme\models.py:49
+msgid "Adresse"
+msgstr ""
+
+#: .\theme\models.py:50 .\theme\templates\base.html:78
+#: .\theme\templates\base.html:98
+msgid "À propos"
+msgstr ""
+
+#: .\theme\templates\base.html:69 .\theme\templates\base.html:95
+msgid "Accueil"
+msgstr ""
+
+#: .\theme\templates\base.html:75 .\theme\templates\base.html:97
+msgid "Aide & Contact"
+msgstr ""
+
+#: .\theme\templates\base.html:81 .\theme\templates\base.html:99
+msgid "Comparatif"
+msgstr ""
+
+#: .\vitrine\admin.py:15 .\vitrine\admin.py:47
+msgid "Aucune image"
+msgstr ""
+
+#: .\vitrine\admin.py:16 .\vitrine\admin.py:48
+msgid "Aperçu"
+msgstr ""
+
+#: .\vitrine\admin.py:51
+msgid "Administration Tropicom"
+msgstr ""
+
+#: .\vitrine\admin.py:52
+msgid "Tropicom Admin"
+msgstr ""
+
+#: .\vitrine\admin.py:53
+msgid "Bienvenue dans le tableau de bord"
+msgstr ""
+
+#: .\vitrine\models.py:10
+msgid "Prestations"
+msgstr ""
+
+#: .\vitrine\models.py:11
+msgid "Sépare chaque prestation par un point-virgule (;)"
+msgstr ""
+
+#: .\vitrine\models.py:12
+msgid "Aucune prestation"
+msgstr ""
+
+#: .\vitrine\models.py:35
+msgid "Image de"
+msgstr ""
+
+#: .\vitrine\models.py:39
+msgid "Date d'inscription"
+msgstr ""
+
+#: .\vitrine\models.py:49
+msgid "Date"
+msgstr ""
+
+#: .\vitrine\templates\vitrine\services.html:18
+msgid "Nos Services"
+msgstr ""
+
+#: .\vitrine\urls.py:9
+msgid "search/"
+msgstr ""
+
+#: .\vitrine\urls.py:10
+msgid "services/"
+msgstr ""
+
+#: .\vitrine\urls.py:11
+msgid "about/"
+msgstr ""
+
+#: .\vitrine\urls.py:12
+msgid "contact/"
+msgstr ""
+
+#: .\vitrine\urls.py:13
+msgid "comparatif/"
+msgstr ""
+
+#: .\vitrine\urls.py:14
+msgid "newsletter/"
+msgstr ""
+
+#: .\vitrine\views.py:74
+msgid "[Contact] "
+msgstr ""
+
+#: .\vitrine\views.py:75
+msgid "Message de "
+msgstr ""
+
+#: .\vitrine\views.py:80
+msgid "Votre message a été envoyé avec succès."
+msgstr ""
+
+#: .\vitrine\views.py:82
+msgid "Erreur lors de l'envoi de l'email : "
+msgstr ""
+
+#: .\vitrine\views.py:84
+msgid "Tous les champs sont requis."
+msgstr ""
+
+#: .\vitrine\views.py:99
+msgid "Merci pour votre inscription à la newsletter."
+msgstr ""
+
+#: .\vitrine\views.py:101
+msgid "Cet email est déjà inscrit."
+msgstr ""
+
+#: .\vitrine\views.py:103
+msgid "Veuillez entrer une adresse email valide."
+msgstr ""

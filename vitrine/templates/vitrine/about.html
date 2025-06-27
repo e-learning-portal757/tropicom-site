@@ -1,30 +1,123 @@
-{% extends 'base.html' %}
-
-{% block title %}À propos de Tropicom{% endblock %}
+{% extends "base.html" %}
+{% load static %}
+{% block title %}À propos - Tropicom{% endblock %}
+{% load i18n %}
 
 {% block content %}
-<section class="text-center">
-  <h2 class="text-4xl font-bold text-blue-700">À propos de nous</h2>
-  <p class="text-gray-700 mt-4 mb-8 max-w-3xl mx-auto">
-    Tropicom est une entreprise spécialisée dans les solutions informatiques, la cybersécurité, la vidéosurveillance, les réseaux et les télécommunications.
-  </p>
 
-  <div class="bg-blue-100 p-6 rounded-lg shadow max-w-4xl mx-auto">
-    <h3 class="text-2xl font-semibold text-blue-800 mb-2">Notre mission</h3>
-    <p>
-      Accompagner les entreprises et particuliers dans leur transformation numérique avec des services fiables et innovants.
+<section class="bg-white py-16">
+  <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+    
+    <!-- Texte avec effet -->
+    <div class="transform transition duration-700 ease-in-out hover:scale-105 animate-fadeInLeft">
+      <h2 class="text-3xl font-bold text-blue-900 mb-4">Qui sommes-nous ?</h2>
+      <p class="text-gray-700 mb-6 leading-relaxed">
+        <h3>Specialisee en informatique et télècoms,<span class="text-blue-700">Tropi</span><span class="text-red-600">com</span> assure le maintien et la productivité 
+          de votre entreprise grace à un systeme informatique fluide et efficacement</h3>
+        <h3>Disposant de techniciens qualifies, nous assuront des solution completes</h3>
+        <h3> Renforces votre competivite avec un prestataire informatique et Telecoms disposant de techniciens qualifiers</h3>
+      </p>
+    </div>
+
+    <!-- Image à droite avec zoom au survol -->
+    <div class="overflow-hidden rounded-lg shadow-lg group">
+      <img src="{% static 'img/55.jpeg' %}" alt="Tropicom" 
+           class="w-full h-auto transform transition duration-700 ease-in-out group-hover:scale-110">
+    </div>
+
+  </div>
+</section>
+<!-- SECTION IMAGE + TEXTE -->
+<section class="bg-white py-20 px-6">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+
+    <!-- Image avec effet zoom -->
+    <div class="overflow-hidden rounded-xl shadow-lg group">
+      <img src="{% static 'img/003.jpeg' %}" alt="Notre mission"
+           class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700 ease-in-out">
+    </div>
+
+    <!-- Texte à droite -->
+    <div>
+      <h2 class="text-3xl sm:text-4xl font-bold text-blue-900 mb-6">{% trans "Notre mission" %}</h2>
+      <p class="text-gray-700 text-lg leading-relaxed mb-4">
+        {% trans "Chez Tropicom, notre mission est d’offrir des solutions informatiques de qualité, adaptées aux besoins de chaque client, en garantissant fiabilité, sécurité et innovation." %}
+      </p>
+      <p class="text-gray-700 text-base">
+        {% trans "Nous accompagnons les entreprises dans leur transformation numérique, en intervenant avec expertise dans la cybersécurité, les réseaux et les services digitaux." %}
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+
+  <!-- Partie bas : localisation + vidéo -->
+  <div class="container mx-auto px-6 mt-16 grid md:grid-cols-2 gap-12">
+    <div>
+      <p class="text-gray-600 mb-4">📍 Quartier Bogodogo, près de la pédiatrie, Ouagadougou</p>
+      <iframe src="https://www.google.com/maps/embed?pb=..." width="100%" height="300" class="rounded-lg shadow" loading="lazy"></iframe>
+    </div>
+    <div>
+      <h3 class="text-xl font-semibold text-blue-800 mb-2">ou nous trouvez</h3>
+      <video controls class="w-full rounded-lg shadow">
+        <source src="{% static 'video/presentation.mp4' %}" type="video/mp4">
+        Votre navigateur ne supporte pas la vidéo.
+      </video>
+    </div>
+  </div>
+
+
+<!-- BANNIÈRE SPÉCIALE AVANT LE FOOTER -->
+<section class="relative h-[60vh] overflow-hidden group">
+  <!-- Image de fond avec zoom au survol -->
+  <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+       style="background-image: url('{% static 'img/07.jpeg' %}');"></div>
+
+  <!-- Overlay sombre pour lisibilité -->
+  <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+
+  <!-- Texte centré -->
+  <div class="relative z-10 h-full flex flex-col justify-center items-center text-white text-center px-4">
+    <h2 class="text-3xl sm:text-5xl font-bold mb-4 drop-shadow-lg">
+      {% trans "Nous intervenons dans 5 domaines clés" %}
+    </h2>
+    <p class="text-lg sm:text-xl max-w-2xl drop-shadow">
+      {% trans "Sécurité électronique, Transformation digitale, Réseaux & Télécoms, Gestion Documentaire et Systèmes Informatiques." %}
     </p>
   </div>
 </section>
 
-<section class="mt-16 text-center">
-  <h2 class="text-3xl font-bold text-blue-900 mb-6">Nos Services</h2>
-  <p class="text-gray-600 max-w-2xl mx-auto mb-8">
-    Tropicom vous propose des solutions informatiques adaptées à vos besoins.
-  </p>
-  <a href="{% url 'vitrine:services' %}" class="btn-contact">
-    Voir les services
-  </a>
+<!-- SECTION CHIFFRES CLÉS -->
+<section class="py-20 bg-gray-100 px-6">
+  <div class="max-w-6xl mx-auto text-center">
+    <h2 class="text-3xl sm:text-4xl font-bold text-blue-900 mb-12">{% trans "Tropicom en quelques chiffres" %}</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+
+      <!-- Carte 1 : Clients satisfaits -->
+      <div class="bg-white rounded-lg shadow-md p-8 transform hover:scale-105 transition duration-500 group">
+        <div class="text-blue-700 text-5xl font-bold mb-2 group-hover:scale-110 transition-transform duration-500">
+          +150
+        </div>
+        <p class="text-gray-700 font-medium">{% trans "Clients satisfaits" %}</p>
+      </div>
+
+      <!-- Carte 2 : Années d'expérience -->
+      <div class="bg-white rounded-lg shadow-md p-8 transform hover:scale-105 transition duration-500">
+        <div class="text-blue-700 text-5xl font-bold mb-2">8</div>
+        <p class="text-gray-700 font-medium">{% trans "ans d’expérience" %}</p>
+      </div>
+
+      <!-- Carte 3 : Pays desservis -->
+      <div class="bg-white rounded-lg shadow-md p-8 transform hover:scale-105 transition duration-500">
+        <div class="text-blue-700 text-5xl font-bold mb-2">5</div>
+        <p class="text-gray-700 font-medium">{% trans "pays de la sous-région" %}</p>
+      </div>
+
+    </div>
+  </div>
 </section>
 
 {% endblock %}
