@@ -53,37 +53,47 @@ def contact(request):
     """
     if request.method == 'POST':
         nom = request.POST.get('nom')
-        email = request.POST.get('email')
+        email_expediteur = request.POST.get('email') # Renommé pour plus de clarté
         sujet = request.POST.get('sujet')
         message = request.POST.get('message')
 
-        if nom and email and sujet and message:
+        if nom and email_expediteur and sujet and message: # Utilisation de email_expediteur
             # Enregistre le message dans l'admin
-            MessageContact.objects.create(
-                nom=nom,
-                email=email,
-                sujet=sujet,
-                message=message
-            )
+            try:
+                MessageContact.objects.create(
+                    nom=nom,
+                    email=email_expediteur, # Utilisation de email_expediteur
+                    sujet=sujet,
+                    message=message
+                )
+                messages.success(request, _("Votre message a été envoyé avec succès."))
+            except Exception as e:
+                messages.error(request, _("Erreur lors de l'enregistrement du message : ") + str(e))
+                print(f"Erreur d'enregistrement du message : {e}")
+                # Si l'enregistrement échoue, on peut choisir de ne pas envoyer l'email non plus
+                return redirect('vitrine:contact') # Redirige ici si l'enregistrement échoue
 
             # Envoi de l'email
             try:
                 send_mail(
                     subject=_("[Contact] ") + f"{sujet} - {nom}",
-                    message=_("Message de ") + f"{nom} ({email}):\n\n{message}",
+                    message=_("Message de ") + f"{nom} ({email_expediteur}):\n\n{message}", # Utilisation de email_expediteur
                     from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[settings.DEFAULT_FROM_EMAIL],
+                    # MODIFICATION ICI : Ciblez les adresses e-mail définies dans settings.ADMINS
+                    recipient_list=[admin_email for name, admin_email in settings.ADMINS], 
                     fail_silently=False,
                 )
-                messages.success(request, _("Votre message a été envoyé avec succès."))
+                # Le message de succès est déjà géré par l'enregistrement ci-dessus
             except Exception as e:
-                messages.error(request, _("Erreur lors de l'envoi de l'email : ") + str(e))
+                messages.error(request, _("Erreur lors de l'envoi de l'email à l'administrateur : ") + str(e))
+                print(f"Erreur d'envoi d'e-mail: {e}")
         else:
             messages.error(request, _("Tous les champs sont requis."))
 
         return redirect('vitrine:contact')
 
     return render(request, 'vitrine/contact.html')
+
 
 def newsletter(request):
     """

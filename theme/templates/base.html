@@ -119,12 +119,29 @@
 <!-- JS -->
 <script>
   window.addEventListener('load', () => {
-    setTimeout(() => {
+    // Calculer le délai minimal basé sur la fin de l'animation du texte
+    // L'animation floatGrow dure 2.5s.
+    const minDisplayTime = 2500; 
+
+    // Temps écoulé depuis le début du chargement de la page
+    const startTime = performance.now();
+
+    // Fonction pour masquer le loader
+    const hideLoader = () => {
       const loader = document.getElementById('page-loader');
       loader.style.opacity = '0';
       loader.style.transition = 'opacity 0.3s ease';
-      setTimeout(() => loader.remove(), 300);
-    }, 3000);
+      setTimeout(() => loader.remove(), 300); // Délai pour la transition d'opacité
+    };
+
+    // Déclencher le masquage soit après le chargement ET le temps minimal
+    const timeElapsed = performance.now() - startTime;
+    if (timeElapsed >= minDisplayTime) {
+        hideLoader(); // Si le chargement a pris plus que le temps minimal, masquer immédiatement
+    } else {
+        // Sinon, masquer après le temps minimal écoulé
+        setTimeout(hideLoader, minDisplayTime - timeElapsed); 
+    }
   });
 </script>
 
