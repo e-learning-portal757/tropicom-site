@@ -137,7 +137,7 @@ EMAIL_USE_TLS = True
 # L'e-mail d'expédition
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'hamzaguissou103@gmail.com') # Assurez-vous que c'est bien l'adresse d'expédition
 # Le mot de passe d'application ou mot de passe de l'e-mail d'expédition
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD'Amsa@5319 '') # TRÈS IMPORTANT : ne pas laisser vide en production
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'Amsa@5319') # TRÈS IMPORTANT : ne pas laisser vide en production
 
 # L'adresse par défaut qui apparaît comme "De" dans les e-mails envoyés par Django
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

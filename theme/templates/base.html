@@ -11,16 +11,18 @@
   <link href="{% static 'css/dist/styles.css' %}" rel="stylesheet">
 
  <!-- LOADER -->
-
 <style>
   #page-loader {
     position: fixed;
     inset: 0;
     background: url("{% static 'img/03.jpeg' %}") center center / cover no-repeat;
     z-index: 9999;
-    display: flex;
+    display: flex; /* Toujours visible par défaut pour le script */
     align-items: center;
     justify-content: center;
+    /* Ajoutez une transition pour l'opacité si le loader est masqué directement par JS */
+    opacity: 1; /* S'assure qu'il est visible au début */
+    transition: opacity 0.3s ease; /* Pour un fondu en douceur s'il est masqué immédiatement */
   }
 
   .loader-overlay {
@@ -45,7 +47,8 @@
     width: 0;
     font-size: 0;
     opacity: 0;
-    animation: floatGrow 2.5s ease-in-out forwards;
+    /* Conserver l'animation ici, elle sera jouée si le loader est visible */
+    animation: floatGrow 2.5s ease-in-out forwards; 
   }
 
   .tropi {
@@ -68,8 +71,8 @@
       transform: translateY(-10px);
     }
     100% {
-      font-size: 10vw; /* Taille relative à la largeur */
-      width: 90vw; /* 50% de la largeur écran */
+      font-size: 10vw;
+      width: 90vw;
       opacity: 5;
       transform: translateY(5);
     }
@@ -104,7 +107,6 @@
 </style>
 
 
-<!-- HTML -->
 <div id="page-loader">
   <div class="loader-overlay"></div>
   <div class="loader-content">
@@ -116,33 +118,42 @@
   </div>
 </div>
 
-<!-- JS -->
 <script>
-  window.addEventListener('load', () => {
-    // Calculer le délai minimal basé sur la fin de l'animation du texte
-    // L'animation floatGrow dure 2.5s.
-    const minDisplayTime = 2500; 
+  // Récupérer le loader
+  const loader = document.getElementById('page-loader');
 
-    // Temps écoulé depuis le début du chargement de la page
-    const startTime = performance.now();
+  // Vérifier si l'utilisateur a déjà visité le site
+  const hasVisitedBefore = localStorage.getItem('hasVisitedTropiCom');
 
-    // Fonction pour masquer le loader
-    const hideLoader = () => {
-      const loader = document.getElementById('page-loader');
-      loader.style.opacity = '0';
-      loader.style.transition = 'opacity 0.3s ease';
-      setTimeout(() => loader.remove(), 300); // Délai pour la transition d'opacité
-    };
+  if (hasVisitedBefore) {
+    // Si l'utilisateur a déjà visité, masquer le loader immédiatement et le supprimer
+    loader.style.opacity = '0';
+    setTimeout(() => loader.remove(), 300); // Court délai pour permettre la transition
+  } else {
+    // Si c'est la première visite, définir le marqueur dans localStorage
+    localStorage.setItem('hasVisitedTropiCom', 'true');
 
-    // Déclencher le masquage soit après le chargement ET le temps minimal
-    const timeElapsed = performance.now() - startTime;
-    if (timeElapsed >= minDisplayTime) {
-        hideLoader(); // Si le chargement a pris plus que le temps minimal, masquer immédiatement
-    } else {
-        // Sinon, masquer après le temps minimal écoulé
-        setTimeout(hideLoader, minDisplayTime - timeElapsed); 
-    }
-  });
+    // Garder le loader visible et laisser les animations se jouer
+    // Puis le masquer après le temps minimal nécessaire pour l'animation du logo
+    window.addEventListener('load', () => {
+      const minDisplayTime = 2500; // L'animation floatGrow dure 2.5s.
+      const startTime = performance.now(); // Temps de démarrage du script (presque au chargement de la page)
+
+      const hideLoader = () => {
+        loader.style.opacity = '0';
+        // setTimeout pour s'assurer que la transition d'opacité se termine
+        setTimeout(() => loader.remove(), 300); 
+      };
+
+      const timeElapsed = performance.now() - startTime;
+      if (timeElapsed >= minDisplayTime) {
+          hideLoader(); // Si le chargement a pris plus que le temps minimal, masquer immédiatement
+      } else {
+          // Sinon, masquer après le temps minimal écoulé
+          setTimeout(hideLoader, minDisplayTime - timeElapsed); 
+      }
+    });
+  }
 </script>
 
 </head>
