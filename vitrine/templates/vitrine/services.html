@@ -45,36 +45,37 @@
 <section class="max-w-7xl mx-auto px-6 py-16">
   <h2 class="text-3xl font-bold text-center text-blue-900 mb-10">{% trans "Nos Services" %}</h2>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
     {% for service in services %}
-    <div class="bg-white shadow-md rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-300">
+    <div class="bg-white shadow-md rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-300 flex flex-col">
       
-      <!-- Image carrée centrée -->
       <div class="w-full h-48 overflow-hidden bg-gray-100 flex items-center justify-center">
         <img src="{{ service.image.url }}" alt="{{ service.titre }}"
              class="object-cover w-full h-full">
       </div>
 
-      <!-- Contenu -->
-      <div class="p-4 text-center">
+      <div class="p-4 text-center flex flex-col flex-grow">
         <h3 class="text-lg font-semibold text-blue-700 mb-2">{{ service.titre }}</h3>
 
         {% if service.get_prestations %}
-        <ul class="text-gray-600 text-sm mb-4 space-y-1">
+        <ul class="text-gray-600 text-sm mb-4 space-y-1 text-left mx-auto">
           {% for ligne in service.get_prestations %}
-          <li>{{ ligne }}</li>
+          <li class="flex items-start">
+            <svg class="h-4 w-4 text-green-500 mr-2 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="font-bold">{{ ligne }}</span> </li>
           {% endfor %}
         </ul>
         {% endif %}
 
-        <p class="text-xs text-green-600 mb-4">📞 {% trans "Support 24h/7" %} | 🚀 {% trans "Intervention rapide" %}</p>
+        <p class="text-xs text-green-600 mb-4 mt-auto">📞 {% trans "Support 24h/7" %} | 🚀 {% trans "Intervention rapide" %}</p>
 
         <a href="contact"
            class="inline-block w-full bg-blue-100 text-blue-800 font-semibold py-2 rounded hover:bg-blue-200 transition mb-2">
           {% trans "Demander un devis" %}
         </a>
 
-        <!-- Bouton Voir plus qui déclenche la modal -->
         <button onclick="openModal('modal-{{ service.id }}')" 
                 class="inline-block w-full bg-gray-100 text-gray-700 font-semibold py-2 rounded hover:bg-gray-200 transition">
           {% trans "Voir plus" %}
@@ -82,65 +83,61 @@
       </div>
     </div>
 
-    <!-- Modal pour ce service -->
     <div id="modal-{{ service.id }}" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
-      <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        <div class="p-6">
-          <div class="flex justify-between items-start mb-4">
-            <h3 class="text-2xl font-bold text-blue-700">{{ service.titre }}</h3>
-            <button onclick="closeModal('modal-{{ service.id }}')" class="text-gray-500 hover:text-gray-700">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
+        <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-2xl font-bold text-blue-700">{{ service.titre }}</h3>
+                    <button onclick="closeModal('modal-{{ service.id }}')" class="text-gray-500 hover:text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
 
-          <!-- Description détaillée -->
-          {% if service.description %}
-          <div class="prose prose-sm max-w-none mb-6">
-            {{ service.description|safe }}
-          </div>
-          {% endif %}
+                {% if service.description %}
+                <div class="prose prose-sm max-w-none mb-6">
+                    {{ service.description|safe }}
+                </div>
+                {% endif %}
 
-          <!-- Galerie d'images des prestations -->
-          {% if service.prestation_images.all %}
-          <h4 class="text-lg font-semibold mb-3 text-blue-600">{% trans "Nos réalisations" %}</h4>
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-            {% for image in service.prestation_images.all %}
-            <div class="bg-gray-100 rounded overflow-hidden">
-              <img src="{{ image.image.url }}" alt="{{ image.caption|default:service.titre }}" 
-                   class="w-full h-40 object-cover">
-              {% if image.caption %}
-              <p class="text-xs p-2 text-gray-600">{{ image.caption }}</p>
-              {% endif %}
+                {% if service.prestation_images.all %}
+                <h4 class="text-lg font-semibold mb-3 text-blue-600">{% trans "Nos réalisations" %}</h4>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                    {% for image in service.prestation_images.all %}
+                    <div class="bg-gray-100 rounded overflow-hidden">
+                        <img src="{{ image.image.url }}" alt="{{ image.caption|default:service.titre }}" 
+                             class="w-full h-40 object-cover">
+                        {% if image.caption %}
+                        <p class="text-xs p-2 text-gray-600">{{ image.caption }}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% if service.get_prestations %}
+                <h4 class="text-lg font-semibold mb-3 text-blue-600">{% trans "Prestations incluses" %}</h4>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
+                    {% for ligne in service.get_prestations %}
+                    <li class="flex items-start">
+                        <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span class="text-gray-700">{{ ligne }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
+                <div class="flex justify-end mt-4">
+                    <a href="contact" 
+                       class="bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 transition">
+                      {% trans "Contactez-nous" %}
+                    </a>
+                </div>
             </div>
-            {% endfor %}
-          </div>
-          {% endif %}
-
-          <!-- Liste des prestations -->
-          {% if service.get_prestations %}
-          <h4 class="text-lg font-semibold mb-3 text-blue-600">{% trans "Prestations incluses" %}</h4>
-          <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
-            {% for ligne in service.get_prestations %}
-            <li class="flex items-start">
-              <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-              </svg>
-              <span class="text-gray-700">{{ ligne }}</span>
-            </li>
-            {% endfor %}
-          </ul>
-          {% endif %}
-
-          <div class="flex justify-end mt-4">
-            <a href="contact" 
-               class="bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 transition">
-              {% trans "Contactez-nous" %}
-            </a>
-          </div>
         </div>
-      </div>
     </div>
     {% endfor %}
   </div>
@@ -165,30 +162,6 @@
     }
   }
 </script>
-<section class="bg-white py-16">
-  <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-    
-    <!-- Texte avec effet -->
-    <div class="transform transition duration-700 ease-in-out hover:scale-105 animate-fadeInLeft">
-      <h2 class="text-3xl font-bold text-blue-900 mb-4">System informatique</h2>
-      <p class="text-lg">Entreprise burkinabè spécialisée en informatique et télécommunications.</p>
-    <ul class="space-y-2 text-base">
-      <li>✔ Protection de données</li>
-      <li>✔ Infogerance</li>
-      <li>✔ Antivirus ESET</li>
-      
-    </ul>
-    <a href="{% url 'vitrine:contact' %}" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
-    </div>
-
-    <!-- Image à droite avec zoom au survol -->
-    <div class="overflow-hidden rounded-lg shadow-lg group">
-      <img src="{% static 'img/10.jpeg' %}" alt="Tropicom" 
-           class="w-full h-auto transform transition duration-700 ease-in-out group-hover:scale-110">
-    </div>
-
-  </div>
-</section>
 <section class="bg-white py-16">
   <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
     
