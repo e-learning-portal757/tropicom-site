@@ -1,6 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [],
+  content: [
+    './templates/**/*.html', // Pour les templates à la racine du projet
+    './**/templates/**/*.html', // Pour les templates dans les sous-dossiers des apps
+    // Ajoutez d'autres chemins si vous avez des fichiers HTML à d'autres endroits
+    // ou si vous utilisez Tailwind dans des fichiers JS (ex: './src/**/*.{js,jsx,ts,tsx}')
+  ],
   presets: [],
   darkMode: 'media', // or 'class'
   theme: {

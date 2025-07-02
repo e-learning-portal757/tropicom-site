@@ -1,533 +1,559 @@
-
 {% load static %}
 {% load i18n %}
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tropicom</title>
-  <script src="https://unpkg.com/feather-icons"></script>
-  <link href="{% static 'css/dist/styles.css' %}" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tropicom</title>
 
- <!-- LOADER -->
-<style>
-  #page-loader {
-    position: fixed;
-    inset: 0;
-    background: url("{% static 'img/03.jpeg' %}") center center / cover no-repeat;
-    z-index: 9999;
-    display: flex; /* Toujours visible par défaut pour le script */
-    align-items: center;
-    justify-content: center;
-    /* Ajoutez une transition pour l'opacité si le loader est masqué directement par JS */
-    opacity: 1; /* S'assure qu'il est visible au début */
-    transition: opacity 0.3s ease; /* Pour un fondu en douceur s'il est masqué immédiatement */
-  }
+    {# Google Fonts - Intégration des polices que vous aimez #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;700;800;900&display=swap" rel="stylesheet">
+    
+    {# Feather Icons #}
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    {# Font Awesome pour les icônes (déplacé dans le head) #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    {# Votre CSS compilé de Tailwind #}
+    <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}">
+    
+    {# Styles du Loader (peut être déplacé dans styles.css si désiré) #}
+    <style>
+        #page-loader {
+            position: fixed;
+            inset: 0;
+            background: url("{% static 'img/03.jpeg' %}") center center / cover no-repeat;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
 
-  .loader-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 1;
-  }
+        .loader-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
 
-  .loader-content {
-    position: relative;
-    z-index: 10;
-    text-align: center;
-  }
+        .loader-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
 
-  .loader-text {
-    font-weight: 900;
-    font-family: 'Segoe UI', sans-serif;
-    display: flex;
-    justify-content: center;
-    gap: 0.3rem;
-    width: 0;
-    font-size: 0;
-    opacity: 0;
-    /* Conserver l'animation ici, elle sera jouée si le loader est visible */
-    animation: floatGrow 2.5s ease-in-out forwards; 
-  }
+        .loader-text {
+            font-weight: 900;
+            /* Utilisez une des polices sans-serif de Google Fonts si vous préférez */
+            font-family: 'Montserrat', sans-serif; 
+            display: flex;
+            justify-content: center;
+            gap: 0.3rem;
+            width: 0; /* Commence à 0 */
+            font-size: 0; /* Commence à 0 */
+            opacity: 0; /* Commence invisible */
+            animation: floatGrow 2.5s ease-in-out forwards; 
+        }
 
-  .tropi {
-    color: #1d4ed8;
-  }
+        .tropi {
+            color: #1d4ed8; /* Blue-700 de Tailwind */
+        }
 
-  .com {
-    color: #dc2626;
-  }
+        .com {
+            color: #dc2626; /* Red-600 de Tailwind */
+        }
 
-  @keyframes floatGrow {
-    0% {
-      transform: translateY(40px);
-      font-size: 0;
-      width: 0;
-      opacity: 0;
-    }
-    50% {
-      opacity: 1;
-      transform: translateY(-10px);
-    }
-    100% {
-      font-size: 10vw;
-      width: 90vw;
-      opacity: 5;
-      transform: translateY(5);
-    }
-  }
+        @keyframes floatGrow {
+            0% {
+                transform: translateY(40px);
+                font-size: 0;
+                width: 0;
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-10px);
+            }
+            100% {
+                font-size: 10vw; /* Ajustez selon la taille finale désirée */
+                width: auto; /* Permet au texte de prendre sa largeur naturelle */
+                opacity: 1; /* Doit être 1 pour être visible */
+                transform: translateY(0); /* Retour à la position normale */
+            }
+        }
 
-  .loader-message {
-    color: #fff;
-    font-size: 1.2rem;
-    margin-top: 1rem;
-    opacity: 0;
-    animation: fadeIn 1s ease 2.5s forwards;
-  }
+        .loader-message {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 2.5s forwards;
+        }
 
-  .spinner {
-    margin-top: 20px;
-    border: 6px solid #e5e7eb;
-    border-top: 6px solid #ffffff;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    opacity: 0;
-    animation: fadeIn 1s ease 3s forwards, spin 1s linear infinite 3s;
-  }
+        .spinner {
+            margin-top: 20px;
+            border: 6px solid #e5e7eb;
+            border-top: 6px solid #ffffff;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            opacity: 0;
+            animation: fadeIn 1s ease 3s forwards, spin 1s linear infinite 3s;
+        }
 
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
 
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-</style>
-
-
-<div id="page-loader">
-  <div class="loader-overlay"></div>
-  <div class="loader-content">
-    <div class="loader-text">
-      <span class="tropi">Tropi</span><span class="com">com</span>
-    </div>
-    <div class="loader-message">Bienvenue chez nous</div>
-    <div class="spinner"></div>
-  </div>
-</div>
-
-<script>
-  // Récupérer le loader
-  const loader = document.getElementById('page-loader');
-
-  // Vérifier si l'utilisateur a déjà visité le site
-  const hasVisitedBefore = localStorage.getItem('hasVisitedTropiCom');
-
-  if (hasVisitedBefore) {
-    // Si l'utilisateur a déjà visité, masquer le loader immédiatement et le supprimer
-    loader.style.opacity = '0';
-    setTimeout(() => loader.remove(), 300); // Court délai pour permettre la transition
-  } else {
-    // Si c'est la première visite, définir le marqueur dans localStorage
-    localStorage.setItem('hasVisitedTropiCom', 'true');
-
-    // Garder le loader visible et laisser les animations se jouer
-    // Puis le masquer après le temps minimal nécessaire pour l'animation du logo
-    window.addEventListener('load', () => {
-      const minDisplayTime = 2500; // L'animation floatGrow dure 2.5s.
-      const startTime = performance.now(); // Temps de démarrage du script (presque au chargement de la page)
-
-      const hideLoader = () => {
-        loader.style.opacity = '0';
-        // setTimeout pour s'assurer que la transition d'opacité se termine
-        setTimeout(() => loader.remove(), 300); 
-      };
-
-      const timeElapsed = performance.now() - startTime;
-      if (timeElapsed >= minDisplayTime) {
-          hideLoader(); // Si le chargement a pris plus que le temps minimal, masquer immédiatement
-      } else {
-          // Sinon, masquer après le temps minimal écoulé
-          setTimeout(hideLoader, minDisplayTime - timeElapsed); 
-      }
-    });
-  }
-</script>
-
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
 </head>
-<!-- Barre langue et switch thème -->
-<div class="flex items-center justify-end space-x-2 pr-4 pt-2">
-  <i data-feather="globe" class="text-blue-700"></i>
-  <form action="{% url 'set_language' %}" method="post">
-  {% csrf_token %}
-  <input name="next" type="hidden" value="{{ request.get_full_path }}">
-  <select name="language" onchange="this.form.submit()">
-    {% get_current_language as LANGUAGE_CODE %}
-    {% get_available_languages as LANGUAGES %}
-    {% get_language_info_list for LANGUAGES as languages %}
-    {% for lang in languages %}
-      <option value="{{ lang.code }}" {% if lang.code == LANGUAGE_CODE %}selected{% endif %}>
-        {{ lang.name_local }}
-      </option>
-    {% endfor %}
-  </select>
-</form>
-  <button id="themeToggle" class="text-sm text-blue-600 dark:text-white border px-3 py-1 rounded">Mode Sombre</button>
+<body class="bg-gray-50 text-gray-900 font-sans"> {# font-sans appliqué ici #}
+
+{# LOADER HTML #}
+<div id="page-loader">
+    <div class="loader-overlay"></div>
+    <div class="loader-content">
+        <div class="loader-text">
+            <span class="tropi">Tropi</span><span class="com">com</span>
+        </div>
+        <div class="loader-message">Bienvenue chez nous</div>
+        <div class="spinner"></div>
+    </div>
 </div>
-
-</div>
-<script src="https://cdn.tailwindcss.com"></script>
-<body class="bg-gray-50 text-gray-900 font-sans">
-
-<!-- Barre de navigation fixe -->
-<header class="fixed top-0 left-0 w-full bg-white text-blue-800 px-6 py-4 flex items-center justify-start gap-10 shadow-md z-50">
-
-  <!-- Logo aligné à gauche -->
-  <a href="{% url 'vitrine:index' %}" class="flex items-center gap-2">
-    <img src="{% static 'img/1.png' %}" alt="Logo Tropicom" class="h-16 w-16 rounded-full object-cover">
-    <span class="sr-only">Tropicom</span>
-  </a>
-
-  <!-- Menu desktop -->
-  <nav id="menu" class="hidden md:flex gap-6 text-lg items-center" aria-label="Menu principal">
-    <a href="{% url 'vitrine:index' %}" class="flex items-center gap-2 hover:text-red-600 transition">
-      <i data-feather="home"></i> {% trans "Accueil" %}
-    </a>
-    <a href="{% url 'vitrine:services' %}" class="flex items-center gap-2 hover:text-red-600 transition">
-      <i data-feather="box"></i> {% trans "Services" %}
-    </a>
-    <a href="{% url 'vitrine:contact' %}" class="flex items-center gap-2 hover:text-red-600 transition">
-      <i data-feather="phone"></i> {% trans "Aide & Contact" %}
-    </a>
-    <a href="{% url 'vitrine:about' %}" class="flex items-center gap-2 hover:text-red-600 transition">
-      <i data-feather="info"></i> {% trans "À propos" %}
-    </a>
-  </nav>
-
-  <!-- Bouton hamburger (mobile uniquement) -->
-  <button id="menu-btn" class="md:hidden focus:outline-none ml-auto" aria-label="Ouvrir le menu">
-    <i data-feather="menu" class="w-6 h-6 text-blue-800"></i>
-  </button>
-</header>
-
-<!-- Font Awesome pour les icônes -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-<!-- Menu mobile (visible uniquement quand actif, caché par défaut) -->
-<div id="mobile-menu" class="hidden md:hidden bg-blue-800 text-white px-6 py-4 space-y-4">
-  <a href="{% url 'vitrine:index' %}" class="block py-2 hover:text-red-600 transition"><i data-feather="home"></i> {% trans "Accueil" %}</a>
-  <a href="{% url 'vitrine:services' %}" class="block py-2 hover:text-red-600 transition"><i data-feather="box"></i> {% trans "Services" %}</a>
-  <a href="{% url 'vitrine:contact' %}" class="block py-2 hover:text-red-600 transition"><i data-feather="phone"></i> {% trans "Aide & Contact" %}</a>
-  <a href="{% url 'vitrine:about' %}" class="block py-2 hover:text-red-600 transition"><i data-feather="info"></i> {% trans "À propos" %}</a>
-
-</div>
-
-
-{% if request.resolver_match.url_name == "index" %}
-        {% block header_special_index %}
-      <header class="relative w-screen h-[70vh] overflow-hidden bg-blue-800 group">
-<button onclick="prevSlide()" class="absolute top-1/2 left-4 transform -translate-y-1/2 z-10 bg-white bg-opacity-60 hover:bg-opacity-90 text-blue-800 rounded-full p-2 shadow-md opacity-100 transition duration-300">
-    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-    </svg>
-  </button>
-
-  <button onclick="nextSlide()" class="absolute top-1/2 right-4 transform -translate-y-1/2 z-10 bg-white bg-opacity-60 hover:bg-opacity-90 text-blue-800 rounded-full p-2 shadow-md opacity-100 transition duration-300">
-    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-    </svg>
-  </button>
-
-  <div id="fullscreen-slider" class="flex transition-transform duration-1000 ease-in-out h-full w-[500vw]">
-   <section class="w-screen h-[70vh] flex flex-col md:flex-row items-center justify-center flex-shrink-0">
-  
-  <!-- Image à gauche -->
-  <div class="w-full md:w-1/2 h-full">
-    <img src="{% static 'img/09.jpeg' %}" alt="Image Tropicom" class="w-full h-full object-cover" />
-  </div>
-
-  <!-- Texte à droite avec écriture blanche -->
-  <div class="w-full md:w-1/2 h-full px-8 flex flex-col justify-center space-y-4 text-white bg-black/90">
-    <h2 class="text-4xl font-bold">
-      <span class="text-blue-700">Tropi</span><span class="text-red-600">com</span>
-    </h2>
-    <p class="text-lg">Entreprise burkinabè spécialisée en informatique et télécommunications.</p>
-    <ul class="space-y-2 text-base">
-      <li>✔ Réseaux & Télécoms</li>
-      <li>✔ Sécurité électronique</li>
-      <li>✔ Transformation digitale</li>
-      <li>✔ Systèmes informatique</li>
-      <li>✔ communication d'Entreprise</li>
-      
-    </ul>
-    <a href="contact" class="inline-block text-white text-sm py-1.5 px-3 rounded hover:underline transition">
-      Contactez-nous </a>
-  
-  </div>
-
-</section>
-
-
-    <!-- Slide 1 -->
-    <section class="w-screen h-[70vh] bg-cover bg-center flex items-center justify-center text-white flex-shrink-0" style="background-image: url('{% static 'img/2341.jpeg' %}');">
-      <div class="bg-black bg-opacity-50 p-8 rounded-xl text-center max-w-3xl">
-       <h2 class="text-4xl font-bold">
-      <span class="text-blue-700">Réseau & Telecoms</span>
-    </h2>
-        <p class="text-lg mb-3">Entreprise burkinabè spécialisée en informatique et télécommunications.</p>
-        <ul class="space-y-2 text-base mb-3">
-          <li>✔ Fourniture d'Accès internet par satellite</li>
-          <li>✔ Interconnexion réseaux d'entreprise (BLR,FH et FO)</li>
-          <li>✔ Réseaux LAN cables et WIFI d'entreprise</li>
-          <li>✔ Telephonie d'entreprise</li>
-          <li>✔ Certification de cablage</li>
-          <li>✔ Audit & conseil</li>
-        </ul>
-        <a href="contact" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
-      </div>
-    </section>
-    
-    <!-- Slide 2 -->
-     <section class="w-screen h-[70vh] flex flex-col md:flex-row items-center justify-center flex-shrink-0">
-  
-  <!-- Image à gauche -->
-  <div class="w-full md:w-1/2 h-full">
-    <img src="{% static 'img/123.jpeg' %}" alt="Image Tropicom" class="w-full h-full object-cover" />
-  </div>
-
-  <!-- Texte à droite avec écriture blanche -->
-  <div class="w-full md:w-1/2 h-full px-8 flex flex-col justify-center space-y-4 text-white bg-black/90">
-    <h2 class="text-4xl font-bold">
-      <span class="text-blue-700">Systèmes & Securite informatique</span>
-    </h2>
-    <p class="text-lg">Entreprise burkinabè spécialisée en informatique et télécommunications.</p>
-    <ul class="space-y-2 text-base">
-      <li>✔ Protection de données</li>
-      <li>✔ Infogerance</li>
-      <li>✔ Antivirus ESET</li>
-    
-      
-    </ul>
-    <a href="contact" class="inline-block text-white text-sm py-1.5 px-3 rounded hover:underline transition">
-      Contactez-nous
-    </a>
-  </div>
-  </section>
-  <section class="w-screen h-[70vh] flex flex-col md:flex-row items-center justify-center flex-shrink-0">
-  
-  <!-- Image à gauche -->
-  <div class="w-full md:w-1/2 h-full">
-    <img src="{% static 'img/1234.jpeg' %}" alt="Image Tropicom" class="w-full h-full object-cover" />
-  </div>
-
-  <!-- Texte à droite avec écriture blanche -->
-  <div class="w-full md:w-1/2 h-full px-8 flex flex-col justify-center space-y-4 text-white bg-black/90">
-    <h2 class="text-4xl font-bold">
-      <h2 class="text-4xl font-bold"><span class="text-blue-700">Securite electronique</span></h2>
-    </h2>
-    <p class="text-lg">Entreprise burkinabè spécialisée en informatique et télécommunications.</p>
-    <ul class="space-y-2 text-base">
-     <li>✔ Videos Surveillance</li>
-          <li>✔ Systeme d'alarme</li>
-          <li>✔ controls d'acces</li>
-          <li>✔ Detection et Securite incendie</li>
-          <li>✔ Systeme Biometrique</li>
-          <li>✔ Tracking Online et gestion de flotte</li>
-          <li>✔ Scelle de Securite electronique</li>
-          <li>✔ Gestion des visiteurs</li>
-        </ul>
-    <a href="contact" class="inline-block text-white text-sm py-1.5 px-3 rounded hover:underline transition">
-      Contactez-nous
-    </a>
-  </div>
-
-</section>
-
-
-    <section class="w-screen h-[70vh] bg-cover bg-center flex items-center justify-center text-white flex-shrink-0" style="background-image: url('{% static 'img/43.jpeg' %}');">
-      <div class="bg-black bg-opacity-50 p-8 rounded-xl text-center max-w-3xl">
-        <h2 class="text-4xl font-bold"><span class="text-blue-700">Transformation Digitale</span></h2>
-        <p class="text-lg mb-3">Protégez votre entreprise avec nos solutions fiables.</p>
-        <ul class="space-y-2 text-base mb-3">
-          <li>✔ Antivirus ESET</li>
-          <li>✔ Firewall</li>
-          <li>✔ Supervision réseau</li>
-          <li>✔ Audit de sécurité</li>
-        </ul>
-        <a href="contact" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
-      </div>
-    </section>
-    <section class="w-screen h-[70vh] bg-cover bg-center flex items-center justify-center text-white flex-shrink-0" style="background-image: url('{% static 'img/53.jpeg' %}');">
-      <div class="bg-black bg-opacity-50 p-8 rounded-xl text-center max-w-3xl">
-       <h2 class="text-4xl font-bold"><span class="text-blue-700">Communication d'entreprise</span></h2> 
-        <p class="text-lg mb-3">Protégez votre entreprise avec nos solutions fiables.</p>
-        <ul class="space-y-2 text-base mb-3">
-          <li>✔ Antivirus ESET</li>
-          <li>✔ Firewall</li>
-          <li>✔ Supervision réseau</li>
-          <li>✔ Audit de sécurité</li>
-        </ul>
-        <a href="contact" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
-      </div>
-   
-    
-  </div>
-  <div id="pagination" class="absolute bottom-4 left-0 w-full flex justify-center gap-2 z-20"></div>
-  
-</header>
 <script>
-  const slider = document.getElementById('fullscreen-slider');
-  const pagination = document.getElementById('pagination');
-  const slides = slider.children;
-  const totalSlides = slides.length;
-  let currentSlide = 0;
-  let isPaused = false;
-  let sliderInterval;
+    const loader = document.getElementById('page-loader');
+    const hasVisitedBefore = localStorage.getItem('hasVisitedTropiCom');
 
-  const dots = [];
-  for (let i = 0; i < totalSlides; i++) {
-    const dot = document.createElement('button');
-    dot.className = 'w-3 h-3 rounded-full bg-white/50 hover:bg-white transition';
-    dot.addEventListener('click', () => goToSlide(i));
-    pagination.appendChild(dot);
-    dots.push(dot);
-  }
+    // Assurez-vous que le loader existe. Si non, il y a un problème DOM/HTML.
+    if (!loader) {
+        console.error("L'élément #page-loader n'a pas été trouvé dans le DOM.");
+    }
 
-  function updatePagination() {
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('bg-white', i === currentSlide);
-      dot.classList.toggle('bg-white/50', i !== currentSlide);
-    });
-  }
+    if (hasVisitedBefore) {
+        // Ajouter une très courte temporisation pour s'assurer que l'état initial est rendu,
+        // surtout si le JS est exécuté avant même le premier rendu du navigateur.
+        setTimeout(() => {
+            if (loader) { // Vérification supplémentaire au cas où
+                loader.style.opacity = '0';
+                setTimeout(() => loader.remove(), 300);
+            }
+        }, 50); // 50ms de délai avant de masquer
+    } else {
+        localStorage.setItem('hasVisitedTropiCom', 'true');
+        window.addEventListener('load', () => {
+            const minDisplayTime = 60000; // 30 secondes
+            const startTime = performance.now(); 
 
-  function showSlide(index) {
-    slider.style.transform = `translateX(-${index * 100}vw)`;
-    updatePagination();
-  }
+            const hideLoader = () => {
+                if (loader) { // Vérification supplémentaire
+                    loader.style.opacity = '0';
+                    setTimeout(() => loader.remove(), 300); 
+                }
+            };
 
-  function nextSlide() {
-    currentSlide = (currentSlide + 1) % totalSlides;
-    showSlide(currentSlide);
-  }
-
-  function prevSlide() {
-    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-    showSlide(currentSlide);
-  }
-
-  function goToSlide(index) {
-    currentSlide = index;
-    showSlide(currentSlide);
-  }
-
-  function startSlider() {
-    sliderInterval = setInterval(() => {
-      if (!isPaused) nextSlide();
-    }, 6000);
-  }
-
-  // ⏸ Pause sur hover
-  slider.addEventListener('mouseenter', () => {
-    isPaused = true;
-  });
-
-  slider.addEventListener('mouseleave', () => {
-    isPaused = false;
-  });
-
-  updatePagination();
-  startSlider();
+            const timeElapsed = performance.now() - startTime;
+            if (timeElapsed >= minDisplayTime) {
+                hideLoader();
+            } else {
+                setTimeout(hideLoader, minDisplayTime - timeElapsed); 
+            }
+        });
+    }
 </script>
 
+{# Barre langue et switch thème (déplacé dans le body, avant le header principal) #}
+<div class="flex items-center justify-end space-x-2 pr-4 pt-2">
+    <i data-feather="globe" class="text-blue-700"></i>
+    <form action="{% url 'set_language' %}" method="post">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ request.get_full_path }}">
+        <select name="language" onchange="this.form.submit()">
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {% for lang in languages %}
+                <option value="{{ lang.code }}" {% if lang.code == LANGUAGE_CODE %}selected{% endif %}>
+                    {{ lang.name_local }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+    <button id="themeToggle" class="text-sm text-blue-600 dark:text-white border px-3 py-1 rounded">Mode Sombre</button>
+</div>
 
-{% endblock %}
-{% elif request.resolver_match.url_name == "about" %}
-  {% block header_about %}
-   <header class="relative h-[60vh] bg-cover bg-center flex items-center justify-center overflow-hidden group" style="background-image: url('{% static 'img/15.webp' %}');">
-  <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-
-  <!-- Image zoom effect -->
-  <div class="absolute inset-0 scale-100 group-hover:scale-105 transition-transform duration-500 ease-in-out" style="background-image: url('{% static 'img/15.webp' %}'); background-size: cover; background-position: center; z-index: 0;"></div>
-
-  <div class="relative z-10 text-center text-white px-4 max-w-3xl opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition duration-700 ease-out">
-    <h1 class="text-3xl md:text-4xl font-extrabold mb-4">Information d'entreprise</h1>
-    <p class="text-lg md:text-xl font-medium mb-6">
-      <span class="text-blue-700">Tropi</span><span class="text-red-600">com</span>, est une entreprise burkinabè 
-        Specialisee en informatique et Telecommunications des entreprises. Nous répondons aux besoins informatique et Télécoms
-        des entreprise et autres structures,qui recherchent une expertise innovante pour une approche proffessionnelle
-         de leur systeme d'information et la communication
-    </p>
-    <p>Notre experience du terrain nous paermet d'apprehender
-         l'ensemble de vos problematiques, qu'elles soient cpmmerciales ou technique
-      
-    </p>
-    <a href="contact" class="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-800 text-white font-semibold rounded-full transition duration-300">
-      Contactez-nous
+{# Barre de navigation fixe #}
+<header class="fixed top-0 left-0 w-full bg-white text-blue-800 px-6 py-4 flex items-center justify-start gap-10 shadow-md z-50">
+    {# Logo aligné à gauche #}
+    <a href="{% url 'vitrine:index' %}" class="flex items-center gap-2">
+        <img src="{% static 'img/1.png' %}" alt="Logo Tropicom" class="h-16 w-16 rounded-full object-cover">
+        <span class="sr-only">Tropicom</span>
     </a>
-  </div>
+
+    {# Menu desktop #}
+    <nav id="menu" class="hidden md:flex gap-6 text-lg items-center" aria-label="Menu principal">
+        <a href="{% url 'vitrine:index' %}" class="flex items-center gap-2 hover:text-red-600 transition">
+            <i data-feather="home"></i> {% trans "Accueil" %}
+        </a>
+        <a href="{% url 'vitrine:services' %}" class="flex items-center gap-2 hover:text-red-600 transition">
+            <i data-feather="box"></i> {% trans "Services" %}
+        </a>
+        <a href="{% url 'vitrine:contact' %}" class="flex items-center gap-2 hover:text-red-600 transition">
+            <i data-feather="phone"></i> {% trans "Aide & Contact" %}
+        </a>
+        <a href="{% url 'vitrine:about' %}" class="flex items-center gap-2 hover:text-red-600 transition">
+            <i data-feather="info"></i> {% trans "À propos" %}
+        </a>
+    </nav>
+
+    {# Bouton hamburger (mobile uniquement) #}
+    <button id="menu-btn" class="md:hidden focus:outline-none ml-auto" aria-label="Ouvrir le menu" aria-expanded="false">
+        <i data-feather="menu" class="w-6 h-6 text-blue-800"></i>
+    </button>
 </header>
 
-  {% endblock %}
+{# Menu mobile (visible uniquement quand actif, caché par défaut) #}
+{# Ajusté les couleurs pour être en harmonie avec le menu desktop si désiré #}
+<div id="mobile-menu" class="hidden md:hidden bg-white text-blue-800 px-6 py-4 space-y-4 shadow-md mt-20 fixed w-full z-40">
+    <a href="{% url 'vitrine:index' %}" class="block py-2 hover:text-red-600 transition"><i data-feather="home"></i> {% trans "Accueil" %}</a>
+    <a href="{% url 'vitrine:services' %}" class="block py-2 hover:text-red-600 transition"><i data-feather="box"></i> {% trans "Services" %}</a>
+    <a href="{% url 'vitrine:contact' %}" class="block py-2 hover:text-red-600 transition"><i data-feather="phone"></i> {% trans "Aide & Contact" %}</a>
+    <a href="{% url 'vitrine:about' %}" class="block py-2 hover:text-red-600 transition"><i data-feather="info"></i> {% trans "À propos" %}</a>
+</div>
+
+
+{# Condition pour le header spécial de l'index #}
+{% if request.resolver_match.url_name == "index" %}
+    {% block header_special_index %}
+    <header class="relative w-screen h-[70vh] overflow-hidden bg-blue-800 group mt-20"> {# Ajout de mt-20 pour décaler en dessous de la navbar fixe #}
+        {# Boutons de navigation du slider #}
+        <button onclick="prevSlide()" class="absolute top-1/2 left-4 transform -translate-y-1/2 z-10 bg-white bg-opacity-60 hover:bg-opacity-90 text-blue-800 rounded-full p-2 shadow-md transition duration-300">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+        </button>
+        <button onclick="nextSlide()" class="absolute top-1/2 right-4 transform -translate-y-1/2 z-10 bg-white bg-opacity-60 hover:bg-opacity-90 text-blue-800 rounded-full p-2 shadow-md transition duration-300">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+
+        {# Conteneur du slider - ajustez w-[Xvw] dynamiquement si possible, sinon attention aux slides supplémentaires #}
+        {# Pour l'instant, la largeur est basée sur 5 slides de 100vw chacune #}
+        <div id="fullscreen-slider" class="flex transition-transform duration-1000 ease-in-out h-full w-[500vw]">
+            {# Slide 0 (votre première section avec image à gauche) #}
+            <section class="w-screen h-[70vh] flex flex-col md:flex-row items-center justify-center flex-shrink-0">
+                <div class="w-full md:w-1/2 h-full">
+                    <img src="{% static 'img/09.jpeg' %}" alt="Image Tropicom" class="w-full h-full object-cover" />
+                </div>
+                <div class="w-full md:w-1/2 h-full px-8 flex flex-col justify-center space-y-4 text-white bg-black/90">
+                    <h2 class="text-4xl font-bold">
+                        <span class="text-blue-700">Tropi</span><span class="text-red-600">com</span>
+                    </h2>
+                    <p class="text-lg">Entreprise burkinabè spécialisée en informatique et télécommunications.</p>
+                    <ul class="space-y-2 text-base">
+                        <li>✔ Réseaux & Télécoms</li>
+                        <li>✔ Sécurité électronique</li>
+                        <li>✔ Transformation digitale</li>
+                        <li>✔ Systèmes informatique</li>
+                        <li>✔ Communication d'Entreprise</li>
+                    </ul>
+                    <a href="{% url 'vitrine:contact' %}" class="inline-block text-white text-sm py-1.5 px-3 rounded hover:underline transition">
+                        Contactez-nous 
+                    </a>
+                </div>
+            </section>
+
+            {# Slide 1 #}
+            <section class="w-screen h-[70vh] bg-cover bg-center flex items-center justify-center text-white flex-shrink-0" style="background-image: url('{% static 'img/2341.jpeg' %}');">
+                <div class="bg-black bg-opacity-50 p-8 rounded-xl text-center max-w-3xl">
+                    <h2 class="text-4xl font-bold">
+                        <span class="text-blue-700">Réseau & Telecoms</span>
+                    </h2>
+                    <p class="text-lg mb-3">Tropicom offre des solutions complètes pour vos infrastructures réseau.</p>
+                    <ul class="space-y-2 text-base mb-3">
+                        <li>✔ Fourniture d'Accès internet par satellite</li>
+                        <li>✔ Interconnexion réseaux d'entreprise (BLR, FH et FO)</li>
+                        <li>✔ Réseaux LAN câblés et WIFI d'entreprise</li>
+                        <li>✔ Téléphonie d'entreprise</li>
+                        <li>✔ Certification de câblage</li>
+                        <li>✔ Audit & conseil</li>
+                    </ul>
+                    <a href="{% url 'vitrine:contact' %}" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
+                </div>
+            </section>
+            
+            {# Slide 2 #}
+            <section class="w-screen h-[70vh] flex flex-col md:flex-row items-center justify-center flex-shrink-0">
+                <div class="w-full md:w-1/2 h-full">
+                    <img src="{% static 'img/123.jpeg' %}" alt="Systèmes & Sécurité informatique" class="w-full h-full object-cover" />
+                </div>
+                <div class="w-full md:w-1/2 h-full px-8 flex flex-col justify-center space-y-4 text-white bg-black/90">
+                    <h2 class="text-4xl font-bold">
+                        <span class="text-blue-700">Systèmes & Sécurité informatique</span>
+                    </h2>
+                    <p class="text-lg">Protégez et optimisez votre environnement informatique.</p>
+                    <ul class="space-y-2 text-base">
+                        <li>✔ Protection de données</li>
+                        <li>✔ Infogérance</li>
+                        <li>✔ Antivirus ESET</li>
+                    </ul>
+                    <a href="{% url 'vitrine:contact' %}" class="inline-block text-white text-sm py-1.5 px-3 rounded hover:underline transition">
+                        Contactez-nous
+                    </a>
+                </div>
+            </section>
+
+            {# Slide 3 #}
+            <section class="w-screen h-[70vh] flex flex-col md:flex-row items-center justify-center flex-shrink-0">
+                <div class="w-full md:w-1/2 h-full">
+                    <img src="{% static 'img/1234.jpeg' %}" alt="Sécurité électronique" class="w-full h-full object-cover" />
+                </div>
+                <div class="w-full md:w-1/2 h-full px-8 flex flex-col justify-center space-y-4 text-white bg-black/90">
+                    <h2 class="text-4xl font-bold"><span class="text-blue-700">Sécurité électronique</span></h2>
+                    <p class="text-lg">Nos solutions de sécurité pour protéger vos biens et vos locaux.</p>
+                    <ul class="space-y-2 text-base">
+                        <li>✔ Vidéosurveillance</li>
+                        <li>✔ Systèmes d'alarme</li>
+                        <li>✔ Contrôles d'accès</li>
+                        <li>✔ Détection et Sécurité incendie</li>
+                        <li>✔ Systèmes Biométriques</li>
+                        <li>✔ Tracking Online et gestion de flotte</li>
+                        <li>✔ Scellés de Sécurité électronique</li>
+                        <li>✔ Gestion des visiteurs</li>
+                    </ul>
+                    <a href="{% url 'vitrine:contact' %}" class="inline-block text-white text-sm py-1.5 px-3 rounded hover:underline transition">
+                        Contactez-nous
+                    </a>
+                </div>
+            </section>
+
+            {# Slide 4 (Transformation Digitale) #}
+            <section class="w-screen h-[70vh] bg-cover bg-center flex items-center justify-center text-white flex-shrink-0" style="background-image: url('{% static 'img/43.jpeg' %}');">
+                <div class="bg-black bg-opacity-50 p-8 rounded-xl text-center max-w-3xl">
+                    <h2 class="text-4xl font-bold"><span class="text-blue-700">Transformation Digitale</span></h2>
+                    <p class="text-lg mb-3">Accélérez votre transition numérique avec nos experts.</p>
+                    <ul class="space-y-2 text-base mb-3">
+                        <li>✔ Digitalisation des processus métiers</li>
+                        <li>✔ Création de sites web et e-commerce</li>
+                        <li>✔ Développement d'applications sur mesure</li>
+                        <li>✔ Solutions collaboratives et cloud</li>
+                    </ul>
+                    <a href="{% url 'vitrine:contact' %}" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
+                </div>
+            </section>
+
+            {# Slide 5 (Communication d'entreprise) #}
+            <section class="w-screen h-[70vh] bg-cover bg-center flex items-center justify-center text-white flex-shrink-0" style="background-image: url('{% static 'img/53.jpeg' %}');">
+                <div class="bg-black bg-opacity-50 p-8 rounded-xl text-center max-w-3xl">
+                    <h2 class="text-4xl font-bold"><span class="text-blue-700">Communication d'entreprise</span></h2> 
+                    <p class="text-lg mb-3">Améliorez votre communication interne et externe.</p>
+                    <ul class="space-y-2 text-base mb-3">
+                        <li>✔ Solutions de téléphonie IP</li>
+                        <li>✔ Messagerie unifiée</li>
+                        <li>✔ Outils collaboratifs</li>
+                        <li>✔ Supports de communication numérique</li>
+                    </ul>
+                    <a href="{% url 'vitrine:contact' %}" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
+                </div>
+            </section>
+        </div>
+        <div id="pagination" class="absolute bottom-4 left-0 w-full flex justify-center gap-2 z-20"></div>
+    </header>
+    <script>
+        const slider = document.getElementById('fullscreen-slider');
+        const pagination = document.getElementById('pagination');
+        const slides = slider.children;
+        const totalSlides = slides.length; // Assurez-vous que cette valeur est correcte (nombre de <section> dans le slider)
+        let currentSlide = 0;
+        let isPaused = false;
+        let sliderInterval;
+
+        const dots = [];
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('button');
+            dot.className = 'w-3 h-3 rounded-full bg-white/50 hover:bg-white transition';
+            dot.addEventListener('click', () => goToSlide(i));
+            pagination.appendChild(dot);
+            dots.push(dot);
+        }
+
+        function updatePagination() {
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('bg-white', i === currentSlide);
+                dot.classList.toggle('bg-white/50', i !== currentSlide);
+            });
+        }
+
+        function showSlide(index) {
+            slider.style.transform = `translateX(-${index * 100}vw)`;
+            updatePagination();
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            showSlide(currentSlide);
+        }
+
+        function startSlider() {
+            sliderInterval = setInterval(() => {
+                if (!isPaused) nextSlide();
+            }, 6000);
+        }
+
+        slider.addEventListener('mouseenter', () => {
+            isPaused = true;
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            isPaused = false;
+        });
+
+        updatePagination();
+        startSlider();
+    </script>
+    {% endblock %}
+
+{% elif request.resolver_match.url_name == "about" %}
+    {% block header_about %}
+    <header class="relative h-[60vh] bg-cover bg-center flex items-center justify-center overflow-hidden group mt-20"> {# Ajout de mt-20 #}
+        <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+        <div class="absolute inset-0 scale-100 group-hover:scale-105 transition-transform duration-500 ease-in-out" style="background-image: url('{% static 'img/15.webp' %}'); background-size: cover; background-position: center; z-index: 0;"></div>
+        <div class="relative z-10 text-center text-white px-4 max-w-3xl opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition duration-700 ease-out">
+            <h1 class="text-3xl md:text-4xl font-extrabold mb-4 font-heading">Information d'entreprise</h1> {# font-heading appliqué #}
+            <p class="text-lg md:text-xl font-medium mb-6">
+                <span class="text-blue-700">Tropi</span><span class="text-red-600">com</span>, est une entreprise burkinabè 
+                spécialisée en informatique et Télécommunications des entreprises. Nous répondons aux besoins informatiques et Télécoms
+                des entreprises et autres structures, qui recherchent une expertise innovante pour une approche professionnelle
+                de leur système d'information et de la communication.
+            </p>
+            <p>Notre expérience du terrain nous permet d'appréhender
+                l'ensemble de vos problématiques, qu'elles soient commerciales ou techniques.
+            </p>
+            <a href="{% url 'vitrine:contact' %}" class="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-800 text-white font-semibold rounded-full transition duration-300">
+                Contactez-nous
+            </a>
+        </div>
+    </header>
+    {% endblock %}
+{% else %}
+    {# Header par défaut pour les autres pages si nécessaire, sinon le content viendra après la nav #}
+    <div class="pt-20"></div> {# Espace pour la barre de navigation fixe sur les autres pages #}
 {% endif %}
 
+
 <main class="p-6 max-w-7xl mx-auto">
-  {% block content %}
-  <!-- Contenu principal des pages -->
-  {% endblock %}
+    {% block content %}
+    {% endblock %}
 </main>
+
 <footer class="bg-gray-900 text-white px-6 py-10">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-    
-    <!-- Section: Adresse -->
-    <div>
-      <h3 class="text-lg font-semibold mb-4">Adresse</h3>
-      <p class="text-sm">Karpala,cote est du chu BOGODOGO<br>Ouagadougou, Burkina Faso</p>
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {# Section: Adresse #}
+        <div>
+            <h3 class="text-lg font-semibold mb-4">Adresse</h3>
+            <p class="text-sm">Karpala, côté est du CHU BOGODOGO<br>Ouagadougou, Burkina Faso</p>
+        </div>
+
+        {# Section: Liens rapides #}
+        <div>
+            <h3 class="text-lg font-semibold mb-4">Liens rapides</h3>
+            <ul class="space-y-2 text-sm">
+                <li><a href="{% url 'vitrine:index' %}" class="hover:text-blue-400 transition">Accueil</a></li>
+                <li><a href="{% url 'vitrine:services' %}" class="hover:text-blue-400 transition">Nos Services</a></li>
+                <li><a href="{% url 'vitrine:about' %}" class="hover:text-blue-400 transition">À propos</a></li>
+                <li><a href="{% url 'vitrine:contact' %}" class="hover:text-blue-400 transition">Contact</a></li>
+            </ul>
+        </div>
+
+        {# Section: Réseaux sociaux #}
+        <div>
+            <h3 class="text-lg font-semibold mb-4">Suivez-nous</h3>
+            <div class="flex flex-wrap gap-4 text-2xl">
+                <a href="https://www.facebook.com/tropicom.tech" class="text-blue-500 hover:text-white" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-pink-500 hover:text-white" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/company/tropicom---burkina-faso?originalSubdomain=bf" class="text-blue-300 hover:text-white" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="text-black hover:text-white" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="https://wa.me/22673122222" class="text-green-500 hover:text-white" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
     </div>
 
-    <!-- Section: Liens rapides -->
-    <div>
-      <h3 class="text-lg font-semibold mb-4">Liens rapides</h3>
-      <ul class="space-y-2 text-sm">
-        <li><a href="#" class="hover:text-blue-400 transition">Accueil</a></li>
-        <li><a href="#" class="hover:text-blue-400 transition">Nos Services</a></li>
-        <li><a href="#" class="hover:text-blue-400 transition">À propos</a></li>
-        <li><a href="#" class="hover:text-blue-400 transition">Contact</a></li>
-      </ul>
+    {# Bas de page #}
+    <div class="mt-10 border-t border-gray-700 pt-4 text-center text-sm text-gray-400">
+        &copy; 2024 Tropicom. Tous droits réservés.
     </div>
-
-    <!-- Section: Réseaux sociaux -->
-    <div>
-      <h3 class="text-lg font-semibold mb-4">Suivez-nous</h3>
-      <div class="flex flex-wrap gap-4 text-2xl">
-        <a href="https://www.facebook.com/tropicom.tech" class="text-blue-500 hover:text-white" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="text-pink-500 hover:text-white" title="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.linkedin.com/company/tropicom---burkina-faso?originalSubdomain=bf" class="text-blue-300 hover:text-white" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-        <a href="#" class="text-black hover:text-white" title="TikTok"><i class="fab fa-tiktok"></i></a>
-        <a href="https://wa.me/22673122222" class="text-green-500 hover:text-white" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Bas de page -->
-  <div class="mt-10 border-t border-gray-700 pt-4 text-center text-sm text-gray-400">
-    &copy; 2024 Tropicom. Tous droits réservés.
-  </div>
 </footer>
 
 
-  <!-- JS -->
-  <script>
-    feather.replace();
-    const btn = document.getElementById('menu-btn');
-    const menu = document.getElementById('mobile-menu');
-    btn.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
-    });
-  </script>
 
-  {% block extra_js %}{% endblock %}
+{# JS Général #}
+<script>
+    feather.replace(); // Initialise Feather Icons
+
+    // Gestion du menu mobile
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+        const isHidden = mobileMenu.classList.toggle('hidden');
+        menuBtn.setAttribute('aria-expanded', !isHidden); // Mettre à jour l'attribut ARIA
+    });
+
+    // Gestion du thème sombre (Dark Mode)
+    const themeToggle = document.getElementById('themeToggle');
+
+    // Fonction pour appliquer le thème
+    function applyTheme(theme) {
+        if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+            themeToggle.textContent = 'Mode Clair';
+        } else {
+            document.documentElement.classList.remove('dark');
+            themeToggle.textContent = 'Mode Sombre';
+        }
+    }
+
+    // Charger le thème depuis localStorage ou déterminer par préférence système
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        applyTheme(savedTheme);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // Détecter la préférence système si aucun thème n'est sauvegardé
+        applyTheme('dark');
+    } else {
+        applyTheme('light'); // Thème par défaut
+    }
+
+    // Basculer le thème au clic
+    themeToggle.addEventListener('click', () => {
+        if (document.documentElement.classList.contains('dark')) {
+            applyTheme('light');
+            localStorage.setItem('theme', 'light');
+        } else {
+            applyTheme('dark');
+            localStorage.setItem('theme', 'dark');
+        }
+    });
+</script>
+
+{% block extra_js %}{% endblock %}
 </body>
 </html>
