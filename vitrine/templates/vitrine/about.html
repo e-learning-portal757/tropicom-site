@@ -50,24 +50,6 @@
 
   </div>
 </section>
-
-
-
-  <div class="relative bg-blue-50 py-16 px-6 sm:px-12 lg:px-24"> <div class="container mx-auto flex flex-col md:flex-row items-center justify-between md:space-x-12">
-        <div class="w-full md:w-1/2 text-center md:text-left mb-8 md:mb-0">
-            <h3 class="text-3xl md:text-4xl font-extrabold text-blue-900 mb-4">Où nous trouver</h3>
-            <p class="text-lg text-gray-700 mb-6">📍 Quartier Bogodogo, près de la pédiatrie, Ouagadougou</p>
-            <p class="text-md text-gray-600">
-                N'hésitez pas à nous rendre visite ! Notre emplacement est idéalement situé pour vous accueillir.
-                Nous sommes là pour vous guider.
-            </p>
-        </div>
-
-        <div class="w-full md:w-1/2 flex justify-center"> <iframe src="https://www.google.com/maps/embed?pb=..." width="100%" height="400" class="rounded-lg shadow-xl border-4 border-blue-200" loading="lazy"></iframe>
-        </div>
-    </div>
-</div>
-
 <!-- BANNIÈRE SPÉCIALE AVANT LE FOOTER -->
 <section class="relative h-[60vh] overflow-hidden group">
   <!-- Image de fond avec zoom au survol -->
@@ -89,34 +71,90 @@
 </section>
 
 <!-- SECTION CHIFFRES CLÉS -->
-<section class="py-20 bg-gray-100 px-6">
+<section class="py-20 bg-gray-100 px-6" id="chiffres-section"> {# Ajout d'un ID pour cibler la section en JS #}
   <div class="max-w-6xl mx-auto text-center">
     <h2 class="text-3xl sm:text-4xl font-bold text-blue-900 mb-12">{% trans "Tropicom en quelques chiffres" %}</h2>
 
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
 
-      <!-- Carte 1 : Clients satisfaits -->
       <div class="bg-white rounded-lg shadow-md p-8 transform hover:scale-105 transition duration-500 group">
-        <div class="text-blue-700 text-5xl font-bold mb-2 group-hover:scale-110 transition-transform duration-500">
-          +150
+        <div class="text-blue-700 text-5xl font-bold mb-2 group-hover:scale-110 transition-transform duration-500 animated-number" data-target="150" data-duration="2000" data-prefix="+">
+          0 {# Valeur initiale pour l'animation #}
         </div>
         <p class="text-gray-700 font-medium">{% trans "Clients satisfaits" %}</p>
       </div>
 
-      <!-- Carte 2 : Années d'expérience -->
       <div class="bg-white rounded-lg shadow-md p-8 transform hover:scale-105 transition duration-500">
-        <div class="text-blue-700 text-5xl font-bold mb-2">8</div>
+        <div class="text-blue-700 text-5xl font-bold mb-2 animated-number" data-target="8" data-duration="1500">
+          0 {# Valeur initiale pour l'animation #}
+        </div>
         <p class="text-gray-700 font-medium">{% trans "ans d’expérience" %}</p>
       </div>
 
-      <!-- Carte 3 : Pays desservis -->
       <div class="bg-white rounded-lg shadow-md p-8 transform hover:scale-105 transition duration-500">
-        <div class="text-blue-700 text-5xl font-bold mb-2">5</div>
+        <div class="text-blue-700 text-5xl font-bold mb-2 animated-number" data-target="5" data-duration="1500">
+          0 {# Valeur initiale pour l'animation #}
+        </div>
         <p class="text-gray-700 font-medium">{% trans "pays de la sous-région" %}</p>
       </div>
 
     </div>
   </div>
 </section>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const chiffresSection = document.getElementById('chiffres-section');
+    const animatedNumbers = document.querySelectorAll('.animated-number');
+    let hasAnimated = false; // Pour s'assurer que l'animation ne se déclenche qu'une seule fois
+
+    const animateNumber = (element) => {
+        const target = parseInt(element.dataset.target);
+        const duration = parseInt(element.dataset.duration);
+        const prefix = element.dataset.prefix || ''; // Pour gérer le '+'
+        const start = 0;
+        let startTime = null;
+
+        const step = (timestamp) => {
+            if (!startTime) startTime = timestamp;
+            const progress = timestamp - startTime;
+            const percentage = Math.min(progress / duration, 1);
+            const value = Math.floor(percentage * (target - start) + start);
+
+            element.textContent = prefix + value;
+
+            if (percentage < 1) {
+                requestAnimationFrame(step);
+            } else {
+                element.textContent = prefix + target; // S'assurer de la valeur finale exacte
+            }
+        };
+
+        requestAnimationFrame(step);
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !hasAnimated) {
+                animatedNumbers.forEach(num => animateNumber(num));
+                hasAnimated = true;
+                observer.unobserve(entry.target); // Arrêter d'observer une fois l'animation déclenchée
+            }
+        });
+    }, {
+        threshold: 0.5 // Déclenche quand 50% de la section est visible
+    });
+
+    if (chiffresSection) {
+        observer.observe(chiffresSection);
+    }
+});
+</script>
+
+  <div class="mt-10">
+  <iframe 
+    src="https://www.google.com/maps?q=Karpala,+Ouagadougou,+Burkina+Faso&output=embed"
+    width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy">
+  </iframe>
+</div>
 
 {% endblock %}
