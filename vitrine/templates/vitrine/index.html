@@ -2,430 +2,520 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}{% trans "Accueil - Tropicom" %}{% endblock %}
+{% block title %}{% trans "Accueil - Tropicom : Solutions Numériques et Télécoms pour Entreprises" %}{% endblock %}
 
 {% block content %}
 
-<!-- SECTION SERVICES -->
-<section class="max-w-7xl mx-auto px-6 py-16">
-  <h2 class="text-3xl font-bold text-center text-blue-900 mb-10">{% trans "Nos Domaines d'Intervations" %}</h2>
-
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
-    {% for service in services %}
-    <div class="bg-white shadow-md rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-300 flex flex-col">
-      
-      <div class="w-full h-48 overflow-hidden bg-gray-100 flex items-center justify-center">
-        <img src="{{ service.image.url }}" alt="{{ service.titre }}"
-             class="object-cover w-full h-full">
-      </div>
-
-      <div class="p-4 text-center flex flex-col flex-grow">
-        <h3 class="text-lg font-semibold text-blue-700 mb-2">{{ service.titre }}</h3>
-
-        {% if service.get_prestations %}
-        <ul class="text-gray-600 text-sm mb-4 space-y-1 text-left mx-auto">
-          {% for ligne in service.get_prestations %}
-          <li class="flex items-start">
-            <svg class="h-4 w-4 text-green-500 mr-2 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span class="font-bold">{{ ligne }}</span> </li>
-          {% endfor %}
-        </ul>
-        {% endif %}
-
-        <p class="text-xs text-green-600 mb-4 mt-auto">📞 {% trans "Support 24h/7" %} | 🚀 {% trans "Intervention rapide" %}</p>
-
-        <a href="contact"
-           class="inline-block w-full bg-blue-100 text-blue-800 font-semibold py-2 rounded hover:bg-blue-200 transition mb-2">
-          {% trans "Demander un devis" %}
-        </a>
-
-        <button onclick="openModal('modal-{{ service.id }}')" 
-                class="inline-block w-full bg-gray-100 text-gray-700 font-semibold py-2 rounded hover:bg-gray-200 transition">
-          {% trans "Voir plus" %}
-        </button>
-      </div>
+<section class="relative bg-gradient-to-r from-blue-700 to-blue-900 text-white h-[70vh] flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 z-0 opacity-20" style="background-image: url('{% static 'img/hero_background.jpg' %}'); background-size: cover; background-position: center;"></div>
+    
+    <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 animate-fade-in-up">
+            {% trans "Tropicom : Votre Partenaire Stratégique en Solutions Digitales" %}
+        </h1>
+        <p class="text-lg sm:text-xl lg:text-2xl mb-8 animate-fade-in-up delay-100">
+            {% trans "Sécurité, Connectivité et Innovation pour une Croissance Durable en Afrique." %}
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-200">
+            <a href="{% url 'vitrine:contact' %}" class="bg-yellow-400 text-blue-900 font-bold py-3 px-8 rounded-full text-lg hover:bg-yellow-500 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                {% trans "Demander un Devis Gratuit" %}
+            </a>
+            <a href="#our-services" class="border-2 border-white text-white font-semibold py-3 px-8 rounded-full text-lg hover:bg-white hover:text-blue-900 transition-all duration-300 transform hover:scale-105">
+                {% trans "Découvrir Nos Domaines d'Interventions" %}
+            </a>
+        </div>
     </div>
+</section>
 
-    <div id="modal-{{ service.id }}" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
-        <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div class="p-6">
-                <div class="flex justify-between items-start mb-4">
-                    <h3 class="text-2xl font-bold text-blue-700">{{ service.titre }}</h3>
-                    <button onclick="closeModal('modal-{{ service.id }}')" class="text-gray-500 hover:text-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
+<style>
+    @keyframes fadeInUpx {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in-up {
+        animation: fadeInUpx 0.8s ease-out forwards;
+    }
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+</style>
 
-                {% if service.description %}
-                <div class="prose prose-sm max-w-none mb-6">
-                    {{ service.description|safe }}
-                </div>
-                {% endif %}
+<section id="our-services" class="max-w-7xl mx-auto px-6 py-16">
+    <h2 class="text-3xl font-bold text-center text-blue-900 mb-10">{% trans "Nos Domaines d'Intervention" %}</h2>
 
-                {% if service.prestation_images.all %}
-                <h4 class="text-lg font-semibold mb-3 text-blue-600">{% trans "Nos réalisations" %}</h4>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-                    {% for image in service.prestation_images.all %}
-                    <div class="bg-gray-100 rounded overflow-hidden">
-                        <img src="{{ image.image.url }}" alt="{{ image.caption|default:service.titre }}" 
-                             class="w-full h-40 object-cover">
-                        {% if image.caption %}
-                        <p class="text-xs p-2 text-gray-600">{{ image.caption }}</p>
-                        {% endif %}
-                    </div>
-                    {% endfor %}
-                </div>
-                {% endif %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+        {% for service in services %}
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-300 flex flex-col border border-gray-200">
+            
+            <div class="w-full h-48 overflow-hidden bg-gray-100 flex items-center justify-center">
+                <img src="{{ service.image.url }}" alt="{{ service.titre }} - Image de service Tropicom"
+                     class="object-cover w-full h-full lazyload" loading="lazy">
+            </div>
+
+            <div class="p-4 text-center flex flex-col flex-grow">
+                <h3 class="text-lg font-semibold text-blue-700 mb-2">{{ service.titre }}</h3>
 
                 {% if service.get_prestations %}
-                <h4 class="text-lg font-semibold mb-3 text-blue-600">{% trans "Prestations incluses" %}</h4>
-                <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
+                <ul class="text-gray-600 text-sm mb-4 space-y-1 text-left mx-auto">
                     {% for ligne in service.get_prestations %}
                     <li class="flex items-start">
-                        <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg class="h-4 w-4 text-green-500 mr-2 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
-                        <span class="text-gray-700">{{ ligne }}</span>
+                        <span class="font-bold">{{ ligne }}</span>
                     </li>
                     {% endfor %}
                 </ul>
                 {% endif %}
 
-                <div class="flex justify-end mt-4">
-                    <a href="contact" 
-                       class="bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 transition">
-                      {% trans "Contactez-nous" %}
-                    </a>
+                <p class="text-xs text-green-600 mb-4 mt-auto">📞 {% trans "Support 24h/7" %} | 🚀 {% trans "Intervention rapide" %}</p>
+
+                <a href="{% url 'vitrine:contact' %}"
+                   class="inline-block w-full bg-blue-100 text-blue-800 font-semibold py-2 rounded hover:bg-blue-200 transition mb-2">
+                    {% trans "Demander un devis" %}
+                </a>
+
+                <button onclick="openServiceModal('modal-{{ service.id }}')" 
+                        class="inline-block w-full bg-gray-100 text-gray-700 font-semibold py-2 rounded hover:bg-gray-200 transition">
+                    {% trans "Voir plus" %}
+                </button>
+            </div>
+        </div>
+
+        <div id="modal-{{ service.id }}" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden animate-fade-in-scale">
+            <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto transform scale-95 opacity-0 transition-all duration-300 ease-out">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-bold text-blue-700">{{ service.titre }}</h3>
+                        <button onclick="closeServiceModal('modal-{{ service.id }}')" class="text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100 transition" aria-label="Fermer la fenêtre modale">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    {% if service.description %}
+                    <div class="prose prose-sm max-w-none mb-6 text-gray-800 leading-relaxed">
+                        {{ service.description|safe }}
+                    </div>
+                    {% endif %}
+
+                    {% if service.prestation_images.all %}
+                    <h4 class="text-lg font-semibold mb-3 text-blue-600">{% trans "Nos réalisations" %}</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                        {% for image in service.prestation_images.all %}
+                        <div class="bg-gray-100 rounded overflow-hidden shadow-sm">
+                            <img src="{{ image.image.url }}" alt="{{ image.caption|default:service.titre|add:' - Réalisation Tropicom' }}" 
+                                 class="w-full h-40 object-cover lazyload" loading="lazy">
+                            {% if image.caption %}
+                            <p class="text-xs p-2 text-gray-600">{{ image.caption }}</p>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    {% if service.get_prestations %}
+                    <h4 class="text-lg font-semibold mb-3 text-blue-600">{% trans "Prestations incluses" %}</h4>
+                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
+                        {% for ligne in service.get_prestations %}
+                        <li class="flex items-start text-gray-700">
+                            <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>{{ ligne }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    <div class="flex justify-end mt-4">
+                        <a href="{% url 'vitrine:contact' %}" 
+                           class="bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 transition">
+                            {% trans "Contactez-nous" %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<script>
+    // General modal functions with animation for services
+    function openServiceModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => { // Trigger transition
+            modal.querySelector(':first-child').classList.add('scale-100', 'opacity-100');
+            modal.querySelector(':first-child').classList.remove('scale-95', 'opacity-0');
+        }, 10); // Small delay to allow 'hidden' removal to register
+    }
+
+    function closeServiceModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.querySelector(':first-child').classList.add('scale-95', 'opacity-0');
+        modal.querySelector(':first-child').classList.remove('scale-100', 'opacity-100');
+        setTimeout(() => { // Hide after transition
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }, 300); // Duration of transition
+    }
+
+    // Close any modal by clicking outside
+    window.onclick = function(event) {
+        if (event.target.classList.contains('bg-opacity-75')) { 
+            const modal = event.target;
+            // Check if it's a service modal or the all-realisations modal
+            if (modal.id.startsWith('modal-')) {
+                closeServiceModal(modal.id);
+            } else if (modal.id === 'all-realisations-modal') {
+                closeAllRealisationsModal();
+            }
+        }
+    }
+</script>
+
+<section id="our-realisations" class="w-full px-6 py-16 bg-gray-50">
+    <h2 class="text-3xl sm:text-4xl font-bold text-center mb-10 text-blue-900">{% trans "Nos Réalisations" %}</h2>
+
+    <div class="max-w-7xl mx-auto">
+        {% if images_nos_realisations %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                {% for image in images_nos_realisations|slice:":3" %} {# Afficher les 3 premières réalisations #}
+                <div class="relative group rounded-lg overflow-hidden shadow-lg h-64">
+                    <div class="absolute inset-0 bg-center bg-cover transition-transform duration-700 group-hover:scale-110"
+                         style="background-image: url('{{ image.image.url }}');"></div>
+                    <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition duration-300 flex items-end justify-center pb-4">
+                        <p class="text-white text-lg font-bold text-center bg-black bg-opacity-40 rounded py-2 px-4">
+                            {{ image.description }}
+                        </p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if images_nos_realisations|length > 3 %}
+            <div class="text-center mt-12">
+                <button onclick="openAllRealisationsModal()" class="inline-block bg-blue-600 text-white font-semibold py-3 px-8 rounded-full hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 shadow-md">
+                    {% trans "Voir toutes nos réalisations" %} ({{ images_nos_realisations|length }})
+                </button>
+            </div>
+            {% endif %}
+
+        {% else %}
+            <p class="text-center text-gray-600 text-lg">{% trans "Aucune réalisation à afficher pour le moment." %}</p>
+        {% endif %}
+    </div>
+</section>
+
+<div id="all-realisations-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden animate-fade-in-scale">
+    <div class="bg-white rounded-lg max-w-5xl w-full h-[90vh] flex flex-col transform scale-95 opacity-0 transition-all duration-300 ease-out">
+        <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+            <h3 class="text-2xl font-bold text-blue-700">{% trans "Toutes Nos Réalisations" %}</h3>
+            <button onclick="closeAllRealisationsModal()" class="text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100 transition" aria-label="Fermer la fenêtre modale">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <div class="relative flex-grow overflow-hidden p-4 flex items-center justify-center">
+            <div id="realisations-carousel" class="w-full h-full relative">
+                {% for image in images_nos_realisations %}
+                <div class="carousel-item w-full h-full absolute top-0 left-0 transition-opacity duration-500 ease-in-out opacity-0" data-index="{{ forloop.counter0 }}">
+                    <img src="{{ image.image.url }}" alt="{{ image.description|default:'Réalisation' }}" class="w-full h-full object-contain">
+                    {% if image.description %}
+                    <div class="absolute bottom-4 left-4 right-4 bg-black bg-opacity-60 text-white p-2 rounded text-center">
+                        <p class="text-lg font-semibold">{{ image.description }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <button class="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full z-20 hover:bg-opacity-75 transition" onclick="navigateRealisationsCarousel(-1)">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+            </button>
+            <button class="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full z-20 hover:bg-opacity-75 transition" onclick="navigateRealisationsCarousel(1)">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+            </button>
+        </div>
+        <div class="p-4 border-t border-gray-200 text-right">
+            <a href="{% url 'vitrine:contact' %}" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 transition">
+                {% trans "Demander un Devis" %}
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentRealisationsIndex = 0;
+    let realisationsItems = [];
+
+    function openAllRealisationsModal() {
+        const modal = document.getElementById('all-realisations-modal');
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        
+        realisationsItems = document.querySelectorAll('#realisations-carousel .carousel-item');
+        if (realisationsItems.length > 0) {
+            showRealisationsImage(0); // Always start from the first image
+        }
+
+        setTimeout(() => {
+            modal.querySelector(':first-child').classList.add('scale-100', 'opacity-100');
+            modal.querySelector(':first-child').classList.remove('scale-95', 'opacity-0');
+        }, 10);
+    }
+
+    function closeAllRealisationsModal() {
+        const modal = document.getElementById('all-realisations-modal');
+        modal.querySelector(':first-child').classList.add('scale-95', 'opacity-0');
+        modal.querySelector(':first-child').classList.remove('scale-100', 'opacity-100');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }, 300);
+    }
+
+    function showRealisationsImage(index) {
+        if (realisationsItems.length === 0) return;
+
+        realisationsItems.forEach(item => {
+            item.classList.add('opacity-0');
+            item.classList.remove('opacity-100', 'pointer-events-auto'); // Hide all and remove interaction
+        });
+
+        currentRealisationsIndex = (index + realisationsItems.length) % realisationsItems.length;
+        realisationsItems[currentRealisationsIndex].classList.remove('opacity-0');
+        realisationsItems[currentRealisationsIndex].classList.add('opacity-100', 'pointer-events-auto'); // Show current and enable interaction
+    }
+
+    function navigateRealisationsCarousel(direction) {
+        showRealisationsImage(currentRealisationsIndex + direction);
+    }
+</script>
+
+
+<section class="py-20 bg-gray-100 px-4"> {# Changed to gray-100 for more contrast #}
+    <h2 class="text-3xl text-center font-bold text-blue-900 mb-10">{% trans "Pourquoi choisir Tropicom ?" %}</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto"> {# Changed md:grid-cols-4 to lg:grid-cols-4 #}
+        <div class="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+            <i data-feather="zap" class="text-red-600 mx-auto mb-4 w-10 h-10" aria-hidden="true"></i>
+            <h3 class="text-xl font-semibold text-blue-800 mb-2">{% trans "Réactivité Inégalée" %}</h3> {# Enhanced wording #}
+            <p class="text-base text-gray-700">{% trans "Interventions rapides et efficaces en moins de 24h pour garantir votre continuité." %}</p> {# Enhanced wording #}
+        </div>
+        <div class="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+            <i data-feather="shield" class="text-red-600 mx-auto mb-4 w-10 h-10" aria-hidden="true"></i>
+            <h3 class="text-xl font-semibold text-blue-800 mb-2">{% trans "Sécurité Maximale" %}</h3> {# Enhanced wording #}
+            <p class="text-base text-gray-700">{% trans "Protection robuste de vos données, infrastructures et systèmes contre les menaces." %}</p> {# Enhanced wording #}
+        </div>
+        <div class="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+            <i data-feather="cpu" class="text-red-600 mx-auto mb-4 w-10 h-10" aria-hidden="true"></i>
+            <h3 class="text-xl font-semibold text-blue-800 mb-2">{% trans "Expertise Certifiée" %}</h3> {# Enhanced wording #}
+            <p class="text-base text-gray-700">{% trans "Des spécialistes hautement qualifiés et certifiés à votre service dans chaque domaine." %}</p> {# Enhanced wording #}
+        </div>
+        <div class="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+            <i data-feather="dollar-sign" class="text-red-600 mx-auto mb-4 w-10 h-10" aria-hidden="true"></i>
+            <h3 class="text-xl font-semibold text-blue-800 mb-2">{% trans "Prix Compétitifs & Transparents" %}</h3> {# Enhanced wording #}
+            <p class="text-base text-gray-700">{% trans "Des solutions optimisées pour chaque budget, avec une tarification claire et sans surprise." %}</p> {# Enhanced wording #}
+        </div>
+    </div>
+</section>
+
+<section class="py-20 bg-white px-4">
+    <h2 class="text-3xl text-center font-bold text-blue-900 mb-10">{% trans "Ce que disent nos clients" %}</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto"> {# Increased gap #}
+        
+        <div class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 text-center flex flex-col items-center"> {# Changed background, added flex-col for alignment #}
+            <p class="text-gray-700 italic text-lg mb-6 leading-relaxed">"{% trans "Tropicom a entièrement sécurisé notre réseau en moins d'une semaine. Une équipe professionnelle et un résultat impeccable !" %}"</p> {# Enhanced testimonial #}
+            <div class="flex items-center justify-center gap-4 mt-auto"> {# mt-auto pushes content to bottom #}
+                <img src="{% static 'img/74.jpeg' %}" alt="Fatou K., Responsable IT chez FasoSecure" class="w-24 h-24 rounded-full border-4 border-blue-200 shadow-md object-cover transition-transform duration-300 group-hover:scale-110"> {# Added border color #}
+                <div class="text-left">
+                    <p class="font-bold text-blue-800 text-lg">Fatou K.</p>
+                    <p class="text-gray-600 text-sm">FasoSecure, {% trans "Responsable IT" %}</p> {# Added title #}
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 text-center flex flex-col items-center">
+            <p class="text-gray-700 italic text-lg mb-6 leading-relaxed">"{% trans "Service client impeccable. Leur expertise a transformé notre infrastructure. Nous recommandons sans hésiter Tropicom pour vos projets !" %}"</p> {# Enhanced testimonial #}
+            <div class="flex items-center justify-center gap-4 mt-auto">
+                <img src="{% static 'img/72.jpeg' %}" alt="Ismaël D., Directeur Général du Cabinet DKT" class="w-24 h-24 rounded-full border-4 border-blue-200 shadow-md object-cover transition-transform duration-300 group-hover:scale-110">
+                <div class="text-left">
+                    <p class="font-bold text-blue-800 text-lg">Ismaël D.</p>
+                    <p class="text-gray-600 text-sm">Cabinet DKT, {% trans "Directeur Général" %}</p> {# Added title #}
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 text-center flex flex-col items-center">
+            <p class="text-gray-700 italic text-lg mb-6 leading-relaxed">"{% trans "Des experts à l'écoute, qui ont non seulement modernisé notre SI, mais aussi optimisé nos coûts. Un véritable partenaire stratégique." %}"</p> {# Enhanced testimonial #}
+            <div class="flex items-center justify-center gap-4 mt-auto">
+                <img src="{% static 'img/73.jpeg' %}" alt="Sarah T., Fondatrice du Groupe Logex" class="w-24 h-24 rounded-full border-4 border-blue-200 shadow-md object-cover transition-transform duration-300 group-hover:scale-110">
+                <div class="text-left">
+                    <p class="font-bold text-blue-800 text-lg">Sarah T.</p>
+                    <p class="text-gray-600 text-sm">Groupe Logex, {% trans "Fondatrice" %}</p> {# Added title #}
                 </div>
             </div>
         </div>
     </div>
-    {% endfor %}
-  </div>
-</section>
-
-<script>
-  function openModal(modalId) {
-    document.getElementById(modalId).classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeModal(modalId) {
-    document.getElementById(modalId).classList.add('hidden');
-    document.body.style.overflow = 'auto';
-  }
-
-  // Fermer la modal en cliquant à l'extérieur
-  window.onclick = function(event) {
-    if (event.target.classList.contains('bg-opacity-50')) {
-      event.target.classList.add('hidden');
-      document.body.style.overflow = 'auto';
-    }
-  }
-</script>
-
-<!-- SECTION Nos realisation-->
-<section class="w-full px-6 py-16">
-  <h2 class="text-3xl sm:text-4xl font-bold text-center mb-10 text-blue-900">{% trans "Nos Réalisations" %}</h2>
-
-  <!-- Ligne 1 -->
-  <div class="flex flex-wrap md:flex-nowrap gap-6 h-[60vh] mb-12">
-    <!-- Image 1 -->
-    {% if images_nos_realisations|length > 0 %}
-    <div class="w-full md:w-[60%] relative group h-full rounded-lg overflow-hidden shadow-lg">
-      <div class="absolute inset-0 bg-center bg-cover transition-transform duration-700 group-hover:scale-110"
-           style="background-image: url('{{ images_nos_realisations.0.image.url }}');"></div>
-      <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition duration-300"></div>
-      <div class="absolute bottom-0 left-0 right-0 z-10 p-4 transform group-hover:-translate-y-2 transition duration-600">
-        <p class="text-white text-xl font-bold text-center bg-black bg-opacity-40 rounded py-2">
-          {{ images_nos_realisations.0.description }}
-        </p>
-      </div>
-    </div>
-    {% endif %}
-
-    <!-- Deux petites images empilées -->
-    <div class="w-full md:w-[35%] flex flex-col justify-between gap-6 h-full">
-      {% if images_nos_realisations|length > 1 %}
-      <div class="relative group h-[48%] rounded-lg overflow-hidden shadow-md">
-        <div class="absolute inset-0 bg-center bg-cover transition-transform duration-700 group-hover:scale-110"
-             style="background-image: url('{{ images_nos_realisations.1.image.url }}');"></div>
-        <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition duration-300"></div>
-        <div class="absolute bottom-0 left-0 right-0 z-10 p-3 transform group-hover:-translate-y-2 transition duration-600">
-          <p class="text-white text-sm font-medium text-center bg-black bg-opacity-40 rounded py-1">
-            {{ images_nos_realisations.1.description }}
-          </p>
-        </div>
-      </div>
-      {% endif %}
-      {% if images_nos_realisations|length > 2 %}
-      <div class="relative group h-[48%] rounded-lg overflow-hidden shadow-md">
-        <div class="absolute inset-0 bg-center bg-cover transition-transform duration-700 group-hover:scale-110"
-             style="background-image: url('{{ images_nos_realisations.2.image.url }}');"></div>
-        <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition duration-300"></div>
-        <div class="absolute bottom-0 left-0 right-0 z-10 p-3 transform group-hover:-translate-y-2 transition duration-600">
-          <p class="text-white text-sm font-medium text-center bg-black bg-opacity-40 rounded py-1">
-            {{ images_nos_realisations.2.description }}
-          </p>
-        </div>
-      </div>
-      {% endif %}
-    </div>
-  </div>
-
-  <!-- Ligne 2 (inversée) -->
-  <div class="flex flex-wrap md:flex-nowrap gap-6 h-[60vh] flex-row-reverse">
-    <!-- Image 4 -->
-    {% if images_nos_realisations|length > 3 %}
-    <div class="w-full md:w-[60%] relative group h-full rounded-lg overflow-hidden shadow-lg">
-      <div class="absolute inset-0 bg-center bg-cover transition-transform duration-700 group-hover:scale-110"
-           style="background-image: url('{{ images_nos_realisations.4.image.url }}');"></div>
-      <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition duration-300"></div>
-      <div class="absolute bottom-0 left-0 right-0 z-10 p-4 transform group-hover:-translate-y-2 transition duration-600">
-        <p class="text-white text-xl font-bold text-center bg-black bg-opacity-40 rounded py-2">
-          {{ images_nos_realisations.4.description }}
-        </p>
-      </div>
-    </div>
-    {% endif %}
-
-    <!-- Deux petites à gauche -->
-    <div class="w-full md:w-[35%] flex flex-col justify-between gap-6 h-full">
-      {% if images_nos_realisations|length > 3 %}
-      <div class="relative group h-[48%] rounded-lg overflow-hidden shadow-md">
-        <div class="absolute inset-0 bg-center bg-cover transition-transform duration-700 group-hover:scale-110"
-             style="background-image: url('{{ images_nos_realisations.3.image.url }}');"></div>
-        <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition duration-300"></div>
-        <div class="absolute bottom-0 left-0 right-0 z-10 p-3 transform group-hover:-translate-y-2 transition duration-600">
-          <p class="text-white text-sm font-medium text-center bg-black bg-opacity-40 rounded py-1">
-            {{ images_nos_realisations.3.description }}
-          </p>
-        </div>
-      </div>
-      {% endif %}
-      {% if images_nos_realisations|length > 5 %}
-      <div class="relative group h-[48%] rounded-lg overflow-hidden shadow-md">
-        <div class="absolute inset-0 bg-center bg-cover transition-transform duration-700 group-hover:scale-110"
-             style="background-image: url('{{ images_nos_realisations.5.image.url }}');"></div>
-        <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition duration-300"></div>
-        <div class="absolute bottom-0 left-0 right-0 z-10 p-3 transform group-hover:-translate-y-2 transition duration-600">
-          <p class="text-white text-sm font-medium text-center bg-black bg-opacity-40 rounded py-1">
-            {{ images_nos_realisations.5.description }}
-          </p>
-        </div>
-      </div>
-      {% endif %}
-    </div>
-  </div>
 </section>
 
 
-<!-- SECTION POURQUOI NOUS CHOISIR -->
-<section class="py-20 bg-gray-50 px-4">
-  <h2 class="text-3xl text-center font-bold text-blue-900 mb-10">{% trans "Pourquoi choisir Tropicom ?" %}</h2>
-  <div class="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
-    <div class="text-center p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
-      <i data-feather="zap" class="text-red-600 mx-auto mb-4 w-10 h-10" aria-hidden="true"></i>
-      <h3 class="text-xl font-semibold text-blue-800 mb-2">{% trans "Réactivité" %}</h3>
-      <p class="text-base text-gray-600">{% trans "Interventions rapides en moins de 24h" %}</p>
-    </div>
-    <div class="text-center p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
-      <i data-feather="shield" class="text-red-600 mx-auto mb-4 w-10 h-10" aria-hidden="true"></i>
-      <h3 class="text-xl font-semibold text-blue-800 mb-2">{% trans "Sécurité" %}</h3>
-      <p class="text-base text-gray-600">{% trans "Protection de vos données et systèmes" %}</p>
-    </div>
-    <div class="text-center p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
-      <i data-feather="cpu" class="text-red-600 mx-auto mb-4 w-10 h-10" aria-hidden="true"></i>
-      <h3 class="text-xl font-semibold text-blue-800 mb-2">{% trans "Expertise" %}</h3>
-      <p class="text-base text-gray-600">{% trans "Spécialistes certifiés dans chaque domaine" %}</p>
-    </div>
-    <div class="text-center p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
-      <i data-feather="dollar-sign" class="text-red-600 mx-auto mb-4 w-10 h-10" aria-hidden="true"></i>
-      <h3 class="text-xl font-semibold text-blue-800 mb-2">{% trans "Prix Compétitifs" %}</h3>
-      <p class="text-base text-gray-600">{% trans "Des solutions pour chaque budget" %}</p>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION TÉMOIGNAGES -->
-<section class="py-20 bg-white px-4">
-  <h2 class="text-3xl text-center font-bold text-blue-900 mb-10">{% trans "Ce que disent nos clients" %}</h2>
-  <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-    
-    <!-- Témoignage 1 -->
-    <div class="bg-blue-100 p-6 rounded-lg shadow hover:shadow-xl transition text-center group">
-      <p class="text-gray-700 italic text-lg mb-6">"{% trans "Tropicom a entièrement sécurisé notre réseau en moins d'une semaine." %}"</p>
-      <div class="flex items-center justify-center gap-4">
-        <img src="{% static 'img/74.jpeg' %}" alt="Fatou K." class="w-24 h-24 rounded-full border-4 border-white shadow-md object-cover transition-transform duration-300 group-hover:scale-110">
-        <p class="font-semibold text-blue-800">Fatou K., FasoSecure</p>
-      </div>
-    </div>
-
-    <!-- Témoignage 2 -->
-    <div class="bg-blue-100 p-6 rounded-lg shadow hover:shadow-xl transition text-center group">
-      <p class="text-gray-700 italic text-lg mb-6">"{% trans "Service client impeccable. Nous recommandons sans hésiter." %}"</p>
-      <div class="flex items-center justify-center gap-4">
-        <img src="{% static 'img/72.jpeg' %}" alt="Ismaël D." class="w-24 h-24 rounded-full border-4 border-white shadow-md object-cover transition-transform duration-300 group-hover:scale-110">
-        <p class="font-semibold text-blue-800">Ismaël D., Cabinet DKT</p>
-      </div>
-    </div>
-
-    <!-- Témoignage 3 -->
-    <div class="bg-blue-100 p-6 rounded-lg shadow hover:shadow-xl transition text-center group">
-      <p class="text-gray-700 italic text-lg mb-6">"{% trans "Des experts à l'écoute qui ont modernisé notre SI." %}"</p>
-      <div class="flex items-center justify-center gap-4">
-        <img src="{% static 'img/73.jpeg' %}" alt="Sarah T." class="w-24 h-24 rounded-full border-4 border-white shadow-md object-cover transition-transform duration-300 group-hover:scale-110">
-        <p class="font-semibold text-blue-800">Sarah T., Groupe Logex</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-
-<!-- SECTION PARTENAIRES -->
 <section class="py-12 bg-gray-100 text-center">
-  <h2 class="text-3xl font-bold text-blue-900 mb-10">{% trans "Ils nous font confiance" %}</h2>
-  <div class="overflow-hidden relative max-w-7xl mx-auto">
-    <div id="partners-slider" class="flex gap-8 animate-scroll whitespace-nowrap">
-      <img src="{% static 'img/60.jpg' %}" alt="{% trans 'Partenaire 1' %}" class="h-12 inline-block" />
-      <img src="{% static 'img/000001.jpeg' %}" alt="{% trans 'Partenaire 2' %}" class="h-12 inline-block" />
-      <img src="{% static 'img/000002.png' %}" alt="{% trans 'Partenaire 3' %}" class="h-12 inline-block" />
-       <img src="{% static 'img/000003.jpg' %}" alt="{% trans 'Partenaire 4' %}" class="h-12 inline-block" />
-       <img src="{% static 'img/000003.png' %}" alt="{% trans 'Partenaire 5' %}" class="h-12 inline-block" />
-       <img src="{% static 'img/000004.png' %}" alt="{% trans 'Partenaire 6' %}" class="h-12 inline-block" />
-      <img src="{% static 'img/000007.png' %}" alt="{% trans 'Partenaire 7' %}" class="h-12 inline-block" />
-      <img src="{% static 'img/000008.png' %}" alt="{% trans 'Partenaire 8' %}" class="h-12 inline-block" />
-      <img src="{% static 'img/000000.png' %}" alt="{% trans 'Partenaire 9' %}" class="h-12 inline-block" />
-      <img src="{% static 'img/000009.png' %}" alt="{% trans 'Partenaire 9' %}" class="h-12 inline-block" />
-      <!-- Répétition pour boucle fluide -->
-      <img src="{% static 'img/60.jpg' %}" alt="{% trans 'Partenaire 1' %}" class="h-12 inline-block" />
-      <img src="{% static 'img/000001.jpeg' %}" alt="{% trans 'Partenaire 2' %}" class="h-12 inline-block" />
-      <img src="{% static 'img/000002.png' %}" alt="{% trans 'Partenaire 3' %}" class="h-12 inline-block" />
-      <img src="{% static 'img/000003.jpg' %}" alt="{% trans 'Partenaire 4' %}" class="h-12 inline-block" />
-      <img src="{% static 'img/000003.png' %}" alt="{% trans 'Partenaire 5' %}" class="h-12 inline-block" />
-      <img src="{% static 'img/000004.png' %}" alt="{% trans 'Partenaire 6' %}" class="h-12 inline-block" />
-      <img src="{% static 'img/000007.png' %}" alt="{% trans 'Partenaire 7' %}" class="h-12 inline-block" />
-      <img src="{% static 'img/000008.png' %}" alt="{% trans 'Partenaire 8' %}" class="h-12 inline-block" />
-      <img src="{% static 'img/000000.png' %}" alt="{% trans 'Partenaire 9' %}" class="h-12 inline-block" />
-      <img src="{% static 'img/000009.png' %}" alt="{% trans 'Partenaire 9' %}" class="h-12 inline-block" />
+    <h2 class="text-3xl font-bold text-blue-900 mb-10">{% trans "Ils nous font confiance" %}</h2>
+    <div class="overflow-hidden relative max-w-7xl mx-auto">
+        <div id="partners-slider" class="flex gap-8 animate-scroll whitespace-nowrap py-4"> {# Added py-4 for spacing #}
+            <img src="{% static 'img/60.jpg' %}" alt="{% trans 'Logo Partenaire 1' %}" class="h-12 inline-block object-contain" loading="lazy" />
+            <img src="{% static 'img/000001.jpeg' %}" alt="{% trans 'Logo Partenaire 2' %}" class="h-12 inline-block object-contain" loading="lazy" />
+            <img src="{% static 'img/000002.png' %}" alt="{% trans 'Logo Partenaire 3' %}" class="h-12 inline-block object-contain" loading="lazy" />
+            <img src="{% static 'img/000003.jpg' %}" alt="{% trans 'Logo Partenaire 4' %}" class="h-12 inline-block object-contain" loading="lazy" />
+            <img src="{% static 'img/000003.png' %}" alt="{% trans 'Logo Partenaire 5' %}" class="h-12 inline-block object-contain" loading="lazy" />
+            <img src="{% static 'img/000004.png' %}" alt="{% trans 'Logo Partenaire 6' %}" class="h-12 inline-block object-contain" loading="lazy" />
+            <img src="{% static 'img/000007.png' %}" alt="{% trans 'Logo Partenaire 7' %}" class="h-12 inline-block object-contain" loading="lazy" />
+            <img src="{% static 'img/000008.png' %}" alt="{% trans 'Logo Partenaire 8' %}" class="h-12 inline-block object-contain" loading="lazy" />
+            <img src="{% static 'img/000000.png' %}" alt="{% trans 'Logo Partenaire 9' %}" class="h-12 inline-block object-contain" loading="lazy" />
+            <img src="{% static 'img/000009.png' %}" alt="{% trans 'Logo Partenaire 10' %}" class="h-12 inline-block object-contain" loading="lazy" />
+            <img src="{% static 'img/60.jpg' %}" alt="{% trans 'Logo Partenaire 1' %}" class="h-12 inline-block object-contain" loading="lazy" />
+            <img src="{% static 'img/000001.jpeg' %}" alt="{% trans 'Logo Partenaire 2' %}" class="h-12 inline-block object-contain" loading="lazy" />
+            <img src="{% static 'img/000002.png' %}" alt="{% trans 'Logo Partenaire 3' %}" class="h-12 inline-block object-contain" loading="lazy" />
+            <img src="{% static 'img/000003.jpg' %}" alt="{% trans 'Logo Partenaire 4' %}" class="h-12 inline-block object-contain" loading="lazy" />
+            <img src="{% static 'img/000003.png' %}" alt="{% trans 'Logo Partenaire 5' %}" class="h-12 inline-block object-contain" loading="lazy" />
+            <img src="{% static 'img/000004.png' %}" alt="{% trans 'Logo Partenaire 6' %}" class="h-12 inline-block object-contain" loading="lazy" />
+            <img src="{% static 'img/000007.png' %}" alt="{% trans 'Logo Partenaire 7' %}" class="h-12 inline-block object-contain" loading="lazy" />
+            <img src="{% static 'img/000008.png' %}" alt="{% trans 'Logo Partenaire 8' %}" class="h-12 inline-block object-contain" loading="lazy" />
+            <img src="{% static 'img/000000.png' %}" alt="{% trans 'Logo Partenaire 9' %}" class="h-12 inline-block object-contain" loading="lazy" />
+            <img src="{% static 'img/000009.png' %}" alt="{% trans 'Logo Partenaire 10' %}" class="h-12 inline-block object-contain" loading="lazy" />
+        </div>
     </div>
-  </div>
 </section>
 
 <style>
-  /* Animation de défilement horizontal */
-  @keyframes scroll {
-    0% {
-      transform: translateX(0);
+    /* Animation de défilement horizontal */
+    @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); } /* Half the width of the duplicated content */
     }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
 
-  .animate-scroll {
-    animation: scroll 20s linear infinite;
-  }
+    .animate-scroll {
+        animation: scroll 25s linear infinite; /* Adjusted speed */
+    }
 </style>
-<!-- BANNIÈRE SPÉCIALE AVANT LE FOOTER -->
+
 <section class="relative h-[60vh] overflow-hidden group">
-  <!-- Image de fond avec zoom au survol -->
-  <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-       style="background-image: url('{% static 'img/12.jpeg' %}');"></div>
+    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 lazyload"
+         style="background-image: url('{% static 'img/12.jpeg' %}');" loading="lazy"></div>
 
-  <!-- Overlay sombre pour lisibilité -->
-  <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+    <div class="absolute inset-0 bg-black bg-opacity-60"></div> {# Increased opacity for better text readability #}
 
-  <!-- Texte centré -->
-  <div class="relative z-10 h-full flex flex-col justify-center items-center text-white text-center px-4">
-    <h2 class="text-3xl sm:text-5xl font-bold mb-4 drop-shadow-lg">
-      {% trans "Rejoignez la révolution digitale avec Tropicom" %}
-    </h2>
-    <p class="text-lg sm:text-xl max-w-2xl drop-shadow">
-      {% trans "Des solutions innovantes, rapides et sécurisées pour vos projets numériques." %}
-    </p>
-  </div>
+    <div class="relative z-10 h-full flex flex-col justify-center items-center text-white text-center px-4">
+        <h2 class="text-3xl sm:text-5xl font-bold mb-4 drop-shadow-lg">
+            {% trans "Rejoignez la révolution digitale avec Tropicom" %}
+        </h2>
+        <p class="text-lg sm:text-xl max-w-2xl drop-shadow mb-8"> {# Added mb-8 for spacing #}
+            {% trans "Des solutions innovantes, rapides et sécurisées pour propulser vos projets numériques." %} {# Enhanced wording #}
+        </p>
+        <a href="{% url 'vitrine:contact' %}" class="bg-green-500 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
+            {% trans "Contactez-nous dès aujourd'hui" %}
+        </a>
+    </div>
 </section>
-<!-- Conteneur des notifications -->
-<div id="notif-container" class="fixed bottom-5 left-5 z-50 space-y-4">
-  <!-- Notification 1 -->
-  <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm">
-    <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600" onclick="this.parentElement.remove()">×</button>
-    <p class="font-semibold text-blue-900 mb-2 text-sm">Besoin d'un vpn securise ?</p>
-    <a href="https://wa.me/22673122222" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
-  Oui, contactez-nous
-</a>
 
-  </div>
-  <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm">
-    <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600" onclick="this.parentElement.remove()">×</button>
-    <p class="font-semibold text-blue-900 mb-2 text-sm">Besoin de systeme d'alarme ?</p>
-    <a href="https://wa.me/22673122222" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
-  Oui, contactez-nous
-</a>
-
-  </div>
-  <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm">
-    <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600" onclick="this.parentElement.remove()">×</button>
-    <p class="font-semibold text-blue-900 mb-2 text-sm">Besoin de conseil en communication ?</p>
-    <a href="https://wa.me/22673122222" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
-  Oui, contactez-nous
-</a>
-
-  </div>
-
-  <!-- Notification 2 -->
- <div id="notif-container" class="fixed bottom-5 left-5 z-50 space-y-4">
-  <!-- Notification 1 -->
-  <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm">
-    <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600" onclick="this.parentElement.remove()">×</button>
-    <p class="font-semibold text-blue-900 mb-2 text-sm">Besoin de site Web ?</p>
-    <a href="https://wa.me/22673122222" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
-  Oui, contactez-nous
-</a>
-
-  </div>
-
-  <!-- Notification 3 -->
-  <div id="notif-container" class="fixed bottom-5 left-5 z-50 space-y-4">
-  <!-- Notification 1 -->
-  <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm">
-    <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600" onclick="this.parentElement.remove()">×</button>
-    <p class="font-semibold text-blue-900 mb-2 text-sm">Besoin d'installation Reseau ?</p>
-    <a href="https://wa.me/22673122222" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
-  Oui, contactez-nous
-</a>
-
-  </div>
+<div id="notif-container" class="fixed bottom-5 left-5 z-50 space-y-4 pointer-events-none"> {# Added pointer-events-none #}
+    <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm pointer-events-auto">
+        <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600 p-1 rounded-full hover:bg-gray-100 transition" onclick="this.parentElement.remove()" aria-label="Fermer la notification">×</button>
+        <p class="font-semibold text-blue-900 mb-2 text-sm">{% trans "Besoin d'un VPN sécurisé ?" %}</p>
+        <a href="https://wa.me/22673122222" target="_blank" rel="noopener noreferrer" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
+            {% trans "Oui, contactez-nous" %}
+        </a>
+    </div>
+    <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm pointer-events-auto">
+        <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600 p-1 rounded-full hover:bg-gray-100 transition" onclick="this.parentElement.remove()" aria-label="Fermer la notification">×</button>
+        <p class="font-semibold text-blue-900 mb-2 text-sm">{% trans "Besoin d'un système d'alarme ?" %}</p>
+        <a href="https://wa.me/22673122222" target="_blank" rel="noopener noreferrer" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
+            {% trans "Oui, contactez-nous" %}
+        </a>
+    </div>
+    <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm pointer-events-auto">
+        <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600 p-1 rounded-full hover:bg-gray-100 transition" onclick="this.parentElement.remove()" aria-label="Fermer la notification">×</button>
+        <p class="font-semibold text-blue-900 mb-2 text-sm">{% trans "Besoin de conseil en communication ?" %}</p>
+        <a href="https://wa.me/22673122222" target="_blank" rel="noopener noreferrer" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
+            {% trans "Oui, contactez-nous" %}
+        </a>
+    </div>
+    <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm pointer-events-auto">
+        <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600 p-1 rounded-full hover:bg-gray-100 transition" onclick="this.parentElement.remove()" aria-label="Fermer la notification">×</button>
+        <p class="font-semibold text-blue-900 mb-2 text-sm">{% trans "Besoin d'un site Web professionnel ?" %}</p>
+        <a href="https://wa.me/22673122222" target="_blank" rel="noopener noreferrer" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
+            {% trans "Oui, contactez-nous" %}
+        </a>
+    </div>
+    <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm pointer-events-auto">
+        <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600 p-1 rounded-full hover:bg-gray-100 transition" onclick="this.parentElement.remove()" aria-label="Fermer la notification">×</button>
+        <p class="font-semibold text-blue-900 mb-2 text-sm">{% trans "Besoin d'installation Réseau ?" %}</p>
+        <a href="https://wa.me/22673122222" target="_blank" rel="noopener noreferrer" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
+            {% trans "Oui, contactez-nous" %}
+        </a>
+    </div>
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const notifs = document.querySelectorAll("#notif-container .notif");
-    let delay = 0;
+    document.addEventListener("DOMContentLoaded", function () {
+        const notifs = document.querySelectorAll("#notif-container .notif");
+        let delay = 0;
+        const displayDuration = 8000; // 8 seconds
+        const intervalBetweenNotifs = 9000; // 9 seconds
 
-    notifs.forEach((notif) => {
-      setTimeout(() => {
-        notif.classList.remove("hidden");
+        notifs.forEach((notif, index) => {
+            setTimeout(() => {
+                notif.classList.remove("hidden");
+                notif.classList.add("animate-fade-in-from-left"); // Add entry animation
 
-        // Disparaît 8 secondes après son apparition
-        setTimeout(() => {
-          notif.remove();
-        }, 8000);
+                setTimeout(() => {
+                    notif.classList.remove("animate-fade-in-from-left");
+                    notif.classList.add("animate-fade-out-to-left"); // Add exit animation
+                    
+                    notif.addEventListener('animationend', () => {
+                        if (notif.classList.contains('animate-fade-out-to-left')) {
+                            notif.remove();
+                        }
+                    }, { once: true }); // Remove listener after first use
+                }, displayDuration); // Hide after displayDuration
+            }, delay);
 
-      }, delay);
-
-      // Prochaine notification dans 9 secondes
-      delay += 9000;
+            delay += intervalBetweenNotifs;
+        });
     });
-  });
 </script>
 
+<style>
+    /* Notification Animations */
+    @keyframes fadeInFromLeft {
+        from { opacity: 0; transform: translateX(-100%); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeOutToLeft {
+        from { opacity: 1; transform: translateX(0); }
+        to { opacity: 0; transform: translateX(-100%); }
+    }
 
+    .animate-fade-in-from-left {
+        animation: fadeInFromLeft 0.5s ease-out forwards;
+    }
+    .animate-fade-out-to-left {
+        animation: fadeOutToLeft 0.5s ease-in forwards;
+    }
+
+    /* Modal Animation */
+    @keyframes fadeInScale {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+    }
+    .animate-fade-in-scale > div { /* Apply to the direct child div within the modal */
+        animation: fadeInScale 0.3s ease-out forwards;
+    }
+</style>
 
 {% endblock %}

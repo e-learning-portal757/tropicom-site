@@ -1,160 +1,203 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}À propos - Tropicom{% endblock %}
 {% load i18n %}
+
+{% block title %}{% trans "À Propos - Tropicom : Votre Partenaire en Solutions Numériques" %}{% endblock %}
 
 {% block content %}
 
-<section class="bg-white py-16">
-  <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-    
-    <!-- Texte avec effet -->
-    <div class="transform transition duration-700 ease-in-out hover:scale-105 animate-fadeInLeft">
-      <h2 class="text-3xl font-bold text-blue-900 mb-4">Qui sommes-nous ?</h2>
-      <p class="text-gray-700 mb-6 leading-relaxed">
-        <h3>Specialisee en informatique et télècoms,<span class="text-blue-700">Tropi</span><span class="text-red-600">com</span> assure le maintien et la productivité 
-          de votre entreprise grace à un systeme informatique fluide et efficacement</h3>
-        <h3>Disposant de techniciens qualifies, nous assuront des solution completes</h3>
-        <h3> Renforces votre competivite avec un prestataire informatique et Telecoms disposant de techniciens qualifiers</h3>
-      </p>
-    </div>
+<section class="bg-white py-16 md:py-20 animate-fade-in">
+    <div class="container mx-auto px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
 
-    <!-- Image à droite avec zoom au survol -->
-    <div class="overflow-hidden rounded-lg shadow-lg group">
-      <img src="{% static 'img/12.jpeg' %}" alt="Tropicom" 
-           class="w-full h-auto transform transition duration-700 ease-in-out group-hover:scale-110">
-    </div>
-
-  </div>
-</section>
-<!-- SECTION IMAGE + TEXTE -->
-<section class="bg-white py-20 px-6">
-  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-
-    <!-- Image avec effet zoom -->
-    <div class="overflow-hidden rounded-xl shadow-lg group">
-      <img src="{% static 'img/000000.jpeg' %}" alt="Notre mission"
-           class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700 ease-in-out">
-    </div>
-
-    <!-- Texte à droite -->
-    <div>
-      <h2 class="text-3xl sm:text-4xl font-bold text-blue-900 mb-6">{% trans "Notre mission" %}</h2>
-      <p class="text-gray-700 text-lg leading-relaxed mb-4">
-        {% trans "Chez Tropicom, notre mission est d’offrir des solutions informatiques de qualité, adaptées aux besoins de chaque client, en garantissant fiabilité, sécurité et innovation." %}
-      </p>
-      <p class="text-gray-700 text-base">
-        {% trans "Nous accompagnons les entreprises dans leur transformation numérique, en intervenant avec expertise dans la cybersécurité, les réseaux et les services digitaux." %}
-      </p>
-    </div>
-
-  </div>
-</section>
-<!-- BANNIÈRE SPÉCIALE AVANT LE FOOTER -->
-<section class="relative h-[60vh] overflow-hidden group">
-  <!-- Image de fond avec zoom au survol -->
-  <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-       style="background-image: url('{% static 'img/07.jpeg' %}');"></div>
-
-  <!-- Overlay sombre pour lisibilité -->
-  <div class="absolute inset-0 bg-black bg-opacity-50"></div>
-
-  <!-- Texte centré -->
-  <div class="relative z-10 h-full flex flex-col justify-center items-center text-white text-center px-4">
-    <h2 class="text-3xl sm:text-5xl font-bold mb-4 drop-shadow-lg">
-      {% trans "Nous intervenons dans 5 domaines clés" %}
-    </h2>
-    <p class="text-lg sm:text-xl max-w-2xl drop-shadow">
-      {% trans "Sécurité électronique, Transformation digitale, Réseaux & Télécoms, Gestion Documentaire et Systèmes Informatiques." %}
-    </p>
-  </div>
-</section>
-
-<!-- SECTION CHIFFRES CLÉS -->
-<section class="py-20 bg-gray-100 px-6" id="chiffres-section"> {# Ajout d'un ID pour cibler la section en JS #}
-  <div class="max-w-6xl mx-auto text-center">
-    <h2 class="text-3xl sm:text-4xl font-bold text-blue-900 mb-12">{% trans "Tropicom en quelques chiffres" %}</h2>
-
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
-
-      <div class="bg-white rounded-lg shadow-md p-8 transform hover:scale-105 transition duration-500 group">
-        <div class="text-blue-700 text-5xl font-bold mb-2 group-hover:scale-110 transition-transform duration-500 animated-number" data-target="150" data-duration="2000" data-prefix="+">
-          0 {# Valeur initiale pour l'animation #}
+        <div class="space-y-6">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-blue-900 mb-6 leading-tight">{% trans "Qui sommes-nous ?" %}</h1>
+            <p class="text-gray-700 text-lg leading-relaxed">
+                {% trans "Spécialisée en informatique et télécoms, " %}
+                <strong class="font-bold">
+                    <span class="text-blue-700">Tropi</span><span class="text-red-600">com</span>
+                </strong>
+                {% trans " assure le maintien et la productivité de votre entreprise grâce à un système informatique fluide et efficace." %}
+            </p>
+            <p class="text-gray-700 text-lg leading-relaxed">
+                {% trans "Disposant de techniciens qualifiés et certifiés, nous assurons des solutions complètes et personnalisées, de la conception à la maintenance, adaptées à l'évolution constante de vos besoins." %}
+            </p>
+            <p class="text-gray-700 text-lg leading-relaxed">
+                {% trans "Renforcez votre compétitivité, optimisez vos opérations et sécurisez votre infrastructure avec un partenaire informatique et Télécoms de confiance." %}
+            </p>
         </div>
-        <p class="text-gray-700 font-medium">{% trans "Clients satisfaits" %}</p>
-      </div>
 
-      <div class="bg-white rounded-lg shadow-md p-8 transform hover:scale-105 transition duration-500">
-        <div class="text-blue-700 text-5xl font-bold mb-2 animated-number" data-target="8" data-duration="1500">
-          0 {# Valeur initiale pour l'animation #}
+        <div class="overflow-hidden rounded-lg shadow-xl transform transition-transform duration-500 hover:scale-105">
+            <img src="{% static 'img/12.jpeg' %}"
+                 srcset="{% static 'img/12.jpeg' %} 1x, {% static 'img/12_2x.jpeg' %} 2x" {# Exemple de srcset pour haute résolution #}
+                 alt="{% trans 'Équipe Tropicom en réunion, illustrant la collaboration et l’expertise technique.' %}"
+                 class="w-full h-auto object-cover lazyload"
+                 loading="lazy"
+                 width="700" height="467"> {# Spécifier width/height pour éviter le CLS #}
         </div>
-        <p class="text-gray-700 font-medium">{% trans "ans d’expérience" %}</p>
-      </div>
-
-      <div class="bg-white rounded-lg shadow-md p-8 transform hover:scale-105 transition duration-500">
-        <div class="text-blue-700 text-5xl font-bold mb-2 animated-number" data-target="5" data-duration="1500">
-          0 {# Valeur initiale pour l'animation #}
-        </div>
-        <p class="text-gray-700 font-medium">{% trans "pays de la sous-région" %}</p>
-      </div>
 
     </div>
-  </div>
 </section>
+
+<section class="bg-gray-50 py-20 px-6 md:py-24 animate-fade-in">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+
+        <div class="overflow-hidden rounded-xl shadow-lg transform transition-transform duration-500 hover:scale-105">
+            <img src="{% static 'img/000000.jpeg' %}"
+                 srcset="{% static 'img/000000.jpeg' %} 1x, {% static 'img/000000_2x.jpeg' %} 2x" {# Exemple srcset #}
+                 alt="{% trans 'Illustration de la mission de Tropicom : une équipe travaillant sur des serveurs, symbolisant la fiabilité et l’innovation.' %}"
+                 class="w-full h-full object-cover lazyload"
+                 loading="lazy"
+                 width="700" height="467"> {# Spécifier width/height #}
+        </div>
+
+        <div class="space-y-6">
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-blue-900 mb-6 leading-tight">{% trans "Notre mission" %}</h2>
+            <p class="text-gray-700 text-lg leading-relaxed">
+                {% trans "Chez Tropicom, notre mission fondamentale est d’offrir des solutions informatiques de qualité supérieure, parfaitement adaptées aux besoins spécifiques et évolutifs de chaque client. Nous nous engageons fermement à garantir fiabilité, sécurité et innovation dans toutes nos interventions, assurant ainsi la pérennité de vos systèmes." %}
+            </p>
+            <p class="text-gray-700 text-lg leading-relaxed">
+                {% trans "Nous accompagnons les entreprises à chaque étape de leur parcours de transformation numérique, en intervenant avec une expertise reconnue dans des domaines critiques tels que la cybersécurité avancée, la conception et le déploiement d'infrastructures réseaux et télécoms résilientes, et le développement de services digitaux sur mesure." %}
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<section class="relative h-[60vh] md:h-[50vh] overflow-hidden flex items-center justify-center text-white text-center group bg-gray-800">
+    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+         style="background-image: url('{% static 'img/07.jpeg' %}');"
+         role="img" aria-label="{% trans 'Arrière-plan thématique sur la technologie et la connectivité.' %}"></div>
+
+    <div class="absolute inset-0 bg-black bg-opacity-70 backdrop-brightness-50"></div> {# Augmenté l'opacité et ajouté un léger flou #}
+
+    <div class="relative z-10 px-4 max-w-4xl mx-auto py-8">
+        <h2 class="text-3xl sm:text-5xl lg:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">
+            {% trans "Nos domaines d'expertise couvrent 5 pôles clés" %}
+        </h2>
+        <p class="text-lg sm:text-xl md:text-2xl max-w-2xl mx-auto drop-shadow-md mb-8">
+            {% trans "Sécurité électronique, Transformation digitale, Réseaux & Télécoms, Gestion Documentaire et Systèmes Informatiques." %}
+        </p>
+        <a href="{% url 'vitrine:services' %}"
+           class="inline-block bg-blue-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">
+            {% trans "Découvrez nos services" %}
+        </a>
+    </div>
+</section>
+
+<section class="py-20 bg-gray-100 px-6" id="chiffres-section">
+    <div class="max-w-6xl mx-auto text-center">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-blue-900 mb-12">{% trans "Tropicom en quelques chiffres" %}</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+
+            <div class="bg-white rounded-lg shadow-md p-8 transform transition-transform duration-500 hover:scale-105 flex flex-col items-center justify-center border-b-4 border-blue-600">
+                <div class="text-blue-700 text-5xl md:text-6xl font-bold mb-2 animated-number" data-target="150" data-duration="2000" data-prefix="+">
+                    0
+                </div>
+                <p class="text-gray-700 font-medium text-lg md:text-xl">{% trans "Clients satisfaits" %}</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-8 transform transition-transform duration-500 hover:scale-105 flex flex-col items-center justify-center border-b-4 border-blue-600">
+                <div class="text-blue-700 text-5xl md:text-6xl font-bold mb-2 animated-number" data-target="8" data-duration="1500">
+                    0
+                </div>
+                <p class="text-gray-700 font-medium text-lg md:text-xl">{% trans "ans d’expérience" %}</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-8 transform transition-transform duration-500 hover:scale-105 flex flex-col items-center justify-center border-b-4 border-blue-600">
+                <div class="text-blue-700 text-5xl md:text-6xl font-bold mb-2 animated-number" data-target="5" data-duration="1500">
+                    0
+                </div>
+                <p class="text-gray-700 font-medium text-lg md:text-xl">{% trans "pays de la sous-région" %}</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 0.8s ease-out forwards;
+        opacity: 0; /* Assurez-vous qu'ils sont cachés avant l'animation */
+    }
+
+    /* Délais pour les sections si vous voulez qu'elles apparaissent séquentiellement */
+    section:nth-of-type(1).animate-fade-in { animation-delay: 0.1s; }
+    section:nth-of-type(2).animate-fade-in { animation-delay: 0.3s; }
+    section:nth-of-type(3).animate-fade-in { animation-delay: 0.5s; }
+    section:nth-of-type(4).animate-fade-in { animation-delay: 0.7s; }
+</style>
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const chiffresSection = document.getElementById('chiffres-section');
-    const animatedNumbers = document.querySelectorAll('.animated-number');
-    let hasAnimated = false; // Pour s'assurer que l'animation ne se déclenche qu'une seule fois
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animation des chiffres clés lors du scroll
+        const chiffresSection = document.getElementById('chiffres-section');
+        const animatedNumbers = document.querySelectorAll('.animated-number');
+        let hasAnimated = false; // Pour s'assurer que l'animation ne se déclenche qu'une seule fois
 
-    const animateNumber = (element) => {
-        const target = parseInt(element.dataset.target);
-        const duration = parseInt(element.dataset.duration);
-        const prefix = element.dataset.prefix || ''; // Pour gérer le '+'
-        const start = 0;
-        let startTime = null;
+        const animateNumber = (element) => {
+            const target = parseInt(element.dataset.target);
+            const duration = parseInt(element.dataset.duration);
+            const prefix = element.dataset.prefix || '';
+            const start = 0;
+            let startTime = null;
 
-        const step = (timestamp) => {
-            if (!startTime) startTime = timestamp;
-            const progress = timestamp - startTime;
-            const percentage = Math.min(progress / duration, 1);
-            const value = Math.floor(percentage * (target - start) + start);
+            const step = (timestamp) => {
+                if (!startTime) startTime = timestamp;
+                const progress = timestamp - startTime;
+                const percentage = Math.min(progress / duration, 1);
+                const value = Math.floor(percentage * (target - start) + start);
 
-            element.textContent = prefix + value;
+                element.textContent = prefix + value;
 
-            if (percentage < 1) {
-                requestAnimationFrame(step);
-            } else {
-                element.textContent = prefix + target; // S'assurer de la valeur finale exacte
-            }
+                if (percentage < 1) {
+                    requestAnimationFrame(step);
+                } else {
+                    element.textContent = prefix + target;
+                }
+            };
+
+            requestAnimationFrame(step);
         };
 
-        requestAnimationFrame(step);
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !hasAnimated) {
-                animatedNumbers.forEach(num => animateNumber(num));
-                hasAnimated = true;
-                observer.unobserve(entry.target); // Arrêter d'observer une fois l'animation déclenchée
-            }
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !hasAnimated) {
+                    animatedNumbers.forEach(num => animateNumber(num));
+                    hasAnimated = true;
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.5
         });
-    }, {
-        threshold: 0.5 // Déclenche quand 50% de la section est visible
+
+        if (chiffresSection) {
+            observer.observe(chiffresSection);
+        }
+
+        // Animation d'apparition des sections (utilisant les styles CSS @keyframes)
+        const sections = document.querySelectorAll('section.animate-fade-in');
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    // Supprimez l'observateur une fois que l'animation est terminée
+                    sectionObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 }); // Déclenche dès 10% de visibilité
+
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
     });
-
-    if (chiffresSection) {
-        observer.observe(chiffresSection);
-    }
-});
 </script>
-
-  <div class="mt-10">
-  <iframe 
-    src="https://www.google.com/maps?q=Karpala,+Ouagadougou,+Burkina+Faso&output=embed"
-    width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy">
-  </iframe>
-</div>
 
 {% endblock %}

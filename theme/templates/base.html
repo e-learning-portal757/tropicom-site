@@ -129,6 +129,8 @@
         <div class="spinner"></div>
     </div>
 </div>
+
+{# SCRIPT LOADER (Déplacé ici pour que l'élément loader soit disponible) #}
 <script>
     const loader = document.getElementById('page-loader');
     const hasVisitedBefore = localStorage.getItem('hasVisitedTropiCom');
@@ -139,28 +141,34 @@
     }
 
     if (hasVisitedBefore) {
-        // Ajouter une très courte temporisation pour s'assurer que l'état initial est rendu,
-        // surtout si le JS est exécuté avant même le premier rendu du navigateur.
+        // L'utilisateur a déjà visité, on masque le loader rapidement.
+        // Cette temporisation est là pour permettre au navigateur de peindre le loader avant de le masquer.
         setTimeout(() => {
-            if (loader) { // Vérification supplémentaire au cas où
+            if (loader) {
                 loader.style.opacity = '0';
-                setTimeout(() => loader.remove(), 300);
+                setTimeout(() => loader.remove(), 300); // Temps de transition CSS
             }
-        }, 50); // 50ms de délai avant de masquer
+        }, 50); // Attendre 50ms pour le rendu initial avant de masquer
     } else {
-        localStorage.setItem('hasVisitedTropiCom', 'true');
+        // Première visite, on affiche le loader pendant un temps minimum.
+        localStorage.setItem('hasVisitedTropiCom', 'true'); // Enregistrer la visite
+
         window.addEventListener('load', () => {
-            const minDisplayTime = 60000; // 30 secondes
-            const startTime = performance.now(); 
+            // Le code ici s'exécute une fois que TOUTE la page (HTML, CSS, images, etc.) est chargée.
+            const minDisplayTime = 30000; // CORRECTION ICI : 30 secondes (30000 ms)
+            const startTime = performance.now(); // Temps de début de l'événement 'load'
 
             const hideLoader = () => {
-                if (loader) { // Vérification supplémentaire
-                    loader.style.opacity = '0';
-                    setTimeout(() => loader.remove(), 300); 
+                if (loader) {
+                    loader.style.opacity = '0'; // Déclenche la transition CSS
+                    setTimeout(() => loader.remove(), 300); // Supprime l'élément après la transition
                 }
             };
 
-            const timeElapsed = performance.now() - startTime;
+            const timeElapsed = performance.now() - startTime; // Temps écoulé depuis le début du 'load'
+            
+            // Si la page a déjà chargé plus longtemps que le temps minimum, masquer immédiatement.
+            // Sinon, masquer après le temps restant pour atteindre le minDisplayTime.
             if (timeElapsed >= minDisplayTime) {
                 hideLoader();
             } else {

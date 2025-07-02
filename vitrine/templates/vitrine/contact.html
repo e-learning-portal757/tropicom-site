@@ -2,236 +2,296 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}Contact - Tropicom{% endblock %}
+{% block title %}{% trans "Contact - Tropicom : Solutions Numériques et Télécoms pour Entreprises" %}{% endblock %}
 
 {% block content %}
 
-<!-- SECTION CLIENTS EN DIFFICULTÉ -->
 <section class="py-20 bg-gray-50 px-4">
-  <h2 class="text-3xl text-center font-bold text-blue-900 mb-12">{% trans "Nos clients en difficulté, nos solutions efficaces" %}</h2>
+    <h2 class="text-3xl sm:text-4xl text-center font-bold text-blue-900 mb-12">{% trans "Vos défis numériques, nos solutions efficaces" %}</h2>
 
-  <div class="grid md:grid-cols-4 gap-8 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
 
-    {% comment %} Carte 1 : Antivirus dépassé {% endcomment %}
+        {# Card 1: Outdated Antivirus #}
+        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-center flex flex-col items-center justify-between">
+            <div>
+                <h3 class="text-xl font-bold text-red-600 mb-2">{% trans "Antivirus dépassé" %}</h3>
+                <p class="text-gray-700 mb-4">{% trans "Votre poste de travail est infecté par un virus, vous empêchant d'accéder à vos fichiers importants." %}</p>
+                <p class="text-green-700 font-semibold">{% trans "➡️ Notre solution : Installation d'un antivirus professionnel et nettoyage complet du système." %}</p>
+            </div>
+            <div class="w-28 h-28 mx-auto mt-6 overflow-hidden rounded-full border-4 border-blue-100 shadow-md group">
+                <img src="{% static 'img/81.jpeg' %}" alt="{% trans 'Icône Antivirus' %}" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500 ease-in-out lazyload" loading="lazy">
+            </div>
+            <a href="#contact-form"
+               class="mt-6 inline-block w-full bg-blue-600 text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition-colors duration-300">
+                {% trans "Obtenir de l'aide" %}
+            </a>
+        </div>
 
-    <div class="bg-white p-6 rounded-lg shadow hover:shadow-xl transition text-center">
-      <h3 class="text-xl font-bold text-red-600 mb-2">{% trans "Antivirus dépassé" %}</h3>
-      <p class="text-gray-700 mb-4">{% trans "Le poste de travail est infecté par un virus. Le client ne peut plus accéder à ses fichiers." %}</p>
-      <p class="text-green-700 font-medium">{% trans "➡️ Solution : Installation d’un antivirus pro + nettoyage complet." %}</p>
-      <div class="w-28 h-28 mx-auto mt-6 overflow-hidden rounded-full border-4 border-white shadow-lg group">
-        <img src="{% static 'img/81.jpeg' %}" alt="Antivirus" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500 ease-in-out">
-      </div>
-      <a href="#contact"
-         class="mt-4 inline-block w-full bg-blue-100 text-blue-800 font-semibold py-2 rounded hover:bg-blue-200 transition">
-        {% trans "Contactez-nous" %}
-      </a>
+        {# Card 2: Unstable Connection #}
+        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-center flex flex-col items-center justify-between">
+            <div>
+                <h3 class="text-xl font-bold text-red-600 mb-2">{% trans "Connexion instable" %}</h3>
+                <p class="text-gray-700 mb-4">{% trans "Votre connexion internet est intermittente, rendant le travail quasiment impossible." %}</p>
+                <p class="text-green-700 font-semibold">{% trans "➡️ Notre solution : Diagnostic Wi-Fi approfondi et remplacement de votre équipement réseau." %}</p>
+            </div>
+            <div class="w-28 h-28 mx-auto mt-6 overflow-hidden rounded-full border-4 border-blue-100 shadow-md group">
+                <img src="{% static 'img/83.jpeg' %}" alt="{% trans 'Icône Connexion' %}" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500 ease-in-out lazyload" loading="lazy">
+            </div>
+            <a href="#contact-form"
+               class="mt-6 inline-block w-full bg-blue-600 text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition-colors duration-300">
+                {% trans "Obtenir de l'aide" %}
+            </a>
+        </div>
+
+        {# Card 3: Slow Network #}
+        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-center flex flex-col items-center justify-between">
+            <div>
+                <h3 class="text-xl font-bold text-red-600 mb-2">{% trans "Réseau d'entreprise lent" %}</h3>
+                <p class="text-gray-700 mb-4">{% trans "Le partage de fichiers et l'accès aux ressources réseau sont excessivement lents." %}</p>
+                <p class="text-green-700 font-semibold">{% trans "➡️ Notre solution : Optimisation de votre réseau local (LAN) et réorganisation du câblage." %}</p>
+            </div>
+            <div class="w-28 h-28 mx-auto mt-6 overflow-hidden rounded-full border-4 border-blue-100 shadow-md group">
+                <img src="{% static 'img/84.jpeg' %}" alt="{% trans 'Icône Réseau lent' %}" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500 ease-in-out lazyload" loading="lazy">
+            </div>
+            <a href="#contact-form"
+               class="mt-6 inline-block w-full bg-blue-600 text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition-colors duration-300">
+                {% trans "Obtenir de l'aide" %}
+            </a>
+        </div>
+
+        {# Card 4: Remote Access Impossible #}
+        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-center flex flex-col items-center justify-between">
+            <div>
+                <h3 class="text-xl font-bold text-red-600 mb-2">{% trans "Accès distant impossible" %}</h3>
+                <p class="text-gray-700 mb-4">{% trans "Vos collaborateurs en télétravail ne peuvent pas se connecter au réseau interne de l'entreprise." %}</p>
+                <p class="text-green-700 font-semibold">{% trans "➡️ Notre solution : Mise en œuvre d'un réseau privé virtuel (VPN) sécurisé et performant." %}</p>
+            </div>
+            <div class="w-28 h-28 mx-auto mt-6 overflow-hidden rounded-full border-4 border-blue-100 shadow-md group">
+                <img src="{% static 'img/81.jpeg' %}" alt="{% trans 'Icône VPN' %}" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500 ease-in-out lazyload" loading="lazy">
+            </div>
+            <a href="#contact-form"
+               class="mt-6 inline-block w-full bg-blue-600 text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition-colors duration-300">
+                {% trans "Obtenir de l'aide" %}
+            </a>
+        </div>
+
     </div>
-
-    {% comment %}Carte 2 : Connexion instable{% endcomment %}
-    <div class="bg-white p-6 rounded-lg shadow hover:shadow-xl transition text-center">
-      <h3 class="text-xl font-bold text-red-600 mb-2">{% trans "Connexion instable" %}</h3>
-      <p class="text-gray-700 mb-4">{% trans "Le client perd sa connexion chaque 5 minutes, impossible de travailler." %}</p>
-      <p class="text-green-700 font-medium">{% trans "➡️ Solution : Diagnostic Wi-Fi + remplacement du routeur." %}</p>
-      <div class="w-28 h-28 mx-auto mt-6 overflow-hidden rounded-full border-4 border-white shadow-lg group">
-        <img src="{% static 'img/83.jpeg' %}" alt="Connexion" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500 ease-in-out">
-      </div>
-      <a href="#contact"
-         class="mt-4 inline-block w-full bg-blue-100 text-blue-800 font-semibold py-2 rounded hover:bg-blue-200 transition">
-        {% trans "Contactez-nous" %}
-      </a>
-    </div>
-
-    {% comment %}Carte 3 : Réseau lent{% endcomment %}
-    <div class="bg-white p-6 rounded-lg shadow hover:shadow-xl transition text-center">
-      <h3 class="text-xl font-bold text-red-600 mb-2">{% trans "Réseau lent" %}</h3>
-      <p class="text-gray-700 mb-4">{% trans "Le réseau de l'entreprise rame. Partage de fichiers très lent." %}</p>
-      <p class="text-green-700 font-medium">{% trans "➡️ Solution : Optimisation du LAN et des câblages." %}</p>
-      <div class="w-28 h-28 mx-auto mt-6 overflow-hidden rounded-full border-4 border-white shadow-lg group">
-        <img src="{% static 'img/84.jpeg' %}" alt="Réseau lent" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500 ease-in-out">
-      </div>
-      <a href="#contact"
-         class="mt-4 inline-block w-full bg-blue-100 text-blue-800 font-semibold py-2 rounded hover:bg-blue-200 transition">
-        {% trans "Contactez-nous" %}
-      </a>
-    </div>
-
-    {% comment %}Carte 4 : Accès distant impossible  {% endcomment %}
-    <div class="bg-white p-6 rounded-lg shadow hover:shadow-xl transition text-center">
-      <h3 class="text-xl font-bold text-red-600 mb-2">{% trans "Impossible de se connecter à distance" %}</h3>
-      <p class="text-gray-700 mb-4">{% trans "Le télétravailleur ne peut pas accéder au réseau interne." %}</p>
-      <p class="text-green-700 font-medium">{% trans "➡️ Solution : Mise en place d’un VPN sécurisé." %}</p>
-      <div class="w-28 h-28 mx-auto mt-6 overflow-hidden rounded-full border-4 border-white shadow-lg group">
-        <img src="{% static 'img/81.jpeg' %}" alt="VPN" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500 ease-in-out">
-      </div>
-      <a href="#contact"
-         class="mt-4 inline-block w-full bg-blue-100 text-blue-800 font-semibold py-2 rounded hover:bg-blue-200 transition">
-        {% trans "Contactez-nous" %}
-      </a>
-    </div>
-
-  </div>
 </section>
 
 
-<!-- Aide et Contact -->
-<section id="contact" class="py-16 bg-white">
-  <div class="max-w-6xl mx-auto px-4">
-    <h2 class="text-4xl font-bold text-center text-blue-700 mb-8">Aide et Contact</h2>
+<section id="contact-form" class="py-16 bg-white px-4">
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-4xl sm:text-5xl font-extrabold text-center text-blue-700 mb-12">{% trans "Contactez-nous" %}</h2>
 
-    {# Affichage des messages de Django (succès/erreur) #}
-    {% if messages %}
-    <div class="mb-6"> {# Ajout d'une marge inférieure pour séparer des autres éléments #}
-        <ul class="list-none p-0">
-            {% for message in messages %}
-            <li class="p-3 mb-2 rounded-md 
-                {% if message.tags == 'success' %}bg-green-100 text-green-700{% comment %} Vert pour succès {% endcomment %}
-                {% elif message.tags == 'error' %}bg-red-100 text-red-700{% comment %} Rouge pour erreur {% endcomment %}
-                {% elif message.tags == 'warning' %}bg-yellow-100 text-yellow-700{% comment %} Jaune pour avertissement {% endcomment %}
-                {% else %}bg-blue-100 text-blue-700{% comment %} Bleu par défaut ou info {% endcomment %}{% endif %}">
-                {{ message }}
-            </li>
-            {% endfor %}
-        </ul>
+        {# Django Messages Display #}
+        {% if messages %}
+        <div class="mb-8 p-4 rounded-lg">
+            <ul class="list-none m-0 p-0">
+                {% for message in messages %}
+                <li class="p-3 mb-2 rounded-md text-center
+                    {% if message.tags == 'success' %}bg-green-100 text-green-700 border border-green-200{% comment %} Green for success {% endcomment %}
+                    {% elif message.tags == 'error' %}bg-red-100 text-red-700 border border-red-200{% comment %} Red for error {% endcomment %}
+                    {% elif message.tags == 'warning' %}bg-yellow-100 text-yellow-700 border border-yellow-200{% comment %} Yellow for warning {% endcomment %}
+                    {% else %}bg-blue-100 text-blue-700 border border-blue-200{% comment %} Blue by default or info {% endcomment %}{% endif %}">
+                    {{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {# Contact Form #}
+            <form method="POST" action="{% url 'vitrine:contact' %}" class="space-y-6 bg-gray-50 p-8 rounded-lg shadow-lg">
+                {% csrf_token %}
+                <div>
+                    <label for="nom" class="block text-gray-800 font-semibold mb-2">{% trans "Votre Nom Complet" %}</label>
+                    <input type="text" id="nom" name="nom" required
+                           class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out text-gray-900 placeholder-gray-500"
+                           placeholder="{% trans 'Ex: Jean Dupont' %}">
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-800 font-semibold mb-2">{% trans "Votre Adresse E-mail Professionnelle" %}</label>
+                    <input type="email" id="email" name="email" required
+                           class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out text-gray-900 placeholder-gray-500"
+                           placeholder="{% trans 'Ex: contact@votreentreprise.com' %}">
+                </div>
+                <div>
+                    <label for="sujet" class="block text-gray-800 font-semibold mb-2">{% trans "Sujet de votre demande" %}</label>
+                    <input type="text" id="sujet" name="sujet" required
+                           class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out text-gray-900 placeholder-gray-500"
+                           placeholder="{% trans 'Ex: Demande de devis pour sécurité réseau' %}">
+                </div>
+                <div>
+                    <label for="message" class="block text-gray-800 font-semibold mb-2">{% trans "Votre Message Détaillé" %}</label>
+                    <textarea id="message" name="message" rows="6" required
+                              class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out text-gray-900 placeholder-gray-500"
+                              placeholder="{% trans 'Décrivez votre besoin ou votre problème...' %}"></textarea>
+                </div>
+                <button type="submit"
+                        class="w-full bg-blue-700 text-white font-bold py-3 rounded-md hover:bg-blue-800 transition-colors duration-300 transform hover:scale-105 shadow-md">
+                    {% trans "Envoyer Votre Message" %}
+                </button>
+            </form>
+
+            {# Contact Information #}
+            <div class="space-y-8 text-gray-700">
+                <div class="bg-gray-100 p-7 rounded-xl shadow-md">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-3">{% trans "Notre Adresse" %}</h3>
+                    <p class="text-lg leading-relaxed">
+                        06 BP 10811 Ouagadougou<br>
+                        Burkina Faso<br>
+                        Karpala-Secteur 51 <br>
+                        {% trans "Côté est du CHU de Bogodogo" %}
+                    </p>
+                </div>
+                <div class="bg-gray-100 p-7 rounded-xl shadow-md">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-3">{% trans "Contact Téléphonique" %}</h3>
+                    <p class="text-lg mb-2"><i class="fas fa-phone-alt text-blue-600 mr-2"></i> +226 25 37 37 88</p>
+                    <p class="text-lg mb-2"><i class="fab fa-whatsapp text-green-500 mr-2"></i> +226 73 12 22 22</p>
+                    <p class="text-lg"><i class="fas fa-mobile-alt text-blue-600 mr-2"></i> +226 77 48 08 09</p>
+                </div>
+                <div class="bg-gray-100 p-7 rounded-xl shadow-md">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-3">{% trans "Adresse E-mail" %}</h3>
+                    <p class="text-lg">
+                        <i class="fas fa-envelope text-blue-600 mr-2"></i>
+                        <a href="mailto:contact@tropicom.com" class="text-blue-700 hover:underline">contact@tropicom.com</a>
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
-    {% endif %}
-
-    <div class="grid md:grid-cols-2 gap-10">
-      <form method="POST" action="{% url 'vitrine:contact' %}" class="space-y-4">
-        {% csrf_token %}
-        <div>
-          <label for="nom" class="block text-gray-700 font-medium mb-1">Nom</label>
-          <input type="text" id="nom" name="nom" required class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
-        </div>
-        <div>
-          <label for="email" class="block text-gray-700 font-medium mb-1">Email</label>
-          <input type="email" id="email" name="email" required class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
-        </div>
-        <div>
-          <label for="sujet" class="block text-gray-700 font-medium mb-1">Sujet</label>
-          <input type="text" id="sujet" name="sujet" required class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
-        </div>
-        <div>
-          <label for="message" class="block text-gray-700 font-medium mb-1">Message</label>
-          <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
-        </div>
-        <button type="submit" class="w-full bg-blue-700 text-white py-2 rounded-md hover:bg-blue-800 transition">Envoyer</button>
-      </form>
-
-      <div class="space-y-6 text-gray-700">
-        <div class="bg-gray-100 p-6 rounded-xl shadow">
-          <h3 class="text-xl font-semibold text-blue-700 mb-2">Adresse</h3>
-          <p>06 BP 10811 &nbsp;Ouagadougou<br>Burkina Faso</p>
-          <p>Karpala-Secteur 51 <br> Coté est du chu de BOGODOGO</p>
-        </div>
-        <div class="bg-gray-100 p-6 rounded-xl shadow">
-          <h3 class="text-xl font-semibold text-blue-700 mb-2">Téléphone</h3>
-          <p>+226 25 37 37 88</p>
-          <p>+226 73 12 22 22</p>
-          <p>+226 77 48 08 09</p>
-        </div>
-        <div class="bg-gray-100 p-6 rounded-xl shadow">
-          <h3 class="text-xl font-semibold text-blue-700 mb-2">Email</h3>
-          <p>contact@tropicom.com</p>
-        </div>
-      </div>
-    </div>
-  </div>
 </section>
-<div class="mt-10">
-  <iframe 
-    src="https://www.google.com/maps?q=Karpala,+Ouagadougou,+Burkina+Faso&output=embed"
-    width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy">
-  </iframe>
+
+<section class="mt-10 mb-10"> {# Added margin-bottom for better spacing #}
+    <h2 class="sr-only">{% trans "Localisation de Tropicom sur Google Maps" %}</h2> {# Screen reader only title #}
+    <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3876.544520869372!2d-1.464684085189745!3d12.355609491295982!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xe2ebc394c8e7e17%3A0xf69c4f69c4f69c4f!2sTropicom!5e0!3m2!1sen!2sbf!4v1678912345678!5m2!1sen!2sbf"
+        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        title="{% trans 'Carte de localisation de Tropicom' %}">
+    </iframe>
+</section>
+
+<div id="notif-container" class="fixed bottom-5 left-5 z-50 space-y-4 pointer-events-none">
+    <div class="notif hidden bg-white border border-blue-300 shadow-lg rounded-lg px-4 py-3 relative w-72 text-sm transform translate-x-[-100%] opacity-0">
+        <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600 p-1 rounded-full hover:bg-gray-100 transition" onclick="this.parentElement.remove()" aria-label="{% trans 'Fermer la notification' %}">×</button>
+        <p class="font-bold text-blue-900 mb-2 text-base">{% trans "Besoin d'un VPN sécurisé ?" %}</p>
+        <a href="https://wa.me/22673122222" target="_blank" rel="noopener noreferrer" class="inline-block bg-green-500 text-white text-xs px-3 py-1.5 rounded-full hover:bg-green-600 transition shadow">
+            {% trans "Oui, contactez-nous" %}
+        </a>
+    </div>
+    <div class="notif hidden bg-white border border-blue-300 shadow-lg rounded-lg px-4 py-3 relative w-72 text-sm transform translate-x-[-100%] opacity-0">
+        <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600 p-1 rounded-full hover:bg-gray-100 transition" onclick="this.parentElement.remove()" aria-label="{% trans 'Fermer la notification' %}">×</button>
+        <p class="font-bold text-blue-900 mb-2 text-base">{% trans "Besoin d'un système d'alarme ?" %}</p>
+        <a href="https://wa.me/22673122222" target="_blank" rel="noopener noreferrer" class="inline-block bg-green-500 text-white text-xs px-3 py-1.5 rounded-full hover:bg-green-600 transition shadow">
+            {% trans "Oui, contactez-nous" %}
+        </a>
+    </div>
+    <div class="notif hidden bg-white border border-blue-300 shadow-lg rounded-lg px-4 py-3 relative w-72 text-sm transform translate-x-[-100%] opacity-0">
+        <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600 p-1 rounded-full hover:bg-gray-100 transition" onclick="this.parentElement.remove()" aria-label="{% trans 'Fermer la notification' %}">×</button>
+        <p class="font-bold text-blue-900 mb-2 text-base">{% trans "Besoin de conseil en communication ?" %}</p>
+        <a href="https://wa.me/22673122222" target="_blank" rel="noopener noreferrer" class="inline-block bg-green-500 text-white text-xs px-3 py-1.5 rounded-full hover:bg-green-600 transition shadow">
+            {% trans "Oui, contactez-nous" %}
+        </a>
+    </div>
+    <div class="notif hidden bg-white border border-blue-300 shadow-lg rounded-lg px-4 py-3 relative w-72 text-sm transform translate-x-[-100%] opacity-0">
+        <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600 p-1 rounded-full hover:bg-gray-100 transition" onclick="this.parentElement.remove()" aria-label="{% trans 'Fermer la notification' %}">×</button>
+        <p class="font-bold text-blue-900 mb-2 text-base">{% trans "Besoin d'un site Web professionnel ?" %}</p>
+        <a href="https://wa.me/22673122222" target="_blank" rel="noopener noreferrer" class="inline-block bg-green-500 text-white text-xs px-3 py-1.5 rounded-full hover:bg-green-600 transition shadow">
+            {% trans "Oui, contactez-nous" %}
+        </a>
+    </div>
+    <div class="notif hidden bg-white border border-blue-300 shadow-lg rounded-lg px-4 py-3 relative w-72 text-sm transform translate-x-[-100%] opacity-0">
+        <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600 p-1 rounded-full hover:bg-gray-100 transition" onclick="this.parentElement.remove()" aria-label="{% trans 'Fermer la notification' %}">×</button>
+        <p class="font-bold text-blue-900 mb-2 text-base">{% trans "Besoin d'installation Réseau ?" %}</p>
+        <a href="https://wa.me/22673122222" target="_blank" rel="noopener noreferrer" class="inline-block bg-green-500 text-white text-xs px-3 py-1.5 rounded-full hover:bg-green-600 transition shadow">
+            {% trans "Oui, contactez-nous" %}
+        </a>
+    </div>
 </div>
 
+<style>
+    /* Keyframe for slide-in animation from left */
+    @keyframes slideInLeft {
+        from {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
 
-<!-- Script JavaScript pour slide horizontal -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const slider = document.getElementById('slider');
-    const totalSlides = slider.children.length;
-    let index = 0;
+    /* Keyframe for slide-out animation to left */
+    @keyframes slideOutLeft {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+    }
 
-    setInterval(() => {
-      index = (index + 1) % totalSlides;
-      slider.style.transform = `translateX(-${index * 100}%)`;
-    }, 5000); // toutes les 5 secondes
-  });
-</script>
-<div id="notif-container" class="fixed bottom-5 left-5 z-50 space-y-4">
-  <!-- Notification 1 -->
-  <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm">
-    <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600" onclick="this.parentElement.remove()">×</button>
-    <p class="font-semibold text-blue-900 mb-2 text-sm">Besoin d'un vpn securise ?</p>
-    <a href="https://wa.me/22673122222" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
-  Oui, contactez-nous
-</a>
+    .notif.animate-slide-in {
+        animation: slideInLeft 0.5s ease-out forwards;
+    }
 
-  </div>
-  <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm">
-    <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600" onclick="this.parentElement.remove()">×</button>
-    <p class="font-semibold text-blue-900 mb-2 text-sm">Besoin de systeme d'alarme ?</p>
-    <a href="https://wa.me/22673122222" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
-  Oui, contactez-nous
-</a>
-
-  </div>
-  <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm">
-    <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600" onclick="this.parentElement.remove()">×</button>
-    <p class="font-semibold text-blue-900 mb-2 text-sm">Besoin de conseil en communication ?</p>
-    <a href="https://wa.me/22673122222" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
-  Oui, contactez-nous
-</a>
-
-  </div>
-
-  <!-- Notification 2 -->
- <div id="notif-container" class="fixed bottom-5 left-5 z-50 space-y-4">
-  <!-- Notification 1 -->
-  <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm">
-    <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600" onclick="this.parentElement.remove()">×</button>
-    <p class="font-semibold text-blue-900 mb-2 text-sm">Besoin de site Web ?</p>
-    <a href="https://wa.me/22673122222" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
-  Oui, contactez-nous
-</a>
-
-  </div>
-
-  <!-- Notification 3 -->
-  <div id="notif-container" class="fixed bottom-5 left-5 z-50 space-y-4">
-  <!-- Notification 1 -->
-  <div class="notif hidden bg-white border border-blue-300 shadow-md rounded px-4 py-3 relative w-64 text-sm">
-    <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600" onclick="this.parentElement.remove()">×</button>
-    <p class="font-semibold text-blue-900 mb-2 text-sm">Besoin d'installation Reseau ?</p>
-    <a href="https://wa.me/22673122222" class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600 transition">
-  Oui, contactez-nous
-</a>
-
-  </div>
-</div>
+    .notif.animate-slide-out {
+        animation: slideOutLeft 0.5s ease-in forwards;
+    }
+</style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const notifs = document.querySelectorAll("#notif-container .notif");
-    let delay = 0;
+    document.addEventListener("DOMContentLoaded", function () {
+        const notifs = document.querySelectorAll("#notif-container .notif");
+        let delay = 0;
+        const displayDuration = 8000; // 8 seconds
+        const intervalBetweenNotifs = 9000; // 9 seconds to show the next one after the previous one finishes its display duration
 
-    notifs.forEach((notif) => {
-      setTimeout(() => {
-        notif.classList.remove("hidden");
+        function showNotif(index) {
+            if (index >= notifs.length) {
+                index = 0; // Loop back to the first notification
+            }
 
-        // Disparaît 8 secondes après son apparition
-        setTimeout(() => {
-          notif.remove();
-        }, 8000);
+            const currentNotif = notifs[index];
+            currentNotif.classList.remove("hidden", "animate-slide-out");
+            currentNotif.classList.add("animate-slide-in");
+            currentNotif.style.pointerEvents = 'auto'; // Enable interactions for the current notif
 
-      }, delay);
+            // Set timeout for disappearance
+            setTimeout(() => {
+                currentNotif.classList.remove("animate-slide-in");
+                currentNotif.classList.add("animate-slide-out");
+                currentNotif.style.pointerEvents = 'none'; // Disable interactions during exit animation
 
-      // Prochaine notification dans 9 secondes
-      delay += 9000;
+                currentNotif.addEventListener('animationend', function handler() {
+                    currentNotif.classList.add("hidden");
+                    currentNotif.removeEventListener('animationend', handler); // Remove listener to prevent multiple calls
+                });
+            }, displayDuration);
+
+            // Schedule the next notification
+            setTimeout(() => {
+                showNotif(index + 1);
+            }, intervalBetweenNotifs);
+        }
+
+        // Start the cycle after a small initial delay
+        if (notifs.length > 0) {
+            setTimeout(() => {
+                showNotif(0);
+            }, 1000); // Initial delay before the first notification appears
+        }
     });
-  });
+
+    // Dummy script for Feather Icons (replace with actual Feather setup if used)
+    // <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    // <script>
+    //   feather.replace()
+    // </script>
 </script>
-
-
 
 {% endblock %}
