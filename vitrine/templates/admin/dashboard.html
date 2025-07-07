@@ -1,16 +1,115 @@
 {% extends "admin/base_site.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Tableau de bord Tropicom" %}{% endblock %}
+
+{% block content_title %}
+    <h1 class="text-3xl font-extrabold text-gray-900 leading-tight">{% trans "Bienvenue dans le tableau de bord Tropicom" %}</h1>
+{% endblock %}
+
 {% block content %}
-<h1>Bienvenue dans le tableau de bord Tropicom</h1>
+<div class="px-4 py-6"> {# Ajout de padding pour le contenu #}
 
-<div style="display: flex; gap: 20px;">
-  <div><strong>Total Services :</strong> {{ total_services }}</div>
-  <div><strong>Messages :</strong> {{ total_messages }}</div>
-  <div><strong>Inscrits Newsletter :</strong> {{ total_newsletter }}</div>
+    <h2 class="text-2xl font-semibold text-blue-800 mb-6">{% trans "Statistiques rapides" %}</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+        {# Carte des Services #}
+        <div class="bg-white rounded-lg shadow-md p-6 flex items-center space-x-4 border-b-4 border-blue-500 hover:shadow-lg transition-shadow duration-300">
+            <div class="flex-shrink-0 bg-blue-100 rounded-full p-3">
+                <svg class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 002 2h4a2 2 0 012 2v2a2 2 0 01-2 2H9.864a2 2 0 01-1.664.89l-2.88 1.151A.75.75 0 004 17.5V17a2 2 0 00-2-2v-2a2 2 0 002-2h1.136a2 2 0 011.664-.89l2.88-1.151A.75.75 0 0012 6z" />
+                </svg>
+            </div>
+            <div>
+                <p class="text-gray-600 text-sm">{% trans "Total Services" %}</p>
+                <p class="text-3xl font-bold text-gray-900">{{ total_services }}</p>
+            </div>
+        </div>
+
+        {# Carte des Messages #}
+        <div class="bg-white rounded-lg shadow-md p-6 flex items-center space-x-4 border-b-4 border-green-500 hover:shadow-lg transition-shadow duration-300">
+            <div class="flex-shrink-0 bg-green-100 rounded-full p-3">
+                <svg class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+            </div>
+            <div>
+                <p class="text-gray-600 text-sm">{% trans "Messages" %}</p>
+                <p class="text-3xl font-bold text-gray-900">{{ total_messages }}</p>
+            </div>
+        </div>
+
+        {# Carte des Inscrits Newsletter #}
+        <div class="bg-white rounded-lg shadow-md p-6 flex items-center space-x-4 border-b-4 border-purple-500 hover:shadow-lg transition-shadow duration-300">
+            <div class="flex-shrink-0 bg-purple-100 rounded-full p-3">
+                <svg class="h-8 w-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                </svg>
+            </div>
+            <div>
+                <p class="text-gray-600 text-sm">{% trans "Inscrits Newsletter" %}</p>
+                <p class="text-3xl font-bold text-gray-900">{{ total_newsletter }}</p>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="text-2xl font-semibold text-blue-800 mb-6">{% trans "Actions rapides" %}</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {# Carte de gestion des Services #}
+        <a href="{% url 'admin:theme_service_changelist' %}" class="block bg-white rounded-lg shadow-md p-6 group hover:shadow-lg transition-shadow duration-300">
+            <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 bg-blue-500 rounded-full p-3 group-hover:bg-blue-600 transition-colors duration-200">
+                    <svg class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800 group-hover:text-blue-700 transition-colors duration-200">{% trans "Gérer les Services" %}</h3>
+                    <p class="text-gray-600">{% trans "Ajoutez, modifiez ou supprimez les services proposés par Tropicom." %}</p>
+                </div>
+            </div>
+        </a>
+
+        {# Carte des Messages #}
+        <a href="{% url 'admin:vitrine_messagecontact_changelist' %}" class="block bg-white rounded-lg shadow-md p-6 group hover:shadow-lg transition-shadow duration-300">
+            <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 bg-green-500 rounded-full p-3 group-hover:bg-green-600 transition-colors duration-200">
+                    <svg class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.105A9.702 9.702 0 0112 10c4.97 0 9 3.582 9 8z" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800 group-hover:text-green-700 transition-colors duration-200">{% trans "Voir les messages" %}</h3>
+                    <p class="text-gray-600">{% trans "Consultez les messages envoyés via le formulaire de contact." %}</p>
+                </div>
+            </div>
+        </a>
+
+        {# Carte de gestion des Newsletters (exemple, si vous en avez une) #}
+        {# Supprimez ou adaptez si non pertinent #}
+        <a href="{% url 'admin:vitrine_newsletter_changelist' %}" class="block bg-white rounded-lg shadow-md p-6 group hover:shadow-lg transition-shadow duration-300">
+            <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 bg-purple-500 rounded-full p-3 group-hover:bg-purple-600 transition-colors duration-200">
+                    <svg class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800 group-hover:text-purple-700 transition-colors duration-200">{% trans "Gérer la Newsletter" %}</h3>
+                    <p class="text-gray-600">{% trans "Accédez et gérez les abonnés à la newsletter Tropicom." %}</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    {# Vous pouvez ajouter d'autres sections ici, comme des graphiques (si vous avez une bibliothèque de graphique configurée), des liens vers des rapports, etc. #}
+    {# Exemple : un lien vers la documentation #}
+    <div class="mt-10 pt-6 border-t border-gray-200 text-center">
+        <p class="text-gray-600">{% trans "Besoin d'aide ? Consultez la " %}<a href="https://docs.djangoproject.com/fr/stable/ref/contrib/admin/" class="text-blue-600 hover:underline">{% trans "documentation Django Admin" %}</a>.</p>
+    </div>
+
 </div>
-
-<hr>
-
-<p><a href="{% url 'admin:theme_service_changelist' %}">➡️ Gérer les Services</a></p>
-<p><a href="{% url 'admin:vitrine_messagecontact_changelist' %}">📬 Voir les messages</a></p>
-
 {% endblock %}

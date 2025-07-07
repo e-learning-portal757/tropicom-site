@@ -145,6 +145,6 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # --- Adresses des administrateurs (où les messages de contact seront envoyés) ---
 # C'est ici que vous définissez votre email personnel
 ADMINS = [
-    ('Tropicom', 'hamzaguissou103@gmail.com'), # REMPLACEZ PAR VOTRE ADRESSE E-MAIL PERSONNELLE
+    ('amsa guissou', 'hamzaguissou103@gmail.com'), # REMPLACEZ PAR VOTRE ADRESSE E-MAIL PERSONNELLE
 ]
 MANAGERS = ADMINS # Souvent les mêmes que les ADMINS pour les rapports d'erreurs
