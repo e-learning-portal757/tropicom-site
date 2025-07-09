@@ -1,3 +1,5 @@
+# C:\Users\DELL\tropicom\tropicom_site\vitrine\admin.py
+
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
@@ -24,9 +26,9 @@ class ServiceAdmin(admin.ModelAdmin):
 
 @admin.register(Newsletter)
 class NewsletterAdmin(admin.ModelAdmin):
-    list_display = ('email', 'date_inscription')
+    list_display = ('email', 'date_subscribed') # <-- CORRIGÉ ICI
     search_fields = ('email',)
-    readonly_fields = ('date_inscription',)
+    readonly_fields = ('date_subscribed',)    # <-- CORRIGÉ ICI
 
 @admin.register(MessageContact)
 class MessageContactAdmin(admin.ModelAdmin):

@@ -1,3 +1,5 @@
+# C:\Users\DELL\tropicom\tropicom_site\vitrine\models.py
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -7,7 +9,6 @@ class Service(models.Model):
     description = models.TextField(_("Description"))
     categorie = models.CharField(_("Catégorie"), max_length=100, default="Général")
     prestations = models.TextField(
-
         _("Prestations"),
         help_text=_("Sépare chaque prestation par un point-virgule (;)"),
         default=_("Aucune prestation")
@@ -35,9 +36,14 @@ class ImageSupplementaire(models.Model):
     def __str__(self):
         return f"{_('Image de')} {self.service.titre}"
 
+# AJOUTEZ CE MODÈLE ICI
 class Newsletter(models.Model):
     email = models.EmailField(_("Email"), unique=True)
-    date_inscription = models.DateTimeField(_("Date d'inscription"), auto_now_add=True)
+    date_subscribed = models.DateTimeField(_("Date d'abonnement"), auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("Abonné à la newsletter")
+        verbose_name_plural = _("Abonnés à la newsletter")
 
     def __str__(self):
         return self.email
@@ -52,12 +58,14 @@ class MessageContact(models.Model):
     def __str__(self):
         return f"{self.nom} - {self.sujet}"
 
-from django.db import models
+# Vous avez une deuxième `from django.db import models` ici, c'est redondant.
+# Supprimez cette ligne ou assurez-vous qu'elle n'est pas nécessaire.
+# from django.db import models # <-- CELLE-CI !
 
 class ImageNosRealisation(models.Model):
-    titre = models.CharField(max_length=255, default="Image sans titre")
+    titre = models.CharField(max_length=255, default=_("Image sans titre")) # Ajout de _() pour la traduction
     image = models.ImageField(upload_to='realisations/')
     description = models.TextField(blank=True, null=True)
-    
+
     def __str__(self):
         return self.titre

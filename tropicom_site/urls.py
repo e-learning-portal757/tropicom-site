@@ -33,11 +33,6 @@ urlpatterns += i18n_patterns(
     path('', include('vitrine.urls', namespace='vitrine')),
 )
 
-
-urlpatterns += i18n_patterns(
-     path('admin/', admin.site.urls),
-    
-)
 # Fichiers statiques en mode DEBUG
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
