@@ -4,6 +4,13 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from .models import Service, ImageSupplementaire, Newsletter, MessageContact, ImageNosRealisation
+from .models import JobOffer
+
+@admin.register(JobOffer)
+class JobOfferAdmin(admin.ModelAdmin):
+    list_display = ('title', 'is_active', 'created_at')
+    list_filter = ('is_active',)
+    search_fields = ('title', 'description')
 
 # Inline pour les images supplémentaires liées à un service
 class ImageSupplementaireInline(admin.TabularInline):

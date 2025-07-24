@@ -178,53 +178,65 @@
 </script>
 
 
-{# Barre de navigation fixe #}
 <header class="fixed top-0 left-0 w-full bg-white text-blue-800 px-6 py-4 flex items-center shadow-md z-50">
-    {# Logo aligné à gauche #}
-    <a href="{% url 'vitrine:index' %}" class="flex items-center gap-2">
-        <img src="{% static 'img/1.png' %}" alt="Logo Tropicom" class="h-16 w-16 rounded-full object-cover">
-        <span class="sr-only">Tropicom</span>
-    </a>
+    {# Logo aligné à gauche #}
+    <a href="{% url 'vitrine:index' %}" class="flex items-center gap-2">
+        <img src="{% static 'img/1.png' %}" alt="Logo Tropicom" class="h-16 w-16 rounded-full object-cover">
+        <span class="sr-only">Tropicom</span>
+    </a>
 
-    {# Menu desktop - occupe l'espace disponible et centre ses éléments #}
-    <nav id="menu" class="hidden md:flex **gap-4** text-lg items-center flex-grow justify-center" aria-label="Menu principal">
-        <a href="{% url 'vitrine:index' %}" class="flex items-center gap-2 hover:text-red-600 transition font-bold">
-            <i data-feather="home" class="w-5 h-5 align-middle"></i> {% trans "Accueil" %}
-        </a>
-        <a href="{% url 'vitrine:services' %}" class="flex items-center gap-2 hover:text-red-600 transition font-bold">
-            <i data-feather="box" class="w-5 h-5 align-middle"></i> {% trans "Services" %}
-        </a>
-        <a href="{% url 'vitrine:contact' %}" class="flex items-center gap-2 hover:text-red-600 transition font-bold">
-            <i data-feather="phone" class="w-5 h-5 align-middle"></i> {% trans "Aide & Contact" %}
-        </a>
-        <a href="{% url 'vitrine:about' %}" class="flex items-center gap-2 hover:text-red-600 transition font-bold">
-            <i data-feather="info" class="w-5 h-5 align-middle"></i> {% trans "À propos" %}
-        </a>
-    </nav>
+    {# Menu desktop - occupe l'espace disponible et centre ses éléments #}
+    <nav id="menu" class="hidden md:flex gap-4 text-lg items-center flex-grow justify-center" aria-label="Menu principal">
+        <a href="{% url 'vitrine:index' %}" class="flex items-center gap-2 hover:text-red-600 transition font-bold">
+            <i data-feather="home" class="w-5 h-5 align-middle"></i> {% trans "Accueil" %}
+        </a>
+        <a href="{% url 'vitrine:services' %}" class="flex items-center gap-2 hover:text-red-600 transition font-bold">
+            <i data-feather="box" class="w-5 h-5 align-middle"></i> {% trans "Services" %}
+        </a>
+        {# Afficher "Offre d'emploi" si des offres actives existent #}
+        {% if has_active_job_offers %}
+            <a href="{% url 'vitrine:job_offers' %}" class="flex items-center gap-2 hover:text-red-600 transition font-bold">
+                <i data-feather="briefcase" class="w-5 h-5 align-middle"></i> {% trans "Offre d'emploi" %}
+            </a>
+        {% endif %}
+        <a href="{% url 'vitrine:contact' %}" class="flex items-center gap-2 hover:text-red-600 transition font-bold">
+            <i data-feather="phone" class="w-5 h-5 align-middle"></i> {% trans "Aide & Contact" %}
+        </a>
+        <a href="{% url 'vitrine:about' %}" class="flex items-center gap-2 hover:text-red-600 transition font-bold">
+            <i data-feather="info" class="w-5 h-5 align-middle"></i> {% trans "À propos" %}
+        </a>
+    </nav>
 
-    {# Bouton hamburger (mobile uniquement) #}
-    <button id="menu-btn" class="md:hidden focus:outline-none ml-auto" aria-label="Ouvrir le menu" aria-expanded="false">
-        <i data-feather="menu" class="w-6 h-6 text-blue-800"></i>
-    </button>
+    {# Bouton hamburger (mobile uniquement) #}
+    <button id="menu-btn" class="md:hidden focus:outline-none ml-auto" aria-label="Ouvrir le menu" aria-expanded="false">
+        <i data-feather="menu" class="w-6 h-6 text-blue-800"></i>
+    </button>
 </header>
 
-{# Menu mobile (visible uniquement quand actif, caché par défaut) #}
-<div id="mobile-menu" class="hidden md:hidden bg-white text-blue-800 px-6 py-4 space-y-4 shadow-md mt-20 fixed w-full z-40">
-    <a href="{% url 'vitrine:index' %}" class="block py-2 hover:text-red-600 transition font-bold"><i data-feather="home" class="w-5 h-5 align-middle"></i> {% trans "Accueil" %}</a>
-    <a href="{% url 'vitrine:services' %}" class="block py-2 hover:text-red-600 transition font-bold"><i data-feather="box" class="w-5 h-5 align-middle"></i> {% trans "Services" %}</a>
-    <a href="{% url 'vitrine:contact' %}" class="block py-2 hover:text-red-600 transition font-bold"><i data-feather="phone" class="w-5 h-5 align-middle"></i> {% trans "Aide & Contact" %}</a>
-    <a href="{% url 'vitrine:about' %}" class="block py-2 hover:text-red-600 transition font-bold"><i data-feather="info" class="w-5 h-5 align-middle"></i> {% trans "À propos" %}</a>
-</div>
+---
 
 {# Menu mobile (visible uniquement quand actif, caché par défaut) #}
-{# Ajusté les couleurs pour être en harmonie avec le menu desktop si désiré #}
+{# Inclut l'option "Offre d'emploi" avec la même logique conditionnelle #}
 <div id="mobile-menu" class="hidden md:hidden bg-white text-blue-800 px-6 py-4 space-y-4 shadow-md mt-20 fixed w-full z-40">
-    <a href="{% url 'vitrine:index' %}" class="block py-2 hover:text-red-600 transition"><i data-feather="home"></i> {% trans "Accueil" %}</a>
-    <a href="{% url 'vitrine:services' %}" class="block py-2 hover:text-red-600 transition"><i data-feather="box"></i> {% trans "Services" %}</a>
-    <a href="{% url 'vitrine:contact' %}" class="block py-2 hover:text-red-600 transition"><i data-feather="phone"></i> {% trans "Aide & Contact" %}</a>
-    <a href="{% url 'vitrine:about' %}" class="block py-2 hover:text-red-600 transition"><i data-feather="info"></i> {% trans "À propos" %}</a>
+    <a href="{% url 'vitrine:index' %}" class="block py-2 hover:text-red-600 transition flex items-center gap-2">
+        <i data-feather="home" class="w-5 h-5"></i> {% trans "Accueil" %}
+    </a>
+    <a href="{% url 'vitrine:services' %}" class="block py-2 hover:text-red-600 transition flex items-center gap-2">
+        <i data-feather="box" class="w-5 h-5"></i> {% trans "Services" %}
+    </a>
+    {# NOUVEAU : Option Offre d'emploi pour mobile #}
+    {% if has_active_job_offers %}
+        <a href="{% url 'vitrine:job_offers' %}" class="block py-2 hover:text-red-600 transition flex items-center gap-2">
+            <i data-feather="briefcase" class="w-5 h-5"></i> {% trans "Offre d'emploi" %}
+        </a>
+    {% endif %}
+    <a href="{% url 'vitrine:contact' %}" class="block py-2 hover:text-red-600 transition flex items-center gap-2">
+        <i data-feather="phone" class="w-5 h-5"></i> {% trans "Aide & Contact" %}
+    </a>
+    <a href="{% url 'vitrine:about' %}" class="block py-2 hover:text-red-600 transition flex items-center gap-2">
+        <i data-feather="info" class="w-5 h-5"></i> {% trans "À propos" %}
+    </a>
 </div>
-
 
 {# Condition pour le header spécial de l'index #}
 {% if request.resolver_match.url_name == "index" %}
@@ -300,7 +312,7 @@
                     <ul class="space-y-2 text-base">
                         <li>✔ Protection de données</li>
                         <li>✔ Infogérance</li>
-                        <li>✔ Antivirus ESET</li>
+                        <li>✔ Audit de Sécurité informatique</li>
                     </ul>
                     <a href="{% url 'vitrine:contact' %}" class="inline-block text-white text-sm py-1.5 px-3 rounded hover:underline transition">
                         Contactez-nous
@@ -317,14 +329,10 @@
                     <h2 class="text-4xl font-bold"><span class="text-blue-700">Sécurité électronique</span></h2>
                     <p class="text-lg">Nos solutions de sécurité pour protéger vos biens et vos locaux.</p>
                     <ul class="space-y-2 text-base">
-                        <li>✔ Vidéosurveillance</li>
-                        <li>✔ Systèmes d'alarme</li>
+                        <li>✔ Vidéo surveillance</li>
+                        <li>✔ 	Gestion du temps et présence pour entreprise</li>
                         <li>✔ Contrôles d'accès</li>
-                        <li>✔ Détection et Sécurité incendie</li>
-                        <li>✔ Systèmes Biométriques</li>
-                        <li>✔ Tracking Online et gestion de flotte</li>
-                        <li>✔ Scellés de Sécurité électronique</li>
-                        <li>✔ Gestion des visiteurs</li>
+                       
                     </ul>
                     <a href="{% url 'vitrine:contact' %}" class="inline-block text-white text-sm py-1.5 px-3 rounded hover:underline transition">
                         Contactez-nous
@@ -338,10 +346,10 @@
                     <h2 class="text-4xl font-bold"><span class="text-blue-700">Transformation Digitale</span></h2>
                     <p class="text-lg mb-3">Accélérez votre transition numérique avec nos experts.</p>
                     <ul class="space-y-2 text-base mb-3">
-                        <li>✔ Digitalisation des processus métiers</li>
-                        <li>✔ Création de sites web et e-commerce</li>
-                        <li>✔ Développement d'applications sur mesure</li>
-                        <li>✔ Solutions collaboratives et cloud</li>
+                        <li>✔ Gestion Electronique de Document (GED)</li>
+                        <li>✔ Gestion de parc Automobile</li>
+                        <li>✔ Développement d'applications</li>
+                        
                     </ul>
                     <a href="{% url 'vitrine:contact' %}" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
                 </div>
@@ -353,10 +361,12 @@
                     <h2 class="text-4xl font-bold"><span class="text-blue-700">Communication d'entreprise</span></h2> 
                     <p class="text-lg mb-3">Améliorez votre communication interne et externe.</p>
                     <ul class="space-y-2 text-base mb-3">
-                        <li>✔ Solutions de téléphonie IP</li>
-                        <li>✔ Messagerie unifiée</li>
-                        <li>✔ Outils collaboratifs</li>
-                        <li>✔ Supports de communication numérique</li>
+                        <li>✔ Publicité média 360° (TV, Radio, affichage, réseaux sociaux …etc)</li>
+                        <li>✔ Identité visuelle et Design graphique</li>
+                        <li>✔ Communication Interne</li>
+                        <li>✔ Branding d’entreprise</li>
+                        <li>✔ Conception site web</li>
+                        
                     </ul>
                     <a href="{% url 'vitrine:contact' %}" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
                 </div>

@@ -13,7 +13,17 @@ class Service(models.Model):
         help_text=_("Sépare chaque prestation par un point-virgule (;)"),
         default=_("Aucune prestation")
     )
+    
+    class Meta:
+        verbose_name = "Service"
+        verbose_name_plural = "Services"
 
+    
+    def save(self, *args, **kwargs):
+        if not self.slug: # Générer le slug uniquement s'il n'est pas déjà défini
+            self.slug = slugify(self.titre)
+        super().save(*args, **kwargs)
+        
     def __str__(self):
         return self.titre
 
@@ -69,3 +79,18 @@ class ImageNosRealisation(models.Model):
 
     def __str__(self):
         return self.titre
+    
+class JobOffer(models.Model):
+    title = models.CharField(max_length=200, verbose_name="Titre")
+    description = models.TextField(verbose_name="Description")
+    is_active = models.BooleanField(default=True, verbose_name="Active") # Pour contrôler la visibilité dans le menu
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Créée le")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Mise à jour le")
+
+    class Meta:
+        verbose_name = "Offre d'emploi"
+        verbose_name_plural = "Offres d'emploi"
+        ordering = ['-created_at']
+
+    def __str__(self): 
+        return self.title 
