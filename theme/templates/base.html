@@ -178,65 +178,61 @@
 </script>
 
 
-<header class="fixed top-0 left-0 w-full bg-white text-blue-800 px-6 py-4 flex items-center shadow-md z-50">
-    {# Logo aligné à gauche #}
-    <a href="{% url 'vitrine:index' %}" class="flex items-center gap-2">
+<header class="fixed top-0 left-0 w-full bg-white text-blue-800 px-8 py-4 flex items-center justify-between shadow-md z-50">
+    <!-- Logo -->
+    <a href="{% url 'vitrine:index' %}" class="flex items-center gap-3">
         <img src="{% static 'img/1.png' %}" alt="Logo Tropicom" class="h-16 w-16 rounded-full object-cover">
         <span class="sr-only">Tropicom</span>
     </a>
 
-    {# Menu desktop - occupe l'espace disponible et centre ses éléments #}
-    <nav id="menu" class="hidden md:flex gap-4 text-lg items-center flex-grow justify-center" aria-label="Menu principal">
-        <a href="{% url 'vitrine:index' %}" class="flex items-center gap-2 hover:text-red-600 transition font-bold">
-            <i data-feather="home" class="w-5 h-5 align-middle"></i> {% trans "Accueil" %}
+    <!-- Menu desktop -->
+    <nav id="menu" class="hidden md:flex items-center justify-center gap-10 text-lg font-semibold flex-grow">
+        <a href="{% url 'vitrine:index' %}" class="flex items-center gap-2 hover:text-red-600 transition">
+            <i data-feather="home" class="w-5 h-5"></i> Accueil
         </a>
-        <a href="{% url 'vitrine:services' %}" class="flex items-center gap-2 hover:text-red-600 transition font-bold">
-            <i data-feather="box" class="w-5 h-5 align-middle"></i> {% trans "Services" %}
+        <a href="{% url 'vitrine:services' %}" class="flex items-center gap-2 hover:text-red-600 transition">
+            <i data-feather="box" class="w-5 h-5"></i> Services
         </a>
-        {# Afficher "Offre d'emploi" si des offres actives existent #}
         {% if has_active_job_offers %}
-            <a href="{% url 'vitrine:job_offers' %}" class="flex items-center gap-2 hover:text-red-600 transition font-bold">
-                <i data-feather="briefcase" class="w-5 h-5 align-middle"></i> {% trans "Offre d'emploi" %}
+            <a href="{% url 'vitrine:job_offers' %}" class="flex items-center gap-2 hover:text-red-600 transition">
+                <i data-feather="briefcase" class="w-5 h-5"></i> Offre d'emploi
             </a>
         {% endif %}
-        <a href="{% url 'vitrine:contact' %}" class="flex items-center gap-2 hover:text-red-600 transition font-bold">
-            <i data-feather="phone" class="w-5 h-5 align-middle"></i> {% trans "Aide & Contact" %}
+        <a href="{% url 'vitrine:contact' %}" class="flex items-center gap-2 hover:text-red-600 transition">
+            <i data-feather="phone" class="w-5 h-5"></i> Aide & Contact
         </a>
-        <a href="{% url 'vitrine:about' %}" class="flex items-center gap-2 hover:text-red-600 transition font-bold">
-            <i data-feather="info" class="w-5 h-5 align-middle"></i> {% trans "À propos" %}
+        <a href="{% url 'vitrine:about' %}" class="flex items-center gap-2 hover:text-red-600 transition">
+            <i data-feather="info" class="w-5 h-5"></i> À propos
         </a>
     </nav>
 
-    {# Bouton hamburger (mobile uniquement) #}
-    <button id="menu-btn" class="md:hidden focus:outline-none ml-auto" aria-label="Ouvrir le menu" aria-expanded="false">
+    <!-- Bouton hamburger mobile -->
+    <button id="menu-btn" class="md:hidden focus:outline-none ml-auto" aria-label="Ouvrir le menu">
         <i data-feather="menu" class="w-6 h-6 text-blue-800"></i>
     </button>
 </header>
 
----
-
-{# Menu mobile (visible uniquement quand actif, caché par défaut) #}
-{# Inclut l'option "Offre d'emploi" avec la même logique conditionnelle #}
+<!-- Menu mobile -->
 <div id="mobile-menu" class="hidden md:hidden bg-white text-blue-800 px-6 py-4 space-y-4 shadow-md mt-20 fixed w-full z-40">
-    <a href="{% url 'vitrine:index' %}" class="block py-2 hover:text-red-600 transition flex items-center gap-2">
-        <i data-feather="home" class="w-5 h-5"></i> {% trans "Accueil" %}
+    <a href="{% url 'vitrine:index' %}" class="flex items-center gap-2 hover:text-red-600 transition">
+        <i data-feather="home" class="w-5 h-5"></i> Accueil
     </a>
-    <a href="{% url 'vitrine:services' %}" class="block py-2 hover:text-red-600 transition flex items-center gap-2">
-        <i data-feather="box" class="w-5 h-5"></i> {% trans "Services" %}
+    <a href="{% url 'vitrine:services' %}" class="flex items-center gap-2 hover:text-red-600 transition">
+        <i data-feather="box" class="w-5 h-5"></i> Services
     </a>
-    {# NOUVEAU : Option Offre d'emploi pour mobile #}
     {% if has_active_job_offers %}
-        <a href="{% url 'vitrine:job_offers' %}" class="block py-2 hover:text-red-600 transition flex items-center gap-2">
-            <i data-feather="briefcase" class="w-5 h-5"></i> {% trans "Offre d'emploi" %}
+        <a href="{% url 'vitrine:job_offers' %}" class="flex items-center gap-2 hover:text-red-600 transition">
+            <i data-feather="briefcase" class="w-5 h-5"></i> Offre d'emploi
         </a>
     {% endif %}
-    <a href="{% url 'vitrine:contact' %}" class="block py-2 hover:text-red-600 transition flex items-center gap-2">
-        <i data-feather="phone" class="w-5 h-5"></i> {% trans "Aide & Contact" %}
+    <a href="{% url 'vitrine:contact' %}" class="flex items-center gap-2 hover:text-red-600 transition">
+        <i data-feather="phone" class="w-5 h-5"></i> Aide & Contact
     </a>
-    <a href="{% url 'vitrine:about' %}" class="block py-2 hover:text-red-600 transition flex items-center gap-2">
-        <i data-feather="info" class="w-5 h-5"></i> {% trans "À propos" %}
+    <a href="{% url 'vitrine:about' %}" class="flex items-center gap-2 hover:text-red-600 transition">
+        <i data-feather="info" class="w-5 h-5"></i> À propos
     </a>
 </div>
+
 
 {# Condition pour le header spécial de l'index #}
 {% if request.resolver_match.url_name == "index" %}
