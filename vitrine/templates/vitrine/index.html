@@ -6,297 +6,505 @@
 
 {% block content %}
 
-<section class="relative bg-gradient-to-r from-blue-700 to-blue-900 text-white h-[70vh] flex items-center justify-center overflow-hidden">
-    <div class="absolute inset-0 z-0 opacity-20" style="background-image: url('{% static 'img/4.jpeg' %}'); background-size: cover; background-position: center;"></div>
-    
-    <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 animate-fade-in-up">
-            {% trans "Tropicom : Votre Partenaire Stratégique en Solutions Digitales" %}
-        </h1>
-        <p class="text-lg sm:text-xl lg:text-2xl mb-8 animate-fade-in-up delay-100">
-            {% trans "Sécurité, Connectivité et Innovation pour une Croissance Durable en Afrique." %}
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-200">
-            <a href="{% url 'vitrine:contact' %}" class="bg-yellow-400 text-blue-900 font-bold py-3 px-8 rounded-full text-lg hover:bg-yellow-500 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                {% trans "Demander un Devis Gratuit" %}
-            </a>
-            <a href="#our-services" class="border-2 border-white text-white font-semibold py-3 px-8 rounded-full text-lg hover:bg-white hover:text-blue-900 transition-all duration-300 transform hover:scale-105">
-                {% trans "Découvrir Nos Domaines d'Interventions" %}
-            </a>
-        </div>
-    </div>
-</section>
-
-<style>
-    @keyframes fadeInUpx {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in-up {
-        animation: fadeInUpx 0.8s ease-out forwards;
-    }
-    .delay-100 { animation-delay: 0.1s; }
-    .delay-200 { animation-delay: 0.2s; }
-</style>
-
-<section id="our-services" class="max-w-7xl mx-auto px-6 py-16">
-    <h2 class="text-3xl font-bold text-center text-blue-900 mb-10">{% trans "Nos Domaines d'Intervention" %}</h2>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
-        {% for service in services %}
-        <div class="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-300 flex flex-col border border-gray-200">
-            
-            <div class="w-full h-48 overflow-hidden bg-gray-100 flex items-center justify-center">
-                <img src="{{ service.image.url }}" alt="{{ service.titre }} - Image de service Tropicom"
-                     class="object-cover w-full h-full lazyload" loading="lazy">
-            </div>
-
-            <div class="p-4 text-center flex flex-col flex-grow">
-                <h3 class="text-lg font-semibold text-blue-700 mb-2">{{ service.titre }}</h3>
-
-                {% if service.get_prestations %}
-                <ul class="text-gray-600 text-sm mb-4 space-y-1 text-left mx-auto">
-                    {% for ligne in service.get_prestations %}
-                    <li class="flex items-start">
-                        <svg class="h-4 w-4 text-green-500 mr-2 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span class="font-bold">{{ ligne }}</span>
-                    </li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-
-                <p class="text-xs text-green-600 mb-4 mt-auto">📞 {% trans "Support 24h/7" %} | 🚀 {% trans "Intervention rapide" %}</p>
-
-                <a href="{% url 'vitrine:contact' %}"
-                   class="inline-block w-full bg-blue-100 text-blue-800 font-semibold py-2 rounded hover:bg-blue-200 transition mb-2">
-                    {% trans "Demander un devis" %}
+    <section class="relative bg-gradient-to-r from-blue-700 to-blue-900 text-white h-[70vh] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0 opacity-20" style="background-image: url('{% static 'img/4.jpeg' %}'); background-size: cover; background-position: center;"></div>
+        
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 animate-fade-in-up">
+                {% trans "Tropicom : Votre Partenaire Stratégique en Solutions Digitales" %}
+            </h1>
+            <p class="text-lg sm:text-xl lg:text-2xl mb-8 animate-fade-in-up delay-100">
+                {% trans "Sécurité, Connectivité et Innovation pour une Croissance Durable en Afrique." %}
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-200">
+                <a href="{% url 'vitrine:contact' %}" class="bg-yellow-400 text-blue-900 font-bold py-3 px-8 rounded-full text-lg hover:bg-yellow-500 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    {% trans "Demander un Devis Gratuit" %}
                 </a>
-
-                <button onclick="openServiceModal('modal-{{ service.id }}')" 
-                        class="inline-block w-full bg-gray-100 text-gray-700 font-semibold py-2 rounded hover:bg-gray-200 transition">
-                    {% trans "Voir plus" %}
-                </button>
+                <a href="#our-services" class="border-2 border-white text-white font-semibold py-3 px-8 rounded-full text-lg hover:bg-white hover:text-blue-900 transition-all duration-300 transform hover:scale-105">
+                    {% trans "Découvrir Nos Domaines d'Interventions" %}
+                </a>
             </div>
         </div>
+    </section>
 
-        <div id="modal-{{ service.id }}" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden animate-fade-in-scale">
-            <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto transform scale-95 opacity-0 transition-all duration-300 ease-out">
-                <div class="p-6">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-2xl font-bold text-blue-700">{{ service.titre }}</h3>
-                        <button onclick="closeServiceModal('modal-{{ service.id }}')" class="text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100 transition" aria-label="Fermer la fenêtre modale">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    </div>
+    <hr class="my-12 border-gray-300"> 
 
-                    {% if service.description %}
-                    <div class="prose prose-sm max-w-none mb-6 text-gray-800 leading-relaxed">
-                        {{ service.description|safe }}
-                    </div>
-                    {% endif %}
+    <section id="animated-services-slider" class="relative w-full h-[60vh] bg-gray-800 overflow-hidden">
+        <div class="absolute inset-0" id="service-slides-container">
 
-                    {% if service.prestation_images.all %}
-                    <h4 class="text-lg font-semibold mb-3 text-blue-600">{% trans "Nos réalisations" %}</h4>
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-                        {% for image in service.prestation_images.all %}
-                        <div class="bg-gray-100 rounded overflow-hidden shadow-sm">
-                            <img src="{{ image.image.url }}" alt="{{ image.caption|default:service.titre|add:' - Réalisation Tropicom' }}" 
-                                 class="w-full h-40 object-cover lazyload" loading="lazy">
-                            {% if image.caption %}
-                            <p class="text-xs p-2 text-gray-600">{{ image.caption }}</p>
-                            {% endif %}
-                        </div>
-                        {% endfor %}
+            <div class="absolute inset-0 flex items-center justify-center
+                        transition-opacity duration-1500 ease-in-out"
+                 style="opacity: 1;"
+                 data-slide="0">
+                <div class="w-full h-full flex flex-col md:flex-row items-center justify-center gap-8 p-4 md:p-8">
+                    <div class="w-full md:w-1/2 flex justify-center items-center opacity-0 transform -translate-x-20 transition-all duration-1000 ease-out" data-animation-target="image-left">
+                        <img src="{% static 'img/2241.jpg' %}" alt="Le Serveur Dell" class="rounded-xl shadow-xl max-h-[80%] max-w-full object-cover">
                     </div>
-                    {% endif %}
+                    <div class="w-full md:w-1/2 p-8 rounded-lg text-center md:text-left text-white max-w-2xl
+                                        opacity-0 transition-opacity duration-700 ease-in-out transform translate-y-10"
+                         data-animation="text">
+                        <h3 class="text-3xl font-bold mb-3"><span class="text-red-400">🎯 𝐎𝐩𝐭𝐢𝐦𝐢𝐬𝐞𝐳 𝐥𝐚 𝐩𝐞𝐫𝐟𝐨𝐫𝐦𝐚𝐧𝐜𝐞 𝐝𝐞 𝐯𝐨𝐭𝐫𝐞 𝐞𝐧𝐭𝐫𝐞𝐩𝐫𝐢𝐬𝐞 𝐚𝐯𝐞𝐜 𝐥𝐞 𝐬𝐞𝐫𝐯𝐞𝐮𝐫 𝐃𝐞𝐥𝐥 𝐜𝐡𝐞𝐳 <span class="text-blue-700"> 𝐓𝐑𝐎𝐏𝐈</span></span><span class="text-red-600"></span>𝐂𝐎𝐌 !</span></h3>
+                        <p class="text-lg">📈 Fiabilité, rapidité et sécurité : offrez à votre structure une solution informatique à la hauteur de vos ambitions.
+Que vous gériez une PME, un cabinet, une école ou un établissement public, investissez dans un matériel professionnel conçu pour durer.
+</p>
+
+</p>
+ <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> 𝐀𝐝𝐚𝐩𝐭𝐞́ 𝐚𝐮𝐱 𝐞𝐧𝐯𝐢𝐫𝐨𝐧𝐧𝐞𝐦𝐞𝐧𝐭𝐬 𝐞𝐱𝐢𝐠𝐞𝐚𝐧𝐭𝐬
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span>𝐈𝐝𝐞́𝐚𝐥 𝐩𝐨𝐮𝐫 𝐥𝐚 𝐠𝐞𝐬𝐭𝐢𝐨𝐧 𝐝𝐞 𝐝𝐨𝐧𝐧𝐞́𝐞𝐬, 𝐥𝐨𝐠𝐢𝐜𝐢𝐞𝐥𝐬 𝐩𝐫𝐨, 𝐫𝐞́𝐬𝐞𝐚𝐮𝐱 𝐢𝐧𝐭𝐞𝐫𝐧𝐞𝐬
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> 𝐒𝐞𝐫𝐯𝐢𝐜𝐞 𝐚𝐩𝐫𝐞̀𝐬-𝐯𝐞𝐧𝐭𝐞 𝐚𝐬𝐬𝐮𝐫𝐞́
+            </li>
+            
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute inset-0 flex items-center justify-center
+                        transition-opacity duration-1500 ease-in-out"
+                 style="opacity: 0;"
+                 data-slide="1">
+                <div class="w-full h-full flex flex-col md:flex-row items-center justify-center gap-8 p-4 md:p-8">
+                    <div class="w-full md:w-1/2 flex justify-center items-center opacity-0 transform -translate-x-20 transition-all duration-1000 ease-out" data-animation-target="image-left">
+                        <img src="{% static 'img/2230.jpg' %}" alt="Sécurité Électronique" class="rounded-xl shadow-xl max-h-[80%] max-w-full object-cover">
+                    </div>
+                    <div class="w-full md:w-1/2 p-8 rounded-lg text-center md:text-left text-white max-w-2xl
+                                        opacity-0 transition-opacity duration-700 ease-in-out transform translate-y-10"
+                         data-animation="text">
+                        <h3 class="text-3xl font-bold mb-3"><span class="text-red-400">📞 𝐎𝐩𝐭𝐞𝐳 𝐩𝐨𝐮𝐫 𝐥𝐚 𝐩𝐞𝐫𝐟𝐨𝐫𝐦𝐚𝐧𝐜𝐞 𝐚𝐯𝐞𝐜 𝐥𝐚 𝐭𝐞́𝐥𝐞́𝐩𝐡𝐨𝐧𝐢𝐞 𝐈𝐏 𝐝𝐞 <span class="text-blue-700"> 𝐓𝐑𝐎𝐏𝐈</span></span><span class="text-red-600"></span>𝐂𝐎𝐌 !</span> !</span></h3>
+                        <p class="text-lg">Vous cherchez un système de communication moderne, fiable et économique pour votre entreprise ?
+𝐥𝐚 𝐭𝐞́𝐥𝐞́𝐩𝐡𝐨𝐧𝐢𝐞 𝐈𝐏 est la solution idéale pour optimiser vos échanges professionnels.
+</p>
+<h2>𝐐𝐮𝐚𝐥𝐢𝐭𝐞́ 𝐚𝐮𝐝𝐢𝐨 𝐬𝐮𝐩𝐞́𝐫𝐢𝐞𝐮𝐫𝐞</h2>
+
+</p>
+ <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> 𝐑𝐞́𝐝𝐮𝐜𝐭𝐢𝐨𝐧 𝐝𝐞𝐬 𝐜𝐨𝐮̂𝐭𝐬 𝐭𝐞́𝐥𝐞́𝐩𝐡𝐨𝐧𝐢𝐪𝐮𝐞𝐬
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> 𝐀𝐩𝐩𝐞𝐥𝐬 𝐯𝐢𝐚 𝐈𝐧𝐭𝐞𝐫𝐧𝐞𝐭, 𝐞𝐧 𝐭𝐨𝐮𝐭𝐞 𝐬𝐞́𝐜𝐮𝐫𝐢𝐭𝐞́
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> 𝐎𝐮𝐭𝐢𝐥𝐬 𝐝𝐞 𝐜𝐨𝐥𝐥𝐚𝐛𝐨𝐫𝐚𝐭𝐢𝐨𝐧 𝐢𝐧𝐭𝐞́𝐠𝐫𝐞́𝐬
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> 𝐈𝐧𝐬𝐭𝐚𝐥𝐥𝐚𝐭𝐢𝐨𝐧 𝐫𝐚𝐩𝐢𝐝𝐞 𝐞𝐭 𝐚𝐜𝐜𝐨𝐦𝐩𝐚𝐠𝐧𝐞𝐦𝐞𝐧𝐭 𝐭𝐞𝐜𝐡𝐧𝐢𝐪𝐮𝐞
+            </li>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute inset-0 flex items-center justify-center
+                        transition-opacity duration-1500 ease-in-out"
+                 style="opacity: 0;"
+                 data-slide="2">
+                <div class="w-full h-full flex flex-col md:flex-row items-center justify-center gap-8 p-4 md:p-8">
+                    <div class="w-full md:w-1/2 flex justify-center items-center opacity-0 transform -translate-x-20 transition-all duration-1000 ease-out" data-animation-target="image-left">
+                        <img src="{% static 'img/227.jpeg' %}" alt="Transformation Digitale" class="rounded-xl shadow-xl max-h-[80%] max-w-full object-cover">
+                    </div>
+                    <div class="w-full md:w-1/2 p-8 rounded-lg text-center md:text-left text-white max-w-2xl
+                                        opacity-0 transition-opacity duration-700 ease-in-out transform translate-y-10"
+                         data-animation="text">
+                        <h3 class="text-3xl font-bold mb-3"><span class="text-red-400"><span class="text-blue-700"> 𝐓𝐑𝐎𝐏𝐈</span></span><span class="text-red-600"></span>𝐂𝐎𝐌 </span>  digitalise votre gestion documentaire </h3>
+                        <p class="text-lg">En collaborant avec Open Bee, leader des solutions GED (Gestion Électronique de Documents), Tropicom vous propose une plateforme sécurisée, intuitive et conforme aux normes internationales pour :
+</p>
+
+
+
+ <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span>Centraliser vos documents
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span>Automatiser vos processus métiers (validation, signature, archivage)
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> Accéder à vos fichiers à tout moment, depuis n’importe quel appareil
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span>Garantir la traçabilité et la conformité de vos données
+            </li>
+            <h2>📈 Gagnez du temps, réduisez vos coûts, et améliorez la productivité de vos équipes avec une solution 100% dématérialisée.</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute inset-0 flex items-center justify-center
+                        transition-opacity duration-1500 ease-in-out"
+                 style="opacity: 0;"
+                 data-slide="3">
+                <div class="w-full h-full flex flex-col md:flex-row items-center justify-center gap-8 p-4 md:p-8">
+                    <div class="w-full md:w-1/2 flex justify-center items-center opacity-0 transform -translate-x-20 transition-all duration-1000 ease-out" data-animation-target="image-left">
+                        <img src="{% static 'img/241.jpg' %}" alt="Systèmes Informatique" class="rounded-xl shadow-xl max-h-[80%] max-w-full object-cover">
+                    </div>
+                    <div class="w-full md:w-1/2 p-8 rounded-lg text-center md:text-left text-white max-w-2xl
+                                        opacity-0 transition-opacity duration-700 ease-in-out transform translate-y-10"
+                         data-animation="text">
+                        <h3 class="text-3xl font-bold mb-3"><span class="text-red-400">🌍 𝐕𝐨𝐮𝐬 𝐞̂𝐭𝐞𝐬 𝐞𝐧 𝐳𝐨𝐧𝐞 𝐫𝐞𝐜𝐮𝐥𝐞́𝐞 ? <span class="text-blue-700"> 𝐓𝐑𝐎𝐏𝐈</span></span><span class="text-red-600"></span>𝐂𝐎𝐌 </span> 𝐚 𝐥𝐚 𝐬𝐨𝐥𝐮𝐭𝐢𝐨𝐧 !</span></h3>
+                        <p class="text-lg">Avec notre Internet par satellite, restez connecté où que vous soyez — même là où les autres ne vont pas. 🚀
+</p>
+
+
+</p>
+ <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> 𝐂𝐨𝐧𝐧𝐞𝐱𝐢𝐨𝐧 𝐬𝐭𝐚𝐛𝐥𝐞 𝐞𝐭 𝐚𝐜𝐜𝐞𝐬𝐬𝐢𝐛𝐥𝐞 𝐩𝐚𝐫𝐭𝐨𝐮𝐭
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span>𝐈𝐧𝐝𝐞́𝐩𝐞𝐧𝐝𝐚𝐧𝐭 𝐝𝐞𝐬 𝐫𝐞́𝐬𝐞𝐚𝐮𝐱 𝐭𝐞𝐫𝐫𝐞𝐬𝐭𝐫𝐞𝐬
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> 𝐃𝐞́𝐛𝐢𝐭 𝐚𝐝𝐚𝐩𝐭𝐞́ 𝐚̀ 𝐯𝐨𝐬 𝐛𝐞𝐬𝐨𝐢𝐧𝐬 𝐪𝐮𝐨𝐭𝐢𝐝𝐢𝐞𝐧𝐬
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> 𝐈𝐧𝐬𝐭𝐚𝐥𝐥𝐚𝐭𝐢𝐨𝐧 𝐫𝐚𝐩𝐢𝐝𝐞 𝐞𝐭 𝐟𝐚𝐜𝐢𝐥𝐞
+            </li>
+            <h2>📡 𝑁𝑒 𝑙𝑎𝑖𝑠𝑠𝑒𝑧 𝑝𝑙𝑢𝑠 𝑙𝑎 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒 𝑣𝑜𝑢𝑠 𝑑𝑒́𝑐𝑜𝑛𝑛𝑒𝑐𝑡𝑒𝑟 !</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="our-services" class="max-w-7xl mx-auto px-6 py-16">
+        <h2 class="text-3xl font-bold text-center text-blue-900 mb-10">{% trans "Nos Domaines d'Intervention" %}</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+            {% for service in services %}
+            <div class="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-300 flex flex-col border border-gray-200">
+                <div class="w-full h-48 overflow-hidden bg-gray-100 flex items-center justify-center">
+                    <img src="{{ service.image.url }}" alt="{{ service.titre }} - Image de service Tropicom"
+                        class="object-cover w-full h-full lazyload" loading="lazy">
+                </div>
+
+                <div class="p-4 text-center flex flex-col flex-grow">
+                    <h3 class="text-lg font-semibold text-blue-700 mb-2">{{ service.titre }}</h3>
 
                     {% if service.get_prestations %}
-                    <h4 class="text-lg font-semibold mb-3 text-blue-600">{% trans "Prestations incluses" %}</h4>
-                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
+                    <ul class="text-gray-600 text-sm mb-4 space-y-1 text-left mx-auto">
                         {% for ligne in service.get_prestations %}
-                        <li class="flex items-start text-gray-700">
-                            <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <li class="flex items-start">
+                            <svg class="h-4 w-4 text-green-500 mr-2 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                             </svg>
-                            <span>{{ ligne }}</span>
+                            <span class="font-bold">{{ ligne }}</span>
                         </li>
                         {% endfor %}
                     </ul>
                     {% endif %}
 
-                    <div class="flex justify-end mt-4">
-                        <a href="{% url 'vitrine:contact' %}" 
-                           class="bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 transition">
-                            {% trans "Contactez-nous" %}
-                        </a>
+                    <p class="text-xs text-green-600 mb-4 mt-auto">📞 {% trans "Support 24h/7" %} | 🚀 {% trans "Intervention rapide" %}</p>
+
+                    <a href="{% url 'vitrine:contact' %}"
+                       class="inline-block w-full bg-blue-100 text-blue-800 font-semibold py-2 rounded hover:bg-blue-200 transition mb-2">
+                        {% trans "Demander un devis" %}
+                    </a>
+
+                    <button onclick="openServiceModal('modal-{{ service.id }}')" 
+                            class="inline-block w-full bg-gray-100 text-gray-700 font-semibold py-2 rounded hover:bg-gray-200 transition">
+                        {% trans "Voir plus" %}
+                    </button>
+                </div>
+            </div>
+
+            <div id="modal-{{ service.id }}" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden animate-fade-in-scale">
+                <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto transform scale-95 opacity-0 transition-all duration-300 ease-out">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-2xl font-bold text-blue-700">{{ service.titre }}</h3>
+                            <button onclick="closeServiceModal('modal-{{ service.id }}')" class="text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100 transition" aria-label="Fermer la fenêtre modale">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        {% if service.description %}
+                        <div class="prose prose-sm max-w-none mb-6 text-gray-800 leading-relaxed">
+                            {{ service.description|safe }}
+                        </div>
+                        {% endif %}
+
+                        {% if service.prestation_images.all %}
+                        <h4 class="text-lg font-semibold mb-3 text-blue-600">{% trans "Nos réalisations" %}</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                            {% for image in service.prestation_images.all %}
+                            <div class="bg-gray-100 rounded overflow-hidden shadow-sm">
+                                <img src="{{ image.image.url }}" alt="{{ image.caption|default:service.titre|add:' - Réalisation Tropicom' }}" 
+                                     class="w-full h-40 object-cover lazyload" loading="lazy">
+                                {% if image.caption %}
+                                <p class="text-xs p-2 text-gray-600">{{ image.caption }}</p>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        {% if service.get_prestations %}
+                        <h4 class="text-lg font-semibold mb-3 text-blue-600">{% trans "Prestations incluses" %}</h4>
+                        <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
+                            {% for ligne in service.get_prestations %}
+                            <li class="flex items-start text-gray-700">
+                                <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>{{ ligne }}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+
+                        <div class="flex justify-end mt-4">
+                            <a href="{% url 'vitrine:contact' %}" 
+                               class="bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 transition">
+                                {% trans "Contactez-nous" %}
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
-</section>
+    </section>
 
-<script>
-    // General modal functions with animation for services
-    function openServiceModal(modalId) {
-        const modal = document.getElementById(modalId);
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-        setTimeout(() => { // Trigger transition
-            modal.querySelector(':first-child').classList.add('scale-100', 'opacity-100');
-            modal.querySelector(':first-child').classList.remove('scale-95', 'opacity-0');
-        }, 10); // Small delay to allow 'hidden' removal to register
-    }
+    <section id="our-realisations" class="w-full px-6 py-16 bg-gray-50">
+        <h2 class="text-3xl sm:text-4xl font-bold text-center mb-10 text-blue-900">{% trans "Nos Réalisations" %}</h2>
 
-    function closeServiceModal(modalId) {
-        const modal = document.getElementById(modalId);
-        modal.querySelector(':first-child').classList.add('scale-95', 'opacity-0');
-        modal.querySelector(':first-child').classList.remove('scale-100', 'opacity-100');
-        setTimeout(() => { // Hide after transition
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }, 300); // Duration of transition
-    }
-
-    // Close any modal by clicking outside
-    window.onclick = function(event) {
-        if (event.target.classList.contains('bg-opacity-75')) { 
-            const modal = event.target;
-            // Check if it's a service modal or the all-realisations modal
-            if (modal.id.startsWith('modal-')) {
-                closeServiceModal(modal.id);
-            } else if (modal.id === 'all-realisations-modal') {
-                closeAllRealisationsModal();
-            }
-        }
-    }
-</script>
-
-<section id="our-realisations" class="w-full px-6 py-16 bg-gray-50">
-    <h2 class="text-3xl sm:text-4xl font-bold text-center mb-10 text-blue-900">{% trans "Nos Réalisations" %}</h2>
-
-    <div class="max-w-7xl mx-auto">
-        {% if images_nos_realisations %}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                {% for image in images_nos_realisations|slice:":3" %} {# Afficher les 3 premières réalisations #}
-                <div class="relative group rounded-lg overflow-hidden shadow-lg h-64">
-                    <div class="absolute inset-0 bg-center bg-cover transition-transform duration-700 group-hover:scale-110"
-                         style="background-image: url('{{ image.image.url }}');"></div>
-                    <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition duration-300 flex items-end justify-center pb-4">
-                        <p class="text-white text-lg font-bold text-center bg-black bg-opacity-40 rounded py-2 px-4">
-                            {{ image.description }}
-                        </p>
+        <div class="max-w-7xl mx-auto">
+            {% if images_nos_realisations %}
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    {% for image in images_nos_realisations|slice:":3" %} {# Afficher les 3 premières réalisations #}
+                    <div class="relative group rounded-lg overflow-hidden shadow-lg h-64">
+                        <div class="absolute inset-0 bg-center bg-cover transition-transform duration-700 group-hover:scale-110"
+                             style="background-image: url('{{ image.image.url }}');"></div>
+                        <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition duration-300 flex items-end justify-center pb-4">
+                            <p class="text-white text-lg font-bold text-center bg-black bg-opacity-40 rounded py-2 px-4">
+                                {{ image.description }}
+                            </p>
+                        </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
 
-            {% if images_nos_realisations|length > 3 %}
-            <div class="text-center mt-12">
-                <button onclick="openAllRealisationsModal()" class="inline-block bg-blue-600 text-white font-semibold py-3 px-8 rounded-full hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 shadow-md">
-                    {% trans "Voir toutes nos réalisations" %} ({{ images_nos_realisations|length }})
+                {% if images_nos_realisations|length > 3 %}
+                <div class="text-center mt-12">
+                    <button onclick="openAllRealisationsModal()" class="inline-block bg-blue-600 text-white font-semibold py-3 px-8 rounded-full hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 shadow-md">
+                        {% trans "Voir toutes nos réalisations" %} ({{ images_nos_realisations|length }})
+                    </button>
+                </div>
+                {% endif %}
+
+            {% else %}
+                <p class="text-center text-gray-600 text-lg">{% trans "Aucune réalisation à afficher pour le moment." %}</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <div id="all-realisations-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden animate-fade-in-scale">
+        <div class="bg-white rounded-lg max-w-5xl w-full h-[90vh] flex flex-col transform scale-95 opacity-0 transition-all duration-300 ease-out">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-2xl font-bold text-blue-700">{% trans "Toutes Nos Réalisations" %}</h3>
+                <button onclick="closeAllRealisationsModal()" class="text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100 transition" aria-label="Fermer la fenêtre modale">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
                 </button>
             </div>
-            {% endif %}
-
-        {% else %}
-            <p class="text-center text-gray-600 text-lg">{% trans "Aucune réalisation à afficher pour le moment." %}</p>
-        {% endif %}
-    </div>
-</section>
-
-<div id="all-realisations-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden animate-fade-in-scale">
-    <div class="bg-white rounded-lg max-w-5xl w-full h-[90vh] flex flex-col transform scale-95 opacity-0 transition-all duration-300 ease-out">
-        <div class="p-4 border-b border-gray-200 flex justify-between items-center">
-            <h3 class="text-2xl font-bold text-blue-700">{% trans "Toutes Nos Réalisations" %}</h3>
-            <button onclick="closeAllRealisationsModal()" class="text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100 transition" aria-label="Fermer la fenêtre modale">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-        </div>
-        <div class="relative flex-grow overflow-hidden p-4 flex items-center justify-center">
-            <div id="realisations-carousel" class="w-full h-full relative">
-                {% for image in images_nos_realisations %}
-                <div class="carousel-item w-full h-full absolute top-0 left-0 transition-opacity duration-500 ease-in-out opacity-0" data-index="{{ forloop.counter0 }}">
-                    <img src="{{ image.image.url }}" alt="{{ image.description|default:'Réalisation' }}" class="w-full h-full object-contain">
-                    {% if image.description %}
-                    <div class="absolute bottom-4 left-4 right-4 bg-black bg-opacity-60 text-white p-2 rounded text-center">
-                        <p class="text-lg font-semibold">{{ image.description }}</p>
+            <div class="relative flex-grow overflow-hidden p-4 flex items-center justify-center">
+                <div id="realisations-carousel" class="w-full h-full relative">
+                    {% for image in images_nos_realisations %}
+                    <div class="carousel-item w-full h-full absolute top-0 left-0 transition-opacity duration-500 ease-in-out opacity-0" data-index="{{ forloop.counter0 }}">
+                        <img src="{{ image.image.url }}" alt="{{ image.description|default:'Réalisation' }}" class="w-full h-full object-contain">
+                        {% if image.description %}
+                        <div class="absolute bottom-4 left-4 right-4 bg-black bg-opacity-60 text-white p-2 rounded text-center">
+                            <p class="text-lg font-semibold">{{ image.description }}</p>
+                        </div>
+                        {% endif %}
                     </div>
-                    {% endif %}
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
 
-            <button class="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full z-20 hover:bg-opacity-75 transition" onclick="navigateRealisationsCarousel(-1)">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
-            </button>
-            <button class="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full z-20 hover:bg-opacity-75 transition" onclick="navigateRealisationsCarousel(1)">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-            </button>
-        </div>
-        <div class="p-4 border-t border-gray-200 text-right">
-            <a href="{% url 'vitrine:contact' %}" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 transition">
-                {% trans "Demander un Devis" %}
-            </a>
+                <button class="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full z-20 hover:bg-opacity-75 transition" onclick="navigateRealisationsCarousel(-1)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                </button>
+                <button class="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full z-20 hover:bg-opacity-75 transition" onclick="navigateRealisationsCarousel(1)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                </button>
+            </div>
+            <div class="p-4 border-t border-gray-200 text-right">
+                <a href="{% url 'vitrine:contact' %}" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 transition">
+                    {% trans "Demander un Devis" %}
+                </a>
+            </div>
         </div>
     </div>
-</div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Script du Slider de Services Animé ---
+        const slidesContainer = document.getElementById('service-slides-container');
+        const slides = Array.from(slidesContainer.querySelectorAll('[data-slide]'));
+        const totalSlides = slides.length;
+        let currentSlideIndex = 0;
+        let slideInterval;
 
-<script>
-    let currentRealisationsIndex = 0;
-    let realisationsItems = [];
+        const totalSceneDuration = 7000; // Total duration of one "scene" (image + text)
+        const imageFadeDuration = 1500; // Duration of the entire slide's opacity transition (cross-fade)
 
-    function openAllRealisationsModal() {
-        const modal = document.getElementById('all-realisations-modal');
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-        
-        realisationsItems = document.querySelectorAll('#realisations-carousel .carousel-item');
-        if (realisationsItems.length > 0) {
-            showRealisationsImage(0); // Always start from the first image
+        const imageLeftEnterDelay = 100; // Delay before the left image starts its animation
+        const textAnimationDelay = 600; // Delay before the text starts its animation
+
+        function showServiceSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.style.opacity = '0'; // Hide the entire slide (for cross-fade effect)
+
+                const imageElement = slide.querySelector('[data-animation-target="image-left"]');
+                if (imageElement) {
+                    imageElement.classList.add('opacity-0', '-translate-x-20');
+                    imageElement.classList.remove('opacity-100', 'translate-x-0');
+                }
+
+                const textElement = slide.querySelector('[data-animation="text"]');
+                if (textElement) {
+                    textElement.classList.add('opacity-0', 'translate-y-10');
+                    textElement.classList.remove('opacity-100', 'translate-y-0');
+                }
+            });
+
+            const currentSlide = slides[index];
+            currentSlide.style.opacity = '1'; // Make the entire current slide visible
+
+            const currentImageElement = currentSlide.querySelector('[data-animation-target="image-left"]');
+            const currentTextElement = currentSlide.querySelector('[data-animation="text"]');
+
+            if (currentImageElement) {
+                setTimeout(() => {
+                    currentImageElement.classList.remove('opacity-0', '-translate-x-20');
+                    currentImageElement.classList.add('opacity-100', 'translate-x-0');
+                }, imageLeftEnterDelay);
+            }
+
+            if (currentTextElement) {
+                setTimeout(() => {
+                    currentTextElement.classList.remove('opacity-0', 'translate-y-10');
+                    currentTextElement.classList.add('opacity-100', 'translate-y-0');
+                }, textAnimationDelay);
+            }
+
+            currentSlideIndex = index;
         }
 
-        setTimeout(() => {
-            modal.querySelector(':first-child').classList.add('scale-100', 'opacity-100');
-            modal.querySelector(':first-child').classList.remove('scale-95', 'opacity-0');
-        }, 10);
-    }
+        function nextServiceSlide() {
+            currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+            showServiceSlide(currentSlideIndex);
+        }
 
-    function closeAllRealisationsModal() {
-        const modal = document.getElementById('all-realisations-modal');
-        modal.querySelector(':first-child').classList.add('scale-95', 'opacity-0');
-        modal.querySelector(':first-child').classList.remove('scale-100', 'opacity-100');
-        setTimeout(() => {
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }, 300);
-    }
+        function startSlideInterval() {
+            slideInterval = setInterval(nextServiceSlide, totalSceneDuration);
+        }
 
-    function showRealisationsImage(index) {
-        if (realisationsItems.length === 0) return;
+        function resetSlideInterval() { 
+            clearInterval(slideInterval);
+            startSlideInterval();
+        }
 
-        realisationsItems.forEach(item => {
-            item.classList.add('opacity-0');
-            item.classList.remove('opacity-100', 'pointer-events-auto'); // Hide all and remove interaction
-        });
+        showServiceSlide(currentSlideIndex); // Show the first slide initially
+        startSlideInterval();
 
-        currentRealisationsIndex = (index + realisationsItems.length) % realisationsItems.length;
-        realisationsItems[currentRealisationsIndex].classList.remove('opacity-0');
-        realisationsItems[currentRealisationsIndex].classList.add('opacity-100', 'pointer-events-auto'); // Show current and enable interaction
-    }
+        const serviceSliderSection = document.getElementById('animated-services-slider');
+        if (serviceSliderSection) {
+            serviceSliderSection.addEventListener('mouseenter', () => clearInterval(slideInterval));
+            serviceSliderSection.addEventListener('mouseleave', () => startSlideInterval());
+        }
 
-    function navigateRealisationsCarousel(direction) {
-        showRealisationsImage(currentRealisationsIndex + direction);
-    }
+        // --- Fonctions Modales Générales pour les services ---
+        function openServiceModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => { // Trigger transition
+                modal.querySelector(':first-child').classList.add('scale-100', 'opacity-100');
+                modal.querySelector(':first-child').classList.remove('scale-95', 'opacity-0');
+            }, 10); // Small delay to allow 'hidden' removal to register
+        }
+
+        function closeServiceModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.querySelector(':first-child').classList.add('scale-95', 'opacity-0');
+            modal.querySelector(':first-child').classList.remove('scale-100', 'opacity-100');
+            setTimeout(() => { // Hide after transition
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 300); // Duration of transition
+        }
+
+        // --- Fonctions pour la Modale de "Toutes Nos Réalisations" (Carrousel) ---
+        let currentRealisationsIndex = 0;
+        let realisationsItems = [];
+
+        function openAllRealisationsModal() {
+            const modal = document.getElementById('all-realisations-modal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            
+            realisationsItems = document.querySelectorAll('#realisations-carousel .carousel-item');
+            if (realisationsItems.length > 0) {
+                showRealisationsImage(0); // Always start from the first image
+            }
+
+            setTimeout(() => {
+                modal.querySelector(':first-child').classList.add('scale-100', 'opacity-100');
+                modal.querySelector(':first-child').classList.remove('scale-95', 'opacity-0');
+            }, 10);
+        }
+
+        function closeAllRealisationsModal() {
+            const modal = document.getElementById('all-realisations-modal');
+            modal.querySelector(':first-child').classList.add('scale-95', 'opacity-0');
+            modal.querySelector(':first-child').classList.remove('scale-100', 'opacity-100');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        function showRealisationsImage(index) {
+            if (realisationsItems.length === 0) return;
+
+            realisationsItems.forEach(item => {
+                item.classList.add('opacity-0');
+                item.classList.remove('opacity-100', 'pointer-events-auto'); // Hide all and remove interaction
+            });
+
+            currentRealisationsIndex = (index + realisationsItems.length) % realisationsItems.length;
+            realisationsItems[currentRealisationsIndex].classList.remove('opacity-0');
+            realisationsItems[currentRealisationsIndex].classList.add('opacity-100', 'pointer-events-auto'); // Show current and enable interaction
+        }
+
+        function navigateRealisationsCarousel(direction) {
+            showRealisationsImage(currentRealisationsIndex + direction);
+        }
+
+        // Expose functions to the global scope if needed by `onclick` attributes in HTML
+        window.openServiceModal = openServiceModal;
+        window.closeServiceModal = closeServiceModal;
+        window.openAllRealisationsModal = openAllRealisationsModal;
+        window.closeAllRealisationsModal = closeAllRealisationsModal;
+        window.navigateRealisationsCarousel = navigateRealisationsCarousel;
+
+        // Close any modal by clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('bg-opacity-75')) { 
+                const modal = event.target;
+                if (modal.id.startsWith('modal-')) {
+                    closeServiceModal(modal.id);
+                } else if (modal.id === 'all-realisations-modal') {
+                    closeAllRealisationsModal();
+                }
+            }
+        }
+    });
 </script>
-
 <section class="py-20 bg-gray-100 px-4"> {# Changed to gray-100 for more contrast #}
     <h2 class="text-3xl text-center font-bold text-blue-900 mb-10">{% trans "Pourquoi choisir Tropicom ?" %}</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto"> {# Changed md:grid-cols-4 to lg:grid-cols-4 #}

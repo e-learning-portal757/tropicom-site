@@ -16,6 +16,7 @@
     <script src="https://unpkg.com/feather-icons"></script>
     
     {# Font Awesome pour les icônes (déplacé dans le head) #}
+    {# IMPORTANT: Replace "integrity" and "crossorigin" with the actual values from Font Awesome's CDN #}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     {# Votre CSS compilé de Tailwind #}
@@ -155,7 +156,7 @@
 
         window.addEventListener('load', () => {
             // Le code ici s'exécute une fois que TOUTE la page (HTML, CSS, images, etc.) est chargée.
-            const minDisplayTime = 30000; // CORRECTION ICI : 30 secondes (30000 ms)
+            const minDisplayTime = 3000; // Corrected: 3 seconds (3000 ms), 30000ms was 30 seconds
             const startTime = performance.now(); // Temps de début de l'événement 'load'
 
             const hideLoader = () => {
@@ -178,61 +179,92 @@
 </script>
 
 
-<header class="fixed top-0 left-0 w-full bg-white text-blue-800 px-8 py-4 flex items-center justify-between shadow-md z-50">
-    <!-- Logo -->
-    <a href="{% url 'vitrine:index' %}" class="flex items-center gap-3">
-        <img src="{% static 'img/1.png' %}" alt="Logo Tropicom" class="h-16 w-16 rounded-full object-cover">
-        <span class="sr-only">Tropicom</span>
-    </a>
-
-    <!-- Menu desktop -->
-    <nav id="menu" class="hidden md:flex items-center justify-center gap-10 text-lg font-semibold flex-grow">
-        <a href="{% url 'vitrine:index' %}" class="flex items-center gap-2 hover:text-red-600 transition">
-            <i data-feather="home" class="w-5 h-5"></i> Accueil
-        </a>
-        <a href="{% url 'vitrine:services' %}" class="flex items-center gap-2 hover:text-red-600 transition">
-            <i data-feather="box" class="w-5 h-5"></i> Services
-        </a>
-        {% if has_active_job_offers %}
-            <a href="{% url 'vitrine:job_offers' %}" class="flex items-center gap-2 hover:text-red-600 transition">
-                <i data-feather="briefcase" class="w-5 h-5"></i> Offre d'emploi
+<header class="fixed top-0 left-0 w-full bg-white shadow-lg z-50">
+    <div id="top-info-bar" class="w-full bg-blue-900 text-white text-xs sm:text-sm px-4 md:px-8 py-2 font-semibold tracking-wide h-[40px] hidden md:flex">
+        <div class="flex items-center gap-6 flex-grow"> 
+           <a href="{% url 'vitrine:about' %}" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1">
+                <i data-feather="info" class="w-5 h-5" aria-hidden="true"></i> À propos
             </a>
-        {% endif %}
-        <a href="{% url 'vitrine:contact' %}" class="flex items-center gap-2 hover:text-red-600 transition">
-            <i data-feather="phone" class="w-5 h-5"></i> Aide & Contact
-        </a>
-        <a href="{% url 'vitrine:about' %}" class="flex items-center gap-2 hover:text-red-600 transition">
-            <i data-feather="info" class="w-5 h-5"></i> À propos
-        </a>
-    </nav>
+            <a href="{% url 'vitrine:faq' %}" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1">
+                <i data-feather="info" class="w-5 h-5" aria-hidden="true"></i> FAQ
+            </a>
+            
+<div class="flex flex-wrap gap-4 text-xl">
+    <a href="https://www.facebook.com/tropicom.tech" class="text-blue-500 hover:text-white" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+    <a href="#" class="text-pink-500 hover:text-white" title="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.linkedin.com/company/tropicom---burkina-faso?originalSubdomain=bf" class="text-blue-300 hover:text-white" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    <a href="#" class="text-black hover:text-white" title="TikTok"><i class="fab fa-tiktok"></i></a>
+    <a href="https://wa.me/22673122222" class="text-green-500 hover:text-white" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+</div>
+        </div>
 
-    <!-- Bouton hamburger mobile -->
-    <button id="menu-btn" class="md:hidden focus:outline-none ml-auto" aria-label="Ouvrir le menu">
-        <i data-feather="menu" class="w-6 h-6 text-blue-800"></i>
-    </button>
+        <div class="flex items-center gap-4 sm:gap-6 flex-wrap justify-end">
+            <span class="flex items-center gap-1.5 text-blue-100"> 
+                <i data-feather="map-pin" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1"></i>
+                Karpala, Ouagadougou, Burkina Faso
+            </span>
+            <a href="mailto:commercial@tropicom.tech" class="flex items-center gap-1.5 hover:text-red-300 transition-colors duration-200 ease-in-out">
+                <i data-feather="mail" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1"></i>
+                commercial@tropicom.tech
+            </a>
+            <span class="flex items-center gap-1.5 text-blue-100">
+                <i data-feather="phone" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1"></i>
+                +226 25 37 37 88
+            </span>
+        </div>
+    </div>
+
+    <div class="w-full text-blue-800 px-8 py-3 md:py-6 flex items-center justify-between border-b border-gray-200">
+        <a href="{% url 'vitrine:index' %}" class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md">
+            <img src="{% static 'img/1.png' %}" alt="Logo Tropicom" class="h-16 w-16 rounded-full object-cover">
+            <span class="sr-only">Tropicom</span>
+        </a>
+
+        <nav id="menu" class="hidden md:flex items-center justify-center gap-10 text-lg font-semibold flex-grow pl-10">
+            <a href="{% url 'vitrine:index' %}" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1">
+                <i data-feather="home" class="w-5 h-5" aria-hidden="true"></i> Accueil
+            </a>
+            <a href="{% url 'vitrine:services' %}" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1">
+                <i data-feather="box" class="w-5 h-5" aria-hidden="true"></i> Services
+            </a>
+            {% if has_active_job_offers %}
+                <a href="{% url 'vitrine:job_offers' %}" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1">
+                    <i data-feather="briefcase" class="w-5 h-5" aria-hidden="true"></i> Offre d'emploi
+                </a>
+            {% endif %}
+            <a href="{% url 'vitrine:contact' %}" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1">
+                <i data-feather="phone" class="w-5 h-5" aria-hidden="true"></i> Aide & Contact
+            </a>
+            <a href="{% url 'vitrine:about' %}" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1">
+                <i data-feather="info" class="w-5 h-5" aria-hidden="true"></i> À propos
+            </a>
+        </nav>
+
+        <button id="menu-btn" class="md:hidden focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 p-2 rounded-md text-blue-800 hover:bg-gray-100 transition-colors duration-200 ease-in-out" aria-label="Ouvrir le menu mobile">
+            <i data-feather="menu" class="w-6 h-6" aria-hidden="true"></i>
+        </button>
+    </div>
 </header>
 
-<!-- Menu mobile -->
-<div id="mobile-menu" class="hidden md:hidden bg-white text-blue-800 px-6 py-4 space-y-4 shadow-md mt-20 fixed w-full z-40">
-    <a href="{% url 'vitrine:index' %}" class="flex items-center gap-2 hover:text-red-600 transition">
-        <i data-feather="home" class="w-5 h-5"></i> Accueil
+<div id="mobile-menu" class="hidden md:hidden bg-white text-blue-800 px-6 py-4 space-y-4 shadow-xl fixed w-full z-40 border-b border-gray-200">
+    <a href="{% url 'vitrine:index' %}" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1">
+        <i data-feather="home" class="w-5 h-5" aria-hidden="true"></i> Accueil
     </a>
-    <a href="{% url 'vitrine:services' %}" class="flex items-center gap-2 hover:text-red-600 transition">
-        <i data-feather="box" class="w-5 h-5"></i> Services
+    <a href="{% url 'vitrine:services' %}" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1">
+        <i data-feather="box" class="w-5 h-5" aria-hidden="true"></i> Services
     </a>
     {% if has_active_job_offers %}
-        <a href="{% url 'vitrine:job_offers' %}" class="flex items-center gap-2 hover:text-red-600 transition">
-            <i data-feather="briefcase" class="w-5 h-5"></i> Offre d'emploi
+        <a href="{% url 'vitrine:job_offers' %}" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1">
+            <i data-feather="briefcase" class="w-5 h-5" aria-hidden="true"></i> Offre d'emploi
         </a>
     {% endif %}
-    <a href="{% url 'vitrine:contact' %}" class="flex items-center gap-2 hover:text-red-600 transition">
-        <i data-feather="phone" class="w-5 h-5"></i> Aide & Contact
+    <a href="{% url 'vitrine:contact' %}" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1">
+        <i data-feather="phone" class="w-5 h-5" aria-hidden="true"></i> Aide & Contact
     </a>
-    <a href="{% url 'vitrine:about' %}" class="flex items-center gap-2 hover:text-red-600 transition">
-        <i data-feather="info" class="w-5 h-5"></i> À propos
+    <a href="{% url 'vitrine:about' %}" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1">
+        <i data-feather="info" class="w-5 h-5" aria-hidden="true"></i> À propos
     </a>
 </div>
-
 
 {# Condition pour le header spécial de l'index #}
 {% if request.resolver_match.url_name == "index" %}
@@ -326,9 +358,8 @@
                     <p class="text-lg">Nos solutions de sécurité pour protéger vos biens et vos locaux.</p>
                     <ul class="space-y-2 text-base">
                         <li>✔ Vidéo surveillance</li>
-                        <li>✔ 	Gestion du temps et présence pour entreprise</li>
+                        <li>✔ Gestion du temps et présence pour entreprise</li>
                         <li>✔ Contrôles d'accès</li>
-                       
                     </ul>
                     <a href="{% url 'vitrine:contact' %}" class="inline-block text-white text-sm py-1.5 px-3 rounded hover:underline transition">
                         Contactez-nous
@@ -345,7 +376,6 @@
                         <li>✔ Gestion Electronique de Document (GED)</li>
                         <li>✔ Gestion de parc Automobile</li>
                         <li>✔ Développement d'applications</li>
-                        
                     </ul>
                     <a href="{% url 'vitrine:contact' %}" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
                 </div>
@@ -362,7 +392,6 @@
                         <li>✔ Communication Interne</li>
                         <li>✔ Branding d’entreprise</li>
                         <li>✔ Conception site web</li>
-                        
                     </ul>
                     <a href="{% url 'vitrine:contact' %}" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
                 </div>
@@ -489,7 +518,7 @@
         {# Section: Réseaux sociaux #}
         <div>
             <h3 class="text-lg font-semibold mb-4">Suivez-nous</h3>
-            <div class="flex flex-wrap gap-4 text-2xl">
+            <div class="flex flex-wrap gap-4 text-lg"> {# Changed from text-2xl to text-lg #}
                 <a href="https://www.facebook.com/tropicom.tech" class="text-blue-500 hover:text-white" title="Facebook"><i class="fab fa-facebook-f"></i></a>
                 <a href="#" class="text-pink-500 hover:text-white" title="Instagram"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.linkedin.com/company/tropicom---burkina-faso?originalSubdomain=bf" class="text-blue-300 hover:text-white" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
@@ -514,22 +543,49 @@
     // Gestion du menu mobile
     const menuBtn = document.getElementById('menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
-    menuBtn.addEventListener('click', () => {
-        const isHidden = mobileMenu.classList.toggle('hidden');
-        menuBtn.setAttribute('aria-expanded', !isHidden); // Mettre à jour l'attribut ARIA
-    });
+    // Check if elements exist before adding event listeners
+    if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            menuBtn.setAttribute('aria-expanded', !isHidden); // Mettre à jour l'attribut ARIA
+            // Adjust header position based on mobile menu visibility
+            const header = document.querySelector('header.fixed');
+            if (header) {
+                if (!isHidden) { // If menu is shown
+                    header.style.marginBottom = mobileMenu.offsetHeight + 'px'; // Push content down
+                } else {
+                    header.style.marginBottom = '0'; // Reset
+                }
+            }
+        });
+
+        // Close mobile menu when a link is clicked inside it
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuBtn.setAttribute('aria-expanded', false);
+                const header = document.querySelector('header.fixed');
+                if (header) {
+                    header.style.marginBottom = '0'; // Reset
+                }
+            });
+        });
+    }
+
 
     // Gestion du thème sombre (Dark Mode)
+    // NOTE: themeToggle is not present in the provided HTML, assuming it's part of a larger structure.
+    // I've added a check for its existence.
     const themeToggle = document.getElementById('themeToggle');
 
     // Fonction pour appliquer le thème
     function applyTheme(theme) {
         if (theme === 'dark') {
             document.documentElement.classList.add('dark');
-            themeToggle.textContent = 'Mode Clair';
+            if (themeToggle) themeToggle.textContent = 'Mode Clair';
         } else {
             document.documentElement.classList.remove('dark');
-            themeToggle.textContent = 'Mode Sombre';
+            if (themeToggle) themeToggle.textContent = 'Mode Sombre';
         }
     }
 
@@ -545,17 +601,33 @@
     }
 
     // Basculer le thème au clic
-    themeToggle.addEventListener('click', () => {
-        if (document.documentElement.classList.contains('dark')) {
-            applyTheme('light');
-            localStorage.setItem('theme', 'light');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                applyTheme('light');
+                localStorage.setItem('theme', 'light');
+            } else {
+                applyTheme('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    }
+
+    // JavaScript to hide top-info-bar on Android devices
+    // This part ensures it overrides any CSS if the device matches "android"
+    document.addEventListener('DOMContentLoaded', function() {
+        const topInfoBar = document.getElementById('top-info-bar');
+        if (topInfoBar) { // Ensure the element exists
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            if (/android/i.test(userAgent)) {
+                topInfoBar.classList.add('hidden');
+                topInfoBar.classList.remove('md:flex'); // Remove flex display for md breakpoint if it was set
+            }
         } else {
-            applyTheme('dark');
-            localStorage.setItem('theme', 'dark');
+            console.error("L'élément #top-info-bar n'a pas été trouvé dans le DOM pour la détection Android.");
         }
     });
-</script>
 
-{% block extra_js %}{% endblock %}
+</script>
 </body>
 </html>

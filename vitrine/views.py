@@ -161,3 +161,9 @@ def job_offers_view(request):
         'job_offers': active_job_offers,
         'has_active_job_offers': has_active_job_offers,
     })
+    
+def faq(request):
+    """
+    Vue pour la page FAQ.
+    """
+    return render(request, 'vitrine/faq.html', {})

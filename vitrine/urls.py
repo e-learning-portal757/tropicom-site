@@ -15,4 +15,5 @@ urlpatterns = [
     path(_('comparatif/'), views.comparatif, name='comparatif'),
     path(_('newsletter/'), views.newsletter, name='newsletter'),
     path('offres-emploi/', views.job_offers_view, name='job_offers'),
+    path('faq/', views.faq, name='faq'),
 ]
