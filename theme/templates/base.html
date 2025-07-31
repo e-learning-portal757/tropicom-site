@@ -181,15 +181,16 @@
 
 <header class="fixed top-0 left-0 w-full bg-white shadow-lg z-50">
     <div id="top-info-bar" class="w-full bg-blue-900 text-white text-xs sm:text-sm px-4 md:px-8 py-2 font-semibold tracking-wide h-[40px] hidden md:flex">
-        <div class="flex items-center gap-6 flex-grow"> 
+        <div class="flex items-center gap-6 flex-grow"> {# Added flex-grow to push contact info to the right #}
            <a href="{% url 'vitrine:about' %}" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1">
-                <i data-feather="info" class="w-5 h-5" aria-hidden="true"></i> À propos
+                <i data-feather="info" class="w-5 h-5" aria-hidden="true"></i> À Propos
             </a>
-            <a href="{% url 'vitrine:faq' %}" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1">
-                <i data-feather="info" class="w-5 h-5" aria-hidden="true"></i> FAQ
+            <a href="{% url 'vitrine:faq' %}" class="flex items-center gap-2 hover:text-red-300 transition-colors duration-200 ease-in-out" aria-label="Foire aux questions">
+                <i data-feather="help-circle" class="w-5 h-5 text-blue-200" aria-hidden="true"></i> FAQ
             </a>
             
-<div class="flex flex-wrap gap-4 text-xl">
+            {# Consolidated Social Media Icons here, using Font Awesome #}
+           <div class="flex flex-wrap gap-4 text-lg"> {# Changed from text-xl to text-lg #}
     <a href="https://www.facebook.com/tropicom.tech" class="text-blue-500 hover:text-white" title="Facebook"><i class="fab fa-facebook-f"></i></a>
     <a href="#" class="text-pink-500 hover:text-white" title="Instagram"><i class="fab fa-instagram"></i></a>
     <a href="https://www.linkedin.com/company/tropicom---burkina-faso?originalSubdomain=bf" class="text-blue-300 hover:text-white" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
@@ -199,16 +200,16 @@
         </div>
 
         <div class="flex items-center gap-4 sm:gap-6 flex-wrap justify-end">
-            <span class="flex items-center gap-1.5 text-blue-100"> 
-                <i data-feather="map-pin" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1"></i>
+            <span class="flex items-center gap-2 text-blue-100"> {# Removed hidden md:flex here, as the whole top bar is already hidden #}
+                <i data-feather="map-pin" class="w-4 h-4" aria-hidden="true"></i>
                 Karpala, Ouagadougou, Burkina Faso
             </span>
-            <a href="mailto:commercial@tropicom.tech" class="flex items-center gap-1.5 hover:text-red-300 transition-colors duration-200 ease-in-out">
-                <i data-feather="mail" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1"></i>
+            <a href="mailto:commercial@tropicom.tech" class="flex items-center gap-2 hover:text-red-300 transition-colors duration-200 ease-in-out">
+                <i data-feather="mail" class="w-4 h-4" aria-hidden="true"></i>
                 commercial@tropicom.tech
             </a>
             <span class="flex items-center gap-1.5 text-blue-100">
-                <i data-feather="phone" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1"></i>
+                <i data-feather="phone" class="w-4 h-4" aria-hidden="true"></i>
                 +226 25 37 37 88
             </span>
         </div>
@@ -310,22 +311,34 @@
 
             {# Slide 1 #}
             <section class="w-screen h-[70vh] bg-cover bg-center flex items-center justify-center text-white flex-shrink-0" style="background-image: url('{% static 'img/2341.jpeg' %}');">
-                <div class="bg-black bg-opacity-50 p-8 rounded-xl text-center max-w-3xl">
-                    <h2 class="text-4xl font-bold">
-                        <span class="text-blue-700">Réseau & Telecoms</span>
-                    </h2>
-                    <p class="text-lg mb-3">Tropicom offre des solutions complètes pour vos infrastructures réseau.</p>
-                    <ul class="space-y-2 text-base mb-3">
-                        <li>✔ Fourniture d'Accès internet par satellite</li>
-                        <li>✔ Interconnexion réseaux d'entreprise (BLR, FH et FO)</li>
-                        <li>✔ Réseaux LAN câblés et WIFI d'entreprise</li>
-                        <li>✔ Téléphonie d'entreprise</li>
-                        <li>✔ Certification de câblage</li>
-                        <li>✔ Audit & conseil</li>
-                    </ul>
-                    <a href="{% url 'vitrine:contact' %}" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
-                </div>
-            </section>
+    <div class="bg-black bg-opacity-50 p-8 rounded-xl text-center max-w-3xl">
+        <h2 class="text-4xl font-bold">
+            <span class="text-blue-700">Réseau & Telecoms</span>
+        </h2>
+        <p class="text-lg mb-3">Tropicom offre des solutions complètes pour vos infrastructures réseau.</p>
+        <ul class="space-y-2 text-base mb-3 text-left mx-auto max-w-sm"> {# Added text-left, mx-auto, and max-w-sm #}
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> Fourniture d'Accès internet par satellite
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> Interconnexion réseaux d'entreprise (BLR, FH et FO)
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> Réseaux LAN câblés et WIFI d'entreprise
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> Téléphonie d'entreprise
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> Certification de câblage
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> Audit & conseil
+            </li>
+        </ul>
+        <a href="{% url 'vitrine:contact' %}" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
+    </div>
+</section>
             
             {# Slide 2 #}
             <section class="w-screen h-[70vh] flex flex-col md:flex-row items-center justify-center flex-shrink-0">
@@ -367,35 +380,50 @@
                 </div>
             </section>
 
-            {# Slide 4 (Transformation Digitale) #}
-            <section class="w-screen h-[70vh] bg-cover bg-center flex items-center justify-center text-white flex-shrink-0" style="background-image: url('{% static 'img/43.jpeg' %}');">
-                <div class="bg-black bg-opacity-50 p-8 rounded-xl text-center max-w-3xl">
-                    <h2 class="text-4xl font-bold"><span class="text-blue-700">Transformation Digitale</span></h2>
-                    <p class="text-lg mb-3">Accélérez votre transition numérique avec nos experts.</p>
-                    <ul class="space-y-2 text-base mb-3">
-                        <li>✔ Gestion Electronique de Document (GED)</li>
-                        <li>✔ Gestion de parc Automobile</li>
-                        <li>✔ Développement d'applications</li>
-                    </ul>
-                    <a href="{% url 'vitrine:contact' %}" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
-                </div>
-            </section>
+           <section class="w-screen h-[70vh] bg-cover bg-center flex items-center justify-center text-white flex-shrink-0" style="background-image: url('{% static 'img/43.jpeg' %}');">
+    <div class="bg-black bg-opacity-50 p-8 rounded-xl text-center max-w-3xl">
+        <h2 class="text-4xl font-bold"><span class="text-blue-700">Transformation Digitale</span></h2>
+        <p class="text-lg mb-3">Accélérez votre transition numérique avec nos experts.</p>
+        <ul class="space-y-2 text-base mb-3 text-left mx-auto max-w-sm"> {# Added text-left, mx-auto, and max-w-sm #}
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> Gestion Electronique de Document (GED)
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> Gestion de parc Automobile
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> Développement d'applications
+            </li>
+        </ul>
+        <a href="{% url 'vitrine:contact' %}" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
+    </div>
+</section>
 
             {# Slide 5 (Communication d'entreprise) #}
-            <section class="w-screen h-[70vh] bg-cover bg-center flex items-center justify-center text-white flex-shrink-0" style="background-image: url('{% static 'img/53.jpeg' %}');">
-                <div class="bg-black bg-opacity-50 p-8 rounded-xl text-center max-w-3xl">
-                    <h2 class="text-4xl font-bold"><span class="text-blue-700">Communication d'entreprise</span></h2> 
-                    <p class="text-lg mb-3">Améliorez votre communication interne et externe.</p>
-                    <ul class="space-y-2 text-base mb-3">
-                        <li>✔ Publicité média 360° (TV, Radio, affichage, réseaux sociaux …etc)</li>
-                        <li>✔ Identité visuelle et Design graphique</li>
-                        <li>✔ Communication Interne</li>
-                        <li>✔ Branding d’entreprise</li>
-                        <li>✔ Conception site web</li>
-                    </ul>
-                    <a href="{% url 'vitrine:contact' %}" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
-                </div>
-            </section>
+           <section class="w-screen h-[70vh] bg-cover bg-center flex items-center justify-center text-white flex-shrink-0" style="background-image: url('{% static 'img/53.jpeg' %}');">
+    <div class="bg-black bg-opacity-50 p-8 rounded-xl text-center max-w-3xl">
+        <h2 class="text-4xl font-bold"><span class="text-blue-700">Communication d'entreprise</span></h2>
+        <p class="text-lg mb-3">Améliorez votre communication interne et externe.</p>
+        <ul class="space-y-2 text-base mb-3 text-left mx-auto max-w-sm"> {# Added text-left, mx-auto, and max-w-sm #}
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> Publicité média 360° (TV, Radio, affichage, réseaux sociaux …etc)
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> Identité visuelle et Design graphique
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> Communication Interne
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> Branding d’entreprise
+            </li>
+            <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> Conception site web
+            </li>
+        </ul>
+        <a href="{% url 'vitrine:contact' %}" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
+    </div>
+</section>
         </div>
         <div id="pagination" class="absolute bottom-4 left-0 w-full flex justify-center gap-2 z-20"></div>
     </header>
