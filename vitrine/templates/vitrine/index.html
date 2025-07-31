@@ -200,97 +200,111 @@
         </div>
     </div>
 </div>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // --- Script du Slider de Services Animé ---
-        const slidesContainer = document.getElementById('service-slides-container');
-        const slides = Array.from(slidesContainer.querySelectorAll('[data-slide]'));
-        const totalSlides = slides.length;
-        let currentSlideIndex = 0;
-        let slideInterval;
+        // --- 1. Initialisation des icônes Feather ---
+        // S'assure que les icônes sont remplacées dès que le DOM est prêt.
+        if (typeof feather !== 'undefined') {
+            feather.replace();
+        } else {
+            console.warn("La bibliothèque Feather Icons n'est pas chargée. Les icônes pourraient ne pas s'afficher.");
+        }
 
-        const totalSceneDuration = 7000; // Total duration before changing slide
-        const animationDuration = 1000; // Duration for individual element animation (image/text)
+        // --- 2. Gestion du Menu Mobile et du Bouton Hamburger ---
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const header = document.querySelector('header'); // Sélectionne votre <header>
 
-        // Adjust these delays for finer control over synchronization
-        const imageEnterDelay = 50; // Image starts animating very slightly after slide appears
-        const textAnimationDelay = 150; // Text starts animating shortly after image
+        // Vérifie que tous les éléments nécessaires existent avant d'ajouter des écouteurs.
+        if (menuBtn && mobileMenu && header) {
+            // Fonction pour ajuster la position du menu mobile
+            // Ceci est crucial pour que le menu s'affiche juste sous l'en-tête.
+            const adjustMobileMenuPosition = () => {
+                const headerHeight = header.offsetHeight; // Obtient la hauteur réelle de l'en-tête
+                // Définit une variable CSS sur l'élément mobile-menu. Tailwind peut l'utiliser avec top-[var(--header-height)].
+                mobileMenu.style.setProperty('--header-height', `${headerHeight}px`);
+                // Définit également la propriété 'top' directement pour une compatibilité maximale.
+                mobileMenu.style.top = `${headerHeight}px`;
+            };
 
-        function showServiceSlide(index) {
-            slides.forEach((slide, i) => {
-                // First, reset all slides to completely hidden (opacity 0)
-                slide.style.opacity = '0'; 
-                slide.style.zIndex = '0'; // Ensure only current slide is on top
+            // Appelle la fonction une première fois au chargement.
+            adjustMobileMenuPosition();
+            // Réajuste la position si la taille de la fenêtre change (ex: rotation du téléphone, redimensionnement du navigateur).
+            window.addEventListener('resize', adjustMobileMenuPosition);
 
-                // Reset animation state for all images within all slides
-                const imageElement = slide.querySelector('[data-animation-target="image"]'); 
-                if (imageElement) {
-                    imageElement.classList.add('opacity-0', 'scale-95'); // Initial state for new animation
-                    imageElement.classList.remove('opacity-100', 'scale-100');
-                }
+            // Écouteur d'événements pour le clic sur le bouton hamburger.
+            menuBtn.addEventListener('click', () => {
+                // Bascule la classe 'hidden'. Si elle est présente, elle est retirée (menu s'affiche).
+                // Si elle est absente, elle est ajoutée (menu se cache).
+                mobileMenu.classList.toggle('hidden');
 
-                // Reset animation state for the text within all slides
-                const textElement = slide.querySelector('[data-animation="text"]');
-                if (textElement) {
-                    textElement.classList.add('opacity-0', 'translate-y-5'); // Initial state for new animation
-                    textElement.classList.remove('opacity-100', 'translate-y-0');
+                // Optionnel: Change l'icône du bouton hamburger (menu <-> croix).
+                const menuIcon = menuBtn.querySelector('i[data-feather]');
+                if (menuIcon) {
+                    if (mobileMenu.classList.contains('hidden')) {
+                        menuIcon.setAttribute('data-feather', 'menu'); // Montre l'icône hamburger
+                    } else {
+                        menuIcon.setAttribute('data-feather', 'x'); // Montre l'icône croix
+                    }
+                    feather.replace(); // Re-dessine l'icône après le changement.
                 }
             });
 
-            const currentSlide = slides[index];
-            currentSlide.style.zIndex = '1'; // Bring current slide to front
+        } else {
+            // Affiche un avertissement si les éléments critiques ne sont pas trouvés.
+            console.warn("Éléments du menu mobile (bouton, menu, ou en-tête) introuvables. Le menu hamburger pourrait ne pas fonctionner.");
+        }
 
-            // Set the slide to visible after a tiny delay, so that the individual elements can start their animations
-            setTimeout(() => {
-                currentSlide.style.opacity = '1'; // Fade in the whole slide container
+        // --- 3. Gestion de l'Indicateur de Page Active (Desktop et Mobile) ---
+        function setActiveMenuItem() {
+            const currentPath = window.location.pathname;
+            let currentUrlName = 'index'; // Valeur par défaut pour la page d'accueil (index)
 
-                const currentImageElement = currentSlide.querySelector('[data-animation-target="image"]'); 
-                const currentTextElement = currentSlide.querySelector('[data-animation="text"]');
-
-                if (currentImageElement) {
-                    setTimeout(() => {
-                        currentImageElement.classList.remove('opacity-0', 'scale-95'); 
-                        currentImageElement.classList.add('opacity-100', 'scale-100'); 
-                    }, imageEnterDelay);
+            // Si le chemin n'est pas la racine '/', extrait le dernier segment de l'URL.
+            if (currentPath !== '/') {
+                const pathSegments = currentPath.split('/').filter(segment => segment !== '');
+                if (pathSegments.length > 0) {
+                    currentUrlName = pathSegments[pathSegments.length - 1];
                 }
+            }
+            
+            // Si l'URL est exactement '/' (la racine), on considère que c'est 'index'
+            if (currentPath === '/') {
+                currentUrlName = 'index';
+            }
 
-                if (currentTextElement) {
-                    setTimeout(() => {
-                        currentTextElement.classList.remove('opacity-0', 'translate-y-5');
-                        currentTextElement.classList.add('opacity-100', 'translate-y-0');
-                    }, textAnimationDelay);
+            // Sélectionne tous les éléments de menu (ceux du bureau et ceux du mobile).
+            const allMenuItems = document.querySelectorAll('.menu-item, .mobile-menu-item');
+
+            allMenuItems.forEach(item => {
+                const itemUrlName = item.dataset.urlName; // Récupère le 'data-url-name' de l'élément de menu.
+
+                // 1. Réinitialiser l'état de l'élément :
+                // On retire les classes d'état "actif" (rouge et gras).
+                item.classList.remove('text-red-600', 'font-bold');
+                // On s'assure que la couleur par défaut (bleu) est appliquée.
+                item.classList.add('text-blue-800');
+
+                // 2. Vérifier si cet élément de menu correspond à la page actuelle :
+                // Si le 'data-url-name' de l'élément correspond à notre 'currentUrlName'.
+                // Ou si les deux sont 'index' (pour la page d'accueil).
+                if (itemUrlName === currentUrlName || (currentUrlName === 'index' && itemUrlName === 'index')) {
+                    // Applique les classes d'état "actif" (rouge et gras).
+                    item.classList.add('text-red-600', 'font-bold');
+                    // Retire la couleur par défaut pour éviter les conflits.
+                    item.classList.remove('text-blue-800');
                 }
-            }, 50); // Small delay for the parent slide to become visible
-
-            currentSlideIndex = index;
+            });
         }
 
-        function nextServiceSlide() {
-            currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
-            showServiceSlide(currentSlideIndex);
-        }
+        // Appelle la fonction une première fois au chargement de la page.
+        setActiveMenuItem(); 
+        // Ajoute des écouteurs pour mettre à jour l'indicateur si l'URL change (ex: via des liens internes SPA ou boutons retour).
+        window.addEventListener('hashchange', setActiveMenuItem);
+        window.addEventListener('popstate', setActiveMenuItem); // Très important pour les boutons précédent/suivant du navigateur
 
-        function startSlideInterval() {
-            slideInterval = setInterval(nextServiceSlide, totalSceneDuration);
-        }
 
-        function resetSlideInterval() { 
-            clearInterval(slideInterval);
-            startSlideInterval();
-        }
-
-        // Show the first slide initially and start the interval
-        showServiceSlide(currentSlideIndex); 
-        startSlideInterval();
-
-        const serviceSliderSection = document.getElementById('animated-services-slider');
-        if (serviceSliderSection) {
-            serviceSliderSection.addEventListener('mouseenter', () => clearInterval(slideInterval));
-            serviceSliderSection.addEventListener('mouseleave', () => startSlideInterval());
-        }
-
-        // --- General Modal Functions for services ---
+        // --- Fonctions Modales Générales pour les services ---
         function openServiceModal(modalId) {
             const modal = document.getElementById(modalId);
             modal.classList.remove('hidden');
@@ -311,9 +325,9 @@
             }, 300); 
         }
 
-        // --- Functions for the "All Our Realisations" Modal (Carousel) ---
+        // --- Fonctions pour la Modale "Toutes Nos Réalisations" (Carrousel) ---
         let currentRealisationsIndex = 0;
-        let realisationsItems = [];
+        let realisationsItems = []; // Initialisé ici, mis à jour à l'ouverture de la modale
 
         function openAllRealisationsModal() {
             const modal = document.getElementById('all-realisations-modal');
@@ -322,7 +336,7 @@
             
             realisationsItems = document.querySelectorAll('#realisations-carousel .carousel-item');
             if (realisationsItems.length > 0) {
-                showRealisationsImage(0); // Always start from the first image
+                showRealisationsImage(0); // Toujours commencer par la première image
             }
 
             setTimeout(() => {
@@ -346,32 +360,33 @@
 
             realisationsItems.forEach(item => {
                 item.classList.add('opacity-0');
-                item.classList.remove('opacity-100', 'pointer-events-auto'); // Hide all and remove interaction
+                item.classList.remove('opacity-100', 'pointer-events-auto'); // Cache tout et retire l'interaction
             });
 
-            currentRealisationsIndex = (index + realisationsItems.length) % realalisationsItems.length;
+            currentRealisationsIndex = (index + realisationsItems.length) % realisationsItems.length; // Correction ici : 'realalisationsItems' -> 'realisationsItems'
             realisationsItems[currentRealisationsIndex].classList.remove('opacity-0');
-            realisationsItems[currentRealisationsIndex].classList.add('opacity-100', 'pointer-events-auto'); // Show current and enable interaction
+            realisationsItems[currentRealisationsIndex].classList.add('opacity-100', 'pointer-events-auto'); // Affiche l'image actuelle et active l'interaction
         }
 
         function navigateRealisationsCarousel(direction) {
             showRealisationsImage(currentRealisationsIndex + direction);
         }
 
-        // Expose functions to the global scope if needed by `onclick` attributes in HTML
+        // Expose les fonctions à la portée globale si nécessaire pour les attributs `onclick` dans le HTML
         window.openServiceModal = openServiceModal;
         window.closeServiceModal = closeServiceModal;
         window.openAllRealisationsModal = openAllRealisationsModal;
         window.closeAllRealisationsModal = closeAllRealisationsModal;
         window.navigateRealisationsCarousel = navigateRealisationsCarousel;
 
-        // Close any modal by clicking outside
+        // Ferme toute modale en cliquant en dehors d'elle
         window.onclick = function(event) {
-            if (event.target.classList.contains('bg-opacity-75')) { 
+            // Cible les modales qui ont un fond semi-transparent (bg-opacity-75 est un bon indicateur)
+            if (event.target.classList.contains('bg-opacity-75') || event.target.classList.contains('bg-gray-900')) { // Ajout de bg-gray-900 si c'est votre fond de modale
                 const modal = event.target;
-                if (modal.id.startsWith('modal-')) {
+                if (modal.id.startsWith('modal-')) { // Pour les modales de services
                     closeServiceModal(modal.id);
-                } else if (modal.id === 'all-realisations-modal') {
+                } else if (modal.id === 'all-realisations-modal') { // Pour la modale de réalisations
                     closeAllRealisationsModal();
                 }
             }
