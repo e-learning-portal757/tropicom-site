@@ -12,8 +12,14 @@ SECRET_KEY = os.environ.get(
 )
 
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '.onrender.com',
+    'www.tropicom.tech',
+    'tropicom.tech',
+]
 
-ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
 
 # --- Applications ---
 INSTALLED_APPS = [
