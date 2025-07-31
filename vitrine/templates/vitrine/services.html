@@ -23,24 +23,7 @@
 {% endblock %}
 
 {% block content %}
-<section class="relative h-[60vh] overflow-hidden group">
-  <!-- Image de fond avec zoom au survol -->
-  <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-       style="background-image: url('{% static 'img/07.jpeg' %}');"></div>
 
-  <!-- Overlay sombre pour lisibilité -->
-  <div class="absolute inset-0 bg-black bg-opacity-50"></div>
-
-  <!-- Texte centré -->
-  <div class="relative z-10 h-full flex flex-col justify-center items-center text-white text-center px-4">
-    <h2 class="text-3xl sm:text-5xl font-bold mb-4 drop-shadow-lg">
-      {% trans "Nous intervenons dans 5 domaines clés" %}
-    </h2>
-    <p class="text-lg sm:text-xl max-w-2xl drop-shadow">
-      {% trans "Sécurité électronique, Transformation digitale, Réseaux & Télécoms, Gestion Documentaire et Systèmes Informatiques." %}
-    </p>
-  </div>
-</section>
 
 <section class="max-w-7xl mx-auto px-6 py-16">
   <h2 class="text-3xl font-bold text-center text-blue-900 mb-10">{% trans "Nos Domaines d'Intervations" %}</h2>
@@ -176,12 +159,18 @@
       <h2 class="text-3xl font-bold text-blue-900 mb-4">Reseau & Telcoms</h2>
       <p class="text-lg">Entreprise burkinabè spécialisée en informatique et télécommunications.</p>
     <ul class="space-y-2 text-base">
-      <li>✔ Fourniture d'Accès internet par satellite</li>
-          <li>✔ Interconnexion réseaux d'entreprise (BLR,FH et FO)</li>
-          <li>✔ Réseaux LAN cables et WIFI d'entreprise</li>
-          <li>✔ Telephonie d'entreprise</li>
-          <li>✔ Certification de cablage</li>
-          <li>✔ Audit & conseil</li>
+       <li class="flex items-start gap-2"> 
+                <span class="flex-shrink-0">✔</span> 	Fourniture d’accès internet par Satellite
+            </li>
+            <li class="flex items-start gap-2"> 
+                <span class="flex-shrink-0">✔</span> Interconnexion réseaux d'entreprise (BLR, FH et FO)
+            </li>
+            <li class="flex items-start gap-2"> 
+                <span class="flex-shrink-0">✔</span> Réseaux LAN câblés et WIFI d'entreprise
+            </li>
+            <li class="flex items-start gap-2"> 
+                <span class="flex-shrink-0">✔</span> Téléphonie d'entreprise (<span class="text-red-600">IP eT Analogique</span>)
+            </li>
     </ul>
     <a href="{% url 'vitrine:contact' %}"class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
     </div>
@@ -198,14 +187,9 @@
       <h2 class="text-3xl font-bold text-blue-900 mb-4">Securite electronique</h2>
       <p class="text-lg">Entreprise burkinabè spécialisée en informatique et télécommunications.</p>
     <ul class="space-y-2 text-base">
-      <li>✔ Videos Surveillance</li>
-          <li>✔ Systeme d'alarme</li>
-          <li>✔ controls d'acces</li>
-          <li>✔ Detection et Securite incendie</li>
-          <li>✔ Systeme Biometrique</li>
-          <li>✔ Tracking Online et gestion de flotte</li>
-          <li>✔ Scelle de Securite electronique</li>
-          <li>✔ Gestion des visiteurs</li>
+     <li>✔ Vidéo surveillance</li>
+       <li>✔ Gestion Electronique des effectif et du temps de travail</li>
+        <li>✔ Contrôles d'accès</li>
       
     </ul>
     <a href="{% url 'vitrine:contact' %}" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
@@ -234,10 +218,15 @@
       <h2 class="text-3xl font-bold text-blue-900 mb-4">Transformation Digitale</h2>
       <p class="text-lg">Entreprise burkinabè spécialisée en informatique et télécommunications.</p>
     <ul class="space-y-2 text-base">
-      <li>✔ La digitalisation des processus métiers</li>
-          <li>✔ La mise en place de solutions collaboratives et cloud computing</li>
-          <li>✔ La formation du personnel à l’usage des outils numériques</li>
-          
+       <li class="flex items-start gap-2"> {# Added flex items-start gap-2 #}
+                <span class="flex-shrink-0">✔</span> Gestion Electronique de Document (GED)
+            </li>
+            <li class="flex items-start gap-2"> 
+                <span class="flex-shrink-0">✔</span> Gestion de parc Automobile
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="flex-shrink-0">✔</span> Gestion RH, Paie et Contrôle d'accès
+            </li>
     </ul>
     <a href="{% url 'vitrine:contact' %}" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
     </div>
@@ -262,10 +251,23 @@
       <h2 class="text-3xl font-bold text-white mb-4">Communication d'entreprise</h2>
       <p class="text-lg mb-4">Entreprise burkinabè spécialisée en informatique et télécommunications.</p>
       <ul class="space-y-2 text-base text-white mb-6">
-        <li>✔ Antivirus <span class="text-red-400">ESET</span></li>
-        <li>✔ <span class="text-red-400">Firewall</span></li>
-        <li>✔ Supervision réseau</li>
-        <li>✔ Audit de sécurité</li>
+        <li class="flex items-start gap-2">
+                <span class="flex-shrink-0">✔</span> Publicité média 360° (TV, Radio, affichage, réseaux sociaux …etc)
+            </li>
+            <li class="flex items-start gap-2"> 
+
+
+                <span class="flex-shrink-0">✔</span> Identité visuelle et Design graphique
+            </li>
+            <li class="flex items-start gap-2"> 
+                <span class="flex-shrink-0">✔</span> Communication Interne
+            </li>
+            <li class="flex items-start gap-2"> 
+                <span class="flex-shrink-0">✔</span> Branding d’entreprise
+            </li>
+            <li class="flex items-start gap-2"> 
+                <span class="flex-shrink-0">✔</span> Conception site web
+            </li>
       </ul>
       <a href="{% url 'vitrine:contact' %}" class="inline-block bg-white text-blue-800 py-2 px-4 rounded hover:bg-gray-200 transition font-semibold">
         Contactez-nous
@@ -291,13 +293,12 @@
 
     <!-- Texte à droite -->
     <div class="transform transition duration-700 ease-in-out hover:scale-105 animate-fadeInLeft">
-      <h2 class="text-3xl font-bold text-blue-900 mb-4">Systeme Informatique</h2>
+      <h2 class="text-3xl font-bold text-blue-900 mb-4">Systeme & Securite Informatique</h2>
       <p class="text-lg">Entreprise burkinabè spécialisée en informatique et télécommunications.</p>
     <ul class="space-y-2 text-base">
       <li>✔ Protection de données</li>
-          <li>✔ Infogerance</li>
-          <li>✔ Antivirus ESET</li>
-          <li>✔ Audit de sécurité</li>
+       <li>✔ Serveur & systeme de stockage d'entreprise</li>
+        <li>✔ Backup et restauration de données d'entreprise</li>
     </ul>
     <a href="{% url 'vitrine:contact' %}" class="inline-block bg-white text-blue-800 py-1 px-2 rounded hover:bg-gray-200 transition">Contactez-nous</a>
     </div>

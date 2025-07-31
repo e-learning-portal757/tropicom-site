@@ -43,7 +43,7 @@
 
         <div class="overflow-hidden rounded-xl shadow-lg transform transition-transform duration-500 hover:scale-105">
             <img src="{% static 'img/000000.jpeg' %}"
-                 srcset="{% static 'img/000000.jpeg' %} 1x, {% static 'img/000000_2x.jpeg' %} 2x" {# Exemple srcset #}
+                 srcset="{% static 'img/74.jpeg' %} 1x, {% static 'img/000000_2x.jpeg' %} 2x" {# Exemple srcset #}
                  alt="{% trans 'Illustration de la mission de Tropicom : une équipe travaillant sur des serveurs, symbolisant la fiabilité et l’innovation.' %}"
                  class="w-full h-full object-cover lazyload"
                  loading="lazy"
@@ -90,25 +90,25 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
 
-            <div class="bg-white rounded-lg shadow-md p-8 transform transition-transform duration-500 hover:scale-105 flex flex-col items-center justify-center border-b-4 border-blue-600">
-                <div class="text-blue-700 text-5xl md:text-6xl font-bold mb-2 animated-number" data-target="150" data-duration="2000" data-prefix="+">
+            <div class="bg-white rounded-lg shadow-md p-8 transform transition-transform duration-500 hover:scale-105 flex flex-col items-center justify-center border-b-4 border-blue-600 animated-fade-in" style="animation-delay: 0.1s;">
+                <div class="text-blue-700 text-5xl md:text-6xl font-bold mb-2 animated-number" data-target="250" data-duration="2000" data-prefix="+">
                     0
                 </div>
                 <p class="text-gray-700 font-medium text-lg md:text-xl">{% trans "Clients satisfaits" %}</p>
             </div>
 
-            <div class="bg-white rounded-lg shadow-md p-8 transform transition-transform duration-500 hover:scale-105 flex flex-col items-center justify-center border-b-4 border-blue-600">
-                <div class="text-blue-700 text-5xl md:text-6xl font-bold mb-2 animated-number" data-target="8" data-duration="1500">
+            <div class="bg-white rounded-lg shadow-md p-8 transform transition-transform duration-500 hover:scale-105 flex flex-col items-center justify-center border-b-4 border-blue-600 animated-fade-in" style="animation-delay: 0.3s;">
+                <div class="text-blue-700 text-5xl md:text-6xl font-bold mb-2 animated-number" data-target="9" data-duration="1500">
                     0
                 </div>
                 <p class="text-gray-700 font-medium text-lg md:text-xl">{% trans "ans d’expérience" %}</p>
             </div>
 
-            <div class="bg-white rounded-lg shadow-md p-8 transform transition-transform duration-500 hover:scale-105 flex flex-col items-center justify-center border-b-4 border-blue-600">
-                <div class="text-blue-700 text-5xl md:text-6xl font-bold mb-2 animated-number" data-target="5" data-duration="1500">
+            <div class="bg-white rounded-lg shadow-md p-8 transform transition-transform duration-500 hover:scale-105 flex flex-col items-center justify-center border-b-4 border-blue-600 animated-fade-in" style="animation-delay: 0.5s;">
+                <div class="text-blue-700 text-5xl md:text-6xl font-bold mb-2 animated-number" data-target="100" data-duration="1800" data-suffix="%">
                     0
                 </div>
-                <p class="text-gray-700 font-medium text-lg md:text-xl">{% trans "pays de la sous-région" %}</p>
+                <p class="text-gray-700 font-medium text-lg md:text-xl">{% trans "Taux de réussite" %}</p>
             </div>
 
         </div>
@@ -116,34 +116,35 @@
 </section>
 
 <style>
-    @keyframes fadeIn {
+    @keyframes fadeInSlideUp {
         from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
     }
 
-    .animate-fade-in {
-        animation: fadeIn 0.8s ease-out forwards;
-        opacity: 0; /* Assurez-vous qu'ils sont cachés avant l'animation */
+    /* Apply initial hidden state and the animation */
+    .animated-fade-in {
+        opacity: 0; /* Ensures elements are invisible before animation */
+        transform: translateY(20px); /* Sets starting position for slide-up effect */
+        animation: fadeInSlideUp 0.8s ease-out forwards; /* Apply animation */
     }
 
-    /* Délais pour les sections si vous voulez qu'elles apparaissent séquentiellement */
-    section:nth-of-type(1).animate-fade-in { animation-delay: 0.1s; }
-    section:nth-of-type(2).animate-fade-in { animation-delay: 0.3s; }
-    section:nth-of-type(3).animate-fade-in { animation-delay: 0.5s; }
-    section:nth-of-type(4).animate-fade-in { animation-delay: 0.7s; }
+    /* Remove specific nth-of-type for 'section' if you're targeting internal divs */
+    /* The delays will now be applied via inline style for .animated-fade-in elements */
 </style>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Animation des chiffres clés lors du scroll
         const chiffresSection = document.getElementById('chiffres-section');
         const animatedNumbers = document.querySelectorAll('.animated-number');
-        let hasAnimated = false; // Pour s'assurer que l'animation ne se déclenche qu'une seule fois
+        const fadeInElements = document.querySelectorAll('.animated-fade-in'); // Select elements to fade in
+        let hasAnimatedNumbers = false; // To ensure number animation triggers only once
 
+        // Function to animate a single number counter
         const animateNumber = (element) => {
             const target = parseInt(element.dataset.target);
             const duration = parseInt(element.dataset.duration);
             const prefix = element.dataset.prefix || '';
+            const suffix = element.dataset.suffix || ''; // Added suffix support
             const start = 0;
             let startTime = null;
 
@@ -153,51 +154,58 @@
                 const percentage = Math.min(progress / duration, 1);
                 const value = Math.floor(percentage * (target - start) + start);
 
-                element.textContent = prefix + value;
+                element.textContent = prefix + value + suffix; // Include suffix
 
                 if (percentage < 1) {
                     requestAnimationFrame(step);
                 } else {
-                    element.textContent = prefix + target;
+                    element.textContent = prefix + target + suffix; // Ensure final value is accurate
                 }
             };
 
             requestAnimationFrame(step);
         };
 
-        const observer = new IntersectionObserver((entries, observer) => {
+        // Observer for the 'chiffres-section' to trigger number and fade-in animations
+        const chiffresSectionObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting && !hasAnimated) {
-                    animatedNumbers.forEach(num => animateNumber(num));
-                    hasAnimated = true;
-                    observer.unobserve(entry.target);
+                if (entry.isIntersecting) {
+                    // Trigger number animation only once
+                    if (!hasAnimatedNumbers) {
+                        animatedNumbers.forEach(num => animateNumber(num));
+                        hasAnimatedNumbers = true;
+                    }
+
+                    // Trigger fade-in animation for each element with 'animated-fade-in'
+                    fadeInElements.forEach(el => {
+                        // For elements already in view when DOMContentLoaded fires, their animation might not run
+                        // if they are not explicitly removed from observer or styled to animate on intersect
+                        // The CSS `forwards` ensures it stays at the end state.
+                        // We don't need to manually set opacity/transform here if CSS handles the animation fully
+                    });
+                    
+                    // Unobserve the section once animations are triggered
+                    observer.unobserve(entry.target); 
                 }
             });
         }, {
-            threshold: 0.5
+            // Adjust threshold based on when you want animations to start (e.g., 0.2 for 20% visible)
+            threshold: 0.2 
         });
 
         if (chiffresSection) {
-            observer.observe(chiffresSection);
+            chiffresSectionObserver.observe(chiffresSection);
         }
 
-        // Animation d'apparition des sections (utilisant les styles CSS @keyframes)
-        const sections = document.querySelectorAll('section.animate-fade-in');
-        const sectionObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                    // Supprimez l'observateur une fois que l'animation est terminée
-                    sectionObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 }); // Déclenche dès 10% de visibilité
-
-        sections.forEach(section => {
-            sectionObserver.observe(section);
-        });
+        // --- IMPORTANT NOTE ---
+        // The `animated-fade-in` class with `animation: fadeInSlideUp 0.8s ease-out forwards;`
+        // and inline `animation-delay` is enough for the fade-in effect.
+        // You don't need a separate `sectionObserver` in JavaScript for these if
+        // they are already present in the DOM when the `chiffresSectionObserver` fires.
+        // The `forwards` keyword in CSS animation ensures the final state persists.
+        // If you had *other* sections on the page that *also* needed their own unique fade-in
+        // based on their own intersection, then a separate observer would be necessary.
+        // For this code, the single `chiffresSectionObserver` is sufficient.
     });
 </script>
-
 {% endblock %}
