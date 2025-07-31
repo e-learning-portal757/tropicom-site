@@ -176,9 +176,10 @@
         });
     }
 </script>
+
 <header class="fixed top-0 left-0 w-full bg-white shadow-lg z-50">
-    {# Top Info Bar - Hidden on mobile/tablet, visible only on "desktop" #}
-    <div id="top-info-bar" class="w-full bg-blue-900 text-white text-xs sm:text-sm px-4 md:px-8 py-2 font-semibold tracking-wide h-[40px] hidden desktop:flex">
+    {# Top Info Bar - Hidden on devices smaller than 'md' (768px) #}
+    <div id="top-info-bar" class="w-full bg-blue-900 text-white text-xs sm:text-sm px-4 md:px-8 py-2 font-semibold tracking-wide h-[40px] hidden md:flex">
         <div class="flex items-center gap-6 flex-grow">
            <a href="{% url 'vitrine:about' %}" class="flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1">
                 <i data-feather="info" class="w-5 h-5" aria-hidden="true"></i> À Propos
@@ -219,8 +220,8 @@
             <span class="sr-only">Tropicom</span>
         </a>
 
-        {# Desktop Navigation: Hidden on mobile/tablet, flex on "desktop" #}
-        <nav id="menu" class="hidden desktop:flex items-center justify-center gap-10 text-lg font-semibold flex-grow pl-10">
+        {# Desktop Navigation: Hidden on mobile, flex on desktop #}
+        <nav id="menu" class="hidden md:flex items-center justify-center gap-10 text-lg font-semibold flex-grow pl-10">
             <a href="{% url 'vitrine:index' %}" class="menu-item flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1" data-url-name="index">
                 <i data-feather="home" class="w-5 h-5" aria-hidden="true"></i> Accueil
             </a>
@@ -240,15 +241,16 @@
             </a>
         </nav>
 
-        {# Hamburger Button: Visible on mobile/tablet, hidden on "desktop" #}
-        <button id="menu-btn" class="desktop:hidden focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 p-2 rounded-md text-blue-800 hover:bg-gray-100 transition-colors duration-200 ease-in-out" aria-label="Ouvrir le menu mobile">
+        {# Hamburger Button: Hidden on desktop, visible on mobile #}
+        <button id="menu-btn" class="md:hidden focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 p-2 rounded-md text-blue-800 hover:bg-gray-100 transition-colors duration-200 ease-in-out" aria-label="Ouvrir le menu mobile">
             <i data-feather="menu" class="w-6 h-6" aria-hidden="true"></i>
         </button>
     </div>
 </header>
 
-{# Mobile Navigation: Hidden initially on mobile/tablet, hidden on "desktop" #}
-<div id="mobile-menu" class="hidden desktop:hidden bg-white text-blue-800 px-6 py-4 space-y-4 shadow-xl fixed w-full z-40 border-b border-gray-200 top-[var(--header-height)]">
+{# Mobile Navigation: Hidden on mobile initially, hidden on desktop #}
+{# Crucially, the 'hidden' here means it starts hidden on mobile. 'md:hidden' ensures it's hidden on desktop. #}
+<div id="mobile-menu" class="hidden md:hidden bg-white text-blue-800 px-6 py-4 space-y-4 shadow-xl fixed w-full z-40 border-b border-gray-200 top-[var(--header-height)]">
     <a href="{% url 'vitrine:index' %}" class="mobile-menu-item flex items-center gap-2 hover:text-red-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md p-1 -m-1" data-url-name="index">
         <i data-feather="home" class="w-5 h-5" aria-hidden="true"></i> Accueil
     </a>
@@ -267,10 +269,12 @@
         <i data-feather="info" class="w-5 h-5" aria-hidden="true"></i> À propos
     </a>
 </div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // TOUT VOTRE CODE JAVASCRIPT DOIT ÊTRE ICI DEDANS.
+
         // --- 1. Initialisation des icônes Feather ---
-        // Ensures Feather icons are replaced as soon as the DOM is ready.
         if (typeof feather !== 'undefined') {
             feather.replace();
         } else {
@@ -280,54 +284,42 @@
         // --- 2. Gestion du Menu Mobile et du Bouton Hamburger ---
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        const header = document.querySelector('header'); // Selects your <header> element.
+        const header = document.querySelector('header');
 
-        // Checks if all necessary elements exist before adding event listeners.
         if (menuBtn && mobileMenu && header) {
-            // Function to adjust the position of the mobile menu.
-            // This is crucial for the menu to display directly below the header.
             const adjustMobileMenuPosition = () => {
-                const headerHeight = header.offsetHeight; // Gets the actual height of the header.
-                // Sets a CSS variable on the mobile-menu element. Tailwind can use this with top-[var(--header-height)].
+                const headerHeight = header.offsetHeight;
                 mobileMenu.style.setProperty('--header-height', `${headerHeight}px`);
-                // Also sets the 'top' property directly for maximum compatibility.
                 mobileMenu.style.top = `${headerHeight}px`;
             };
 
-            // Calls the function once on page load.
             adjustMobileMenuPosition();
-            // Re-adjusts the position if the window size changes (e.g., phone rotation, browser resize).
             window.addEventListener('resize', adjustMobileMenuPosition);
 
-            // Event listener for clicks on the hamburger button.
             menuBtn.addEventListener('click', () => {
-                // Toggles the 'hidden' class. If present, it's removed (menu appears).
-                // If absent, it's added (menu hides).
                 mobileMenu.classList.toggle('hidden');
 
-                // Optional: Changes the hamburger button icon (menu <-> close).
                 const menuIcon = menuBtn.querySelector('i[data-feather]');
                 if (menuIcon) {
                     if (mobileMenu.classList.contains('hidden')) {
-                        menuIcon.setAttribute('data-feather', 'menu'); // Shows the hamburger icon.
+                        menuIcon.setAttribute('data-feather', 'menu');
                     } else {
-                        menuIcon.setAttribute('data-feather', 'x'); // Shows the close (X) icon.
+                        menuIcon.setAttribute('data-feather', 'x');
                     }
-                    feather.replace(); // Re-renders the icon after the change.
+                    feather.replace();
                 }
             });
 
         } else {
-            // Displays a warning if critical elements are not found.
             console.warn("Éléments du menu mobile (bouton, menu, ou en-tête) introuvables. Le menu hamburger pourrait ne pas fonctionner.");
         }
 
         // --- 3. Gestion de l'Indicateur de Page Active (Desktop et Mobile) ---
+        // LA DÉCLARATION DE LA FONCTION DOIT ÊTRE ICI
         function setActiveMenuItem() {
             const currentPath = window.location.pathname;
-            let currentUrlName = 'index'; // Default value for the home page (index).
+            let currentUrlName = 'index'; 
 
-            // If the path is not the root '/', extracts the last segment of the URL.
             if (currentPath !== '/') {
                 const pathSegments = currentPath.split('/').filter(segment => segment !== '');
                 if (pathSegments.length > 0) {
@@ -335,130 +327,28 @@
                 }
             }
             
-            // If the URL is exactly '/' (root), we consider it 'index'.
-            if (currentPath === '/') {
-                currentUrlName = 'index';
-            }
-
-            // Selects all menu items (both desktop and mobile).
+            // LA LIGNE QUI CAUSE L'ERREUR DOIT ÊTRE À L'INTÉRIEUR DE LA FONCTION
+            // ET CETTE FONCTION EST APPELEE SEULEMENT APRÈS DOMContentLoaded
             const allMenuItems = document.querySelectorAll('.menu-item, .mobile-menu-item');
 
             allMenuItems.forEach(item => {
-                const itemUrlName = item.dataset.urlName; // Retrieves the 'data-url-name' from the menu item.
+                const itemUrlName = item.dataset.urlName;
 
-                // 1. Reset item state:
-                // Removes "active" state classes (red and bold).
                 item.classList.remove('text-red-600', 'font-bold');
-                // Ensures the default (blue) color is applied.
                 item.classList.add('text-blue-800');
 
-                // 2. Check if this menu item corresponds to the current page:
-                // If the 'data-url-name' of the item matches our 'currentUrlName'.
-                // Or if both are 'index' (for the home page).
                 if (itemUrlName === currentUrlName || (currentUrlName === 'index' && itemUrlName === 'index')) {
-                    // Applies the "active" state classes (red and bold).
                     item.classList.add('text-red-600', 'font-bold');
-                    // Removes the default color to avoid conflicts.
                     item.classList.remove('text-blue-800');
                 }
             });
         }
 
-        // Calls the function once when the page loads.
+        // L'APPEL INITIAL DE LA FONCTION DOIT ÊTRE ICI
         setActiveMenuItem(); 
-        // Adds listeners to update the indicator if the URL changes (e.g., via internal SPA links or back buttons).
         window.addEventListener('hashchange', setActiveMenuItem);
-        window.addEventListener('popstate', setActiveMenuItem); // Very important for browser back/forward buttons
-
-
-        // --- General Modal Functions for services ---
-        function openServiceModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            setTimeout(() => { 
-                modal.querySelector(':first-child').classList.add('scale-100', 'opacity-100');
-                modal.querySelector(':first-child').classList.remove('scale-95', 'opacity-0');
-            }, 10); 
-        }
-
-        function closeServiceModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.querySelector(':first-child').classList.add('scale-95', 'opacity-0');
-            modal.querySelector(':first-child').classList.remove('scale-100', 'opacity-100');
-            setTimeout(() => { 
-                modal.classList.add('hidden');
-                document.body.style.overflow = 'auto';
-            }, 300); 
-        }
-
-        // --- Functions for the "All Our Realisations" Modal (Carousel) ---
-        let currentRealisationsIndex = 0;
-        let realisationsItems = []; // Initialized here, updated when the modal opens.
-
-        function openAllRealisationsModal() {
-            const modal = document.getElementById('all-realisations-modal');
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            
-            realisationsItems = document.querySelectorAll('#realisations-carousel .carousel-item');
-            if (realisationsItems.length > 0) {
-                showRealisationsImage(0); // Always start from the first image.
-            }
-
-            setTimeout(() => {
-                modal.querySelector(':first-child').classList.add('scale-100', 'opacity-100');
-                modal.querySelector(':first-child').classList.remove('scale-95', 'opacity-0');
-            }, 10);
-        }
-
-        function closeAllRealisationsModal() {
-            const modal = document.getElementById('all-realisations-modal');
-            modal.querySelector(':first-child').classList.add('scale-95', 'opacity-0');
-            modal.querySelector(':first-child').classList.remove('scale-100', 'opacity-100');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                document.body.style.overflow = 'auto';
-            }, 300);
-        }
-
-        function showRealisationsImage(index) {
-            if (realisationsItems.length === 0) return;
-
-            realisationsItems.forEach(item => {
-                item.classList.add('opacity-0');
-                item.classList.remove('opacity-100', 'pointer-events-auto'); // Hides all and removes interaction.
-            });
-
-            currentRealisationsIndex = (index + realisationsItems.length) % realisationsItems.length;
-            realisationsItems[currentRealisationsIndex].classList.remove('opacity-0');
-            realisationsItems[currentRealisationsIndex].classList.add('opacity-100', 'pointer-events-auto'); // Shows current and enables interaction.
-        }
-
-        function navigateRealisationsCarousel(direction) {
-            showRealisationsImage(currentRealisationsIndex + direction);
-        }
-
-        // Exposes functions to the global scope if needed by `onclick` attributes in HTML.
-        window.openServiceModal = openServiceModal;
-        window.closeServiceModal = closeServiceModal;
-        window.openAllRealisationsModal = openAllRealisationsModal;
-        window.closeAllRealisationsModal = closeAllRealisationsModal;
-        window.navigateRealisationsCarousel = navigateRealisationsCarousel;
-
-        // Closes any modal by clicking outside.
-        window.onclick = function(event) {
-            // Targets modals that have a semi-transparent background (bg-opacity-75 or bg-gray-900).
-            if (event.target.classList.contains('bg-opacity-75') || event.target.classList.contains('bg-gray-900')) {
-                const modal = event.target;
-                if (modal.id.startsWith('modal-')) { // For service modals.
-                    closeServiceModal(modal.id);
-                } else if (modal.id === 'all-realisations-modal') { // For the realisations modal.
-                    closeAllRealisationsModal();
-                }
-            }
-        }
-    });
+        window.addEventListener('popstate', setActiveMenuItem);
+    }); // FIN DE document.addEventListener('DOMContentLoaded', function() {
 </script>
 {% block page_header %}
     {# En-tête pour la page 'index' avec son propre slider #}
